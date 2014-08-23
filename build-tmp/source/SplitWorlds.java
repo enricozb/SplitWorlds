@@ -126,11 +126,13 @@ public void drawLevel()
 	String line = null;
 	do 
 	{
-		if(isLevelLoaded != true) 
+		if(isLevelLoaded != true ) 
 		{ 
 			try 
 			{
 				line = reader.readLine();
+				if(line == null)
+					break;
 				String[] ch = split(line, " ");
 
 				if(ch[0].equals("Platform"))
@@ -226,7 +228,7 @@ class Man extends GameObject
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
+    String[] appletArgs = new String[] { "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {

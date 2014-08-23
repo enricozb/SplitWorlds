@@ -107,11 +107,13 @@ void drawLevel()
 	String line = null;
 	do 
 	{
-		if(isLevelLoaded != true) 
+		if(isLevelLoaded != true ) 
 		{ 
 			try 
 			{
 				line = reader.readLine();
+				if(line == null)
+					break;
 				String[] ch = split(line, " ");
 
 				if(ch[0].equals("Platform"))
