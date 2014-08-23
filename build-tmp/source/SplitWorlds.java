@@ -39,7 +39,7 @@ BufferedReader reader;
 
 public void setup() 
 {
-	size(1200,800);
+	size(1200,600);
 	rectMode(CENTER);
 	initFisicaWorld();
 
@@ -50,7 +50,7 @@ public void setup()
 
 public void draw() 
 {
-	background(0);
+	background(60);
 	upDrawObjects();
 	if(checkForFinish())
 	{
@@ -72,13 +72,6 @@ public void initFisicaWorld()
 	world.setGravity(0, 1e3f);
 
 	divider = new Platform(width/2,height/2,20,height,true); //Remove later
-	//new Platform(width/2,height,width,50,true);
-	/*
-	man = new Man(width/4, height/2, 20, 20);
-	wman = new Man(3 * width/4, height/2, 20, 20);
-	mExit = new Exit(width/4, 700, 20, 20);
-	wExit = new Exit(3 * width/4 + 20, 700, 20, 20);
-	*/
 }
 
 //Key press events, simultaneous key presses working.
@@ -136,13 +129,15 @@ public void drawLevel()
 				String[] ch = split(line, " ");
 
 				if(ch[0].equals("Platform"))
-						new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
-				if(ch[0].equals("Man"))
-						man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				if(ch[0].equals("Woman"))
-						wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				// if(ch[0].equals("Exit"))
-				// 		new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+					new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
+				else if(ch[0].equals("Man"))
+					man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+				else if(ch[0].equals("Woman"))
+					wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+				else if(ch[0].equals("wExit"))
+					wExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+				else if(ch[0].equals("mExit"))
+					mExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
 			} catch(IOException e) 
 			{
 			}
@@ -154,17 +149,19 @@ public void drawLevel()
 
 //**********Classes***********
 
+final String SPIKE = "Spike";
+
 final PVector G = new PVector(0,1);
 final PVector UP_VECTOR = new PVector(0,-5);
 
 abstract class GameObject 
 {
 	FBox box;
-
  	GameObject(float x, float y, float sx, float sy)
  	{
 		box = new FBox(sx, sy);
 		box.setPosition(x, y);
+		box.setNoStroke();
 		world.add(box);
  	}
 }
@@ -188,39 +185,96 @@ class Exit extends Platform
 	}
 };
 
+class Spikes
+{
+	final float X_REPEAT_SIZE = 20;
+	FCompound mainBody;
+
+	Spikes(float x, float y, float sx, float sy)
+	{
+		mainBody = new FCompound();
+		int num = PApplet.parseInt(sx/X_REPEAT_SIZE);
+		for(float i = x - X_REPEAT_SIZE*num/2; i <= x + X_REPEAT_SIZE*num/2; i += X_REPEAT_SIZE)
+		{
+			mainBody.addBody(getTriangle(i,y,X_REPEAT_SIZE,sy));
+		}
+		mainBody.setName(SPIKE);
+
+		world.add(mainBody);
+	}
+
+	public FPoly getTriangle(float x, float y, float sx, float sy)
+	{
+		FPoly ptemp = new FPoly();
+		ptemp.vertex(x - sx/2, y + sy/2);
+		ptemp.vertex(x + sx/2, y + sy/2);
+		ptemp.vertex(x, y - sy/2);
+		ptemp.setNoStroke();
+		return ptemp;
+	}
+};
+
 class Door extends Platform
 {
 	FBox buttonBox;
-	Door(float x, float y, float bx, float by, float sx, float sy, float bsx, float bsy)
+	boolean active;
+
+	Door(float x, float y, float sx, float sy, float bx, float by, float bsx, float bsy)
 	{
 		super(x, y, sx, sy, true);
+		box.setFillColor(color(0,0,255));
+
 		buttonBox = new FBox(bsx, bsy);
 		buttonBox.setPosition(bx, by);
 		buttonBox.setSensor(true);
-		buttonBox.setFill(color(0, 255, 0));
+		buttonBox.setStatic(true);
+		buttonBox.setFillColor(color(0, 255, 0));
+
+		buttonBox.setNoStroke();
+
 		world.add(buttonBox);
+	}
+
+	public void activate()
+	{
+		buttonBox.setPosition(buttonBox.getX(),buttonBox.getY() + 1);
 	}
 };
 
 class Man extends GameObject
 {
+	float ix;
+	float iy;
+
 	Man(float x, float y, float sx, float sy)
 	{
 		super(x, y, sx, sy);
+		this.ix = x;
+		this.iy = y;
+	}
+
+	public void die()
+	{
+		box.setPosition(ix,iy);
+		box.setVelocity(0,0);
 	}
 
 	public void move()
-	{
-		if(uPressed) 
+	{	
+		ArrayList<FBody> temp = box.getTouching();
+		for(FBody fb : temp)
 		{
-			ArrayList<FBody> temp = box.getTouching();
-			for(FBody fb : temp)
+			if(uPressed) 
 			{
 				if(fb.getY() > box.getY() && !fb.isSensor())
 				{
 					box.addImpulse(0, -250);
 					break;
-				}
+				}	
+			}
+			if(fb.getName() == SPIKE)
+			{
+				die();
 			}
 		}
 		if(rPressed) box.setVelocity(100, box.getVelocityY());
@@ -228,7 +282,7 @@ class Man extends GameObject
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "SplitWorlds" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {

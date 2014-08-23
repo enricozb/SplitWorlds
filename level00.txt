@@ -1,2 +1,6 @@
 Platform 20 20 32 32 true
 Platform 600 20 39 20 true
+Man 100 100 20 20 
+Woman 800 100 20 20
+mExit 500 500 20 20
+wExit 900 500 20 20
