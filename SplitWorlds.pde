@@ -20,7 +20,11 @@ BufferedReader reader;
 
 void setup() 
 {
+<<<<<<< HEAD
 	size(1200,600);
+=======
+	size(1200, 600);
+>>>>>>> FETCH_HEAD
 	rectMode(CENTER);
 	initFisicaWorld();
 
@@ -110,6 +114,7 @@ void drawLevel()
 				String[] ch = split(line, " ");
 
 				if(ch[0].equals("Platform"))
+<<<<<<< HEAD
 					new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
 				else if(ch[0].equals("Man"))
 					man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
@@ -119,6 +124,17 @@ void drawLevel()
 					wExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("mExit"))
 					mExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+=======
+						new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
+				if(ch[0].equals("Man"))
+						man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				if(ch[0].equals("Woman"))
+						wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				 if(ch[0].equals("MExit"))
+					new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				 if(ch[0].equals("WExit"))
+					new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+>>>>>>> FETCH_HEAD
 			} catch(IOException e) 
 			{
 			}
