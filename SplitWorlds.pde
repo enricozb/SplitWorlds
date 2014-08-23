@@ -8,13 +8,9 @@ Platform divider;
 Man man;
 Man wman;
 
-<<<<<<< HEAD
-=======
 Exit mExit;
 Exit wExit;
 
-//ArrayList<GameObject> gos = new ArrayList<GameObject>();
->>>>>>> b8644d305fc47899c8558ab444be694d3a9f1c28
 
 int level;
 boolean isLevelLoaded;
@@ -23,16 +19,10 @@ BufferedReader reader;
 
 void setup() 
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
 	size(1200,800,OPENGL);
 	smooth(8);
-=======
 	size(1200,800);
->>>>>>> b8644d305fc47899c8558ab444be694d3a9f1c28
-=======
 	size(1200, 800.0);
->>>>>>> 7afe23aa6331fb9b26a67ac2768884ddbf16b4b3
 
 	rectMode(CENTER);
 	initFisicaWorld();
