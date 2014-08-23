@@ -27,6 +27,9 @@ Platform divider;
 Man man;
 Man wman;
 
+Exit mExit;
+Exit wExit;
+
 //ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
@@ -61,8 +64,10 @@ public void initFisicaWorld()
 	world.setGravity(0,1e3f);
 
 	divider = new Platform(width/2,height/2,20,height,true); //Remove later
+	new Platform(width/2,height,width,50,true);
 	man = new Man(width/4,height/2, 20, 20);
 	wman = new Man(3 * width/4,height/2, 20, 20);
+	mExit = new Exit(width/4,height/2, 20, 20);
 }
 
 //Key press events, simultaneous key presses working.
@@ -187,7 +192,8 @@ class Exit extends Platform
 {
 	Exit(float x, float y, float sx, float sy)
 	{
-		super(x,y,sx,sy,false);
+		super(x,y,sx,sy,true);
+		box.setSensor(true);
 	}
 }
 
@@ -200,13 +206,24 @@ class Man extends GameObject
 
 	public void move()
 	{
-		if(uPressed) this.box.addImpulse(0,-1e3f);
-		if(rPressed) this.box.addForce(1e4f,0);
-		if(lPressed) this.box.addForce(-1e4f,0);
+		if(uPressed) 
+		{
+			ArrayList<FBody> temp = box.getTouching();
+			for(FBody fb : temp)
+			{
+				if(fb.getY() > box.getY())
+				{
+					box.addImpulse(0,-250);
+					break;
+				}
+			}
+		}
+		if(rPressed) box.setVelocity(100,box.getVelocityY());
+		if(lPressed) box.setVelocity(-100,box.getVelocityY());
 	}
 }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "SplitWorlds" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {

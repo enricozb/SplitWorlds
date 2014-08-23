@@ -45,8 +45,10 @@ void initFisicaWorld()
 	world.setGravity(0,1e3);
 
 	divider = new Platform(width/2,height/2,20,height,true); //Remove later
+	new Platform(width/2,height,width,50,true);
 	man = new Man(width/4,height/2, 20, 20);
 	wman = new Man(3 * width/4,height/2, 20, 20);
+	mExit = new Exit(width/4,height/2, 20, 20);
 }
 
 //Key press events, simultaneous key presses working.
@@ -171,7 +173,8 @@ class Exit extends Platform
 {
 	Exit(float x, float y, float sx, float sy)
 	{
-		super(x,y,sx,sy,false);
+		super(x,y,sx,sy,true);
+		box.setSensor(true);
 	}
 }
 
@@ -184,8 +187,19 @@ class Man extends GameObject
 
 	void move()
 	{
-		if(uPressed) this.box.addImpulse(0,-1e3);
-		if(rPressed) this.box.addForce(1e4,0);
-		if(lPressed) this.box.addForce(-1e4,0);
+		if(uPressed) 
+		{
+			ArrayList<FBody> temp = box.getTouching();
+			for(FBody fb : temp)
+			{
+				if(fb.getY() > box.getY())
+				{
+					box.addImpulse(0,-250);
+					break;
+				}
+			}
+		}
+		if(rPressed) box.setVelocity(100,box.getVelocityY());
+		if(lPressed) box.setVelocity(-100,box.getVelocityY());
 	}
 }
