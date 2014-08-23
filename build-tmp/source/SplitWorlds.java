@@ -27,24 +27,23 @@ Platform divider;
 Man man;
 Man wman;
 
-//ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
-int level;
+float level;
 boolean isLevelLoaded;
 
 BufferedReader reader;
 
 public void setup() 
 {
-	size(800,800,OPENGL);
+	size(1200,800,OPENGL);
 	smooth(8);
 
 	rectMode(CENTER);
 	initFisicaWorld();
 
-	//reader = createReader("level00.txt");
-	//level = 0;
-	//drawLevel();
+	reader = createReader("level00.txt");
+	level = 0;
+	drawLevel();
 }
 
 public void draw() 
@@ -103,60 +102,35 @@ public void upDrawObjects()
 	world.draw();
 }
 
-/*
-void drawLevel()
+// Format : ClassName xpos ypos sx sy
+public void drawLevel()
 {
-	String line;
+	String line = null;
 	do {
-		try{
-	if(isLevelLoaded != true) { 
-		String line;
-		do {
-			line = reader.readLine();
-		}
-		String[] ch = split(line, " ");
-		
-		for(Sting go: ch) 
-		{
-			switch (go) 
-			{
-				case "Platform":
-					gos.add(new Platform());
-				case "ManW":
-					gos.add(new Man());
-			}
-		}
-	}
-	while(line != null);
-		while(line != null) {
-			try{
-				line = reader.readLine();
+		if(isLevelLoaded != true) { 
+			try {
+					line = reader.readLine();
+					String[] ch = split(line, " ");
+
+					if(ch[0].equals("Platform"))
+							new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
+					if(ch[0].equals("Man"))
+							new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+					if(ch[0].equals("Woman"))
+							new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+					// if(ch[0].equals("Exit"))
+					// 		new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 			} catch(IOException e) {
 				e.printStackTrace();
 				line = null;
+			} catch(NullPointerException e) {
+				break;
 			}
-			String[] ch = split(line, " ");
-
-				switch (ch[0]) 
-				{
-					case "Platform":
-						gos.add(new Platform(ch[1],ch[2],ch[3],ch[4]));
-						break;
-					case "WMan":
-						gos.add(new Man(ch[1],ch[2],ch[3],ch[4]));
-						break;
-					case "Man":
-						gos.add(new Man(ch[1],ch[2],ch[3],ch[4]));
-						break;
-					case "Door":
-						//gos.add(new Door(ch[1],ch[2],ch[3],ch[4])));
-						break;
-				}	
-		
 		}
-	}	
+	}
+	while(line != null); 	
 }
-*/
+
 
 //**********Classes***********
 

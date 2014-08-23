@@ -1,0 +1,1 @@
+Platform 20 20 32 32 true
