@@ -3,8 +3,6 @@ import fisica.*;
 
 FWorld world;
 
-Platform divider;
-
 Man man;
 Man wman;
 
@@ -28,12 +26,8 @@ void setup()
 
 void draw() 
 {
-	background(0);
-<<<<<<< HEAD
 	checkForFinish();
 	background(60);
-=======
->>>>>>> 020ed3dfa9d19cc56af60089784711b16591083f
 	upDrawObjects();
 	checkForFinish();
 }
@@ -49,7 +43,6 @@ void checkForFinish()
 		initFisicaWorld();
 		drawLevel();
 	}
-
 }
 
 void initFisicaWorld()
@@ -60,7 +53,6 @@ void initFisicaWorld()
 	world.setEdges();
 	world.setGravity(0, 1e3);
 
-	divider = new Platform(width/2,height/2,20,height,true); //Remove later
 }
 
 //Key press events, simultaneous key presses working.
@@ -123,13 +115,7 @@ void drawLevel()
 					man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-<<<<<<< HEAD
-				else if(ch[0].equals("wExit"))
-					wExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-				else if(ch[0].equals("mExit"))
-					mExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-=======
->>>>>>> 020ed3dfa9d19cc56af60089784711b16591083f
+
 			} catch(IOException e) 
 			{
 			}
