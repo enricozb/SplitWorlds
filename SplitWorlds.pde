@@ -24,7 +24,7 @@ void setup()
 	rectMode(CENTER);
 	initFisicaWorld();
 
-	reader = createReader("level00.txt");
+	reader = createReader("level" + level + ".txt");
 	level = 0;
 	drawLevel();
 }
@@ -32,16 +32,23 @@ void setup()
 void draw() 
 {
 	background(0);
+	checkForFinish();
 	upDrawObjects();
-	if(checkForFinish())
-	{
-		//pass
-	}
+	
 }
 
-boolean checkForFinish()
+void checkForFinish()
 {
-	return man.box.isTouchingBody(mExit.box) && wman.box.isTouchingBody(wExit.box);
+	if(man != null && wman != null && man.box.isTouchingBody(mExit.box) && wman.box.isTouchingBody(wExit.box))
+	{
+		isLevelLoaded = false;
+		level++;
+		reader = createReader("level" + level + ".txt");
+		background(0);
+		initFisicaWorld();
+		drawLevel();
+	}
+
 }
 
 void initFisicaWorld()
@@ -122,10 +129,10 @@ void drawLevel()
 						man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				if(ch[0].equals("Woman"))
 						wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-				 if(ch[0].equals("MExit"))
-					new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-				 if(ch[0].equals("WExit"))
-					new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				 if(ch[0].equals("mExit"))
+					mExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				 if(ch[0].equals("wExit"))
+					wExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 			} catch(IOException e) 
 			{
 			}

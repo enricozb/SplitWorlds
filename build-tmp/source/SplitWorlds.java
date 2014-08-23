@@ -43,7 +43,7 @@ public void setup()
 	rectMode(CENTER);
 	initFisicaWorld();
 
-	reader = createReader("level00.txt");
+	reader = createReader("level" + level + ".txt");
 	level = 0;
 	drawLevel();
 }
@@ -51,16 +51,23 @@ public void setup()
 public void draw() 
 {
 	background(0);
+	checkForFinish();
 	upDrawObjects();
-	if(checkForFinish())
-	{
-		//pass
-	}
+	
 }
 
-public boolean checkForFinish()
+public void checkForFinish()
 {
-	return man.box.isTouchingBody(mExit.box) && wman.box.isTouchingBody(wExit.box);
+	if(man != null && wman != null && man.box.isTouchingBody(mExit.box) && wman.box.isTouchingBody(wExit.box))
+	{
+		isLevelLoaded = false;
+		level++;
+		reader = createReader("level" + level + ".txt");
+		background(0);
+		initFisicaWorld();
+		drawLevel();
+	}
+
 }
 
 public void initFisicaWorld()
@@ -141,10 +148,10 @@ public void drawLevel()
 						man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
 				if(ch[0].equals("Woman"))
 						wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				 if(ch[0].equals("MExit"))
-					new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				 if(ch[0].equals("WExit"))
-					new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+				 if(ch[0].equals("mExit"))
+					mExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+				 if(ch[0].equals("wExit"))
+					wExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
 			} catch(IOException e) 
 			{
 			}
