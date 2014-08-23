@@ -10,6 +10,7 @@ Man wman;
 //ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
+boolean isLevelLoaded;
 
 BufferedReader reader;
 
@@ -50,14 +51,18 @@ void upDrawObjects()
 /*
 void drawLevel()
 {
+<<<<<<< HEAD
 	String line;
 	do {
 		try{
+=======
+	if(isLevelLoaded != true) { 
+		String line;
+		do {
+>>>>>>> FETCH_HEAD
 			line = reader.readLine();
-		} catch(IOException e) {
-			e.printStackTrace();
-			line = null;
 		}
+<<<<<<< HEAD
 		String[] ch = split(line, " ");
 		
 		for(Sting go: ch) 
@@ -72,6 +77,41 @@ void drawLevel()
 		}
 	}
 	while(line != null);
+=======
+		while(line != null) {
+			try{
+				line = reader.readLine();
+			} catch(IOException e) {
+				e.printStackTrace();
+				line = null;
+			}
+			String[] ch = split(line, " ");
+
+				switch (ch[0]) 
+				{
+					case "Platform":
+						gos.add(new Platform(ch[1],ch[2],ch[3],ch[4]));
+						break;
+					case "WMan":
+						gos.add(new Man(ch[1],ch[2],ch[3],ch[4]));
+						break;
+					case "Man":
+						gos.add(new Man(ch[1],ch[2],ch[3],ch[4]));
+						break;
+					case "Door":
+						//gos.add(new Door(ch[1],ch[2],ch[3],ch[4])));
+						break;
+				}	
+		
+		}
+	}	
+
+}
+boolean checkCollision(GameObject go1, GameObject go2) {
+	Rectangle r1 = new Rectangle((int) go1.x, (int) go1.y, (int) go1.sx, (int) go1.sy);
+    Rectangle r2 = new Rectangle((int) go2.x, (int) go2.y, (int) go2.sx, (int) go2.sy);
+    return r1.intersects(r2);
+>>>>>>> FETCH_HEAD
 }
 */
 
