@@ -1,5 +1,7 @@
-Man m;
-Man w;
+import java.awt.Rectangle;
+Man man;
+Man wman;
+ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
 
@@ -29,8 +31,8 @@ void keyPressed()
 {
 	if(key == CODED)
 	{
-		m.move(keyCode);
-		w.move(keyCode);
+		man.move(keyCode);
+		wman.move(keyCode);
 	}
 }
 
@@ -42,7 +44,6 @@ void upDrawObjects()
 void drawLevel()
 {
 	String line;
-	ArrayList<GameObject> gos = new ArrayList<GameObject>();
 	do {
 		line = reader.readLine();
 	}
@@ -59,23 +60,16 @@ void drawLevel()
 			switch (go) 
 			{
 				case "Platform":
+					gos.add(new Platform());
+				case "ManW":
 
 
 
 				
 			}
 
-
-			
 		}	
-
-	}
 		
-	
-
-
-			}
-		}
 	}	
 
 }
@@ -85,11 +79,6 @@ boolean checkCollision(GameObject go1, GameObject go2) {
     return r1.intersects(r2);
 }
 
-
-boolean doCollide(GameObject go1, GameObject go2)
-{
-	
-}
 
 void drawOverlay()
 {
