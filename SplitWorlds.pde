@@ -54,10 +54,12 @@ void initFisicaWorld()
 
 	divider = new Platform(width/2,height/2,20,height,true); //Remove later
 	//new Platform(width/2,height,width,50,true);
+	/*
 	man = new Man(width/4, height/2, 20, 20);
 	wman = new Man(3 * width/4, height/2, 20, 20);
 	mExit = new Exit(width/4, 700, 20, 20);
 	wExit = new Exit(3 * width/4 + 20, 700, 20, 20);
+	*/
 }
 
 //Key press events, simultaneous key presses working.
@@ -115,9 +117,9 @@ void drawLevel()
 				if(ch[0].equals("Platform"))
 						new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
 				if(ch[0].equals("Man"))
-						new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+						man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				if(ch[0].equals("Woman"))
-						new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+						wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				// if(ch[0].equals("Exit"))
 				// 		new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 			} catch(IOException e) 
