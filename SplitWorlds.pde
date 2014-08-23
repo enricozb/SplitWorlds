@@ -115,6 +115,8 @@ void drawLevel()
 					man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				else if(ch[0].equals("Spikes"))
+					new Spikes(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 
 			} catch(IOException e) 
 			{
