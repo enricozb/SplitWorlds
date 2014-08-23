@@ -4,6 +4,7 @@ Man wman;
 ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
+boolean isLevelLoaded;
 
 BufferedReader reader;
 
@@ -43,35 +44,37 @@ void upDrawObjects()
 
 void drawLevel()
 {
-	String line;
-	do {
-		line = reader.readLine();
-	}
-	while(line != null) {
-		try{
+	if(isLevelLoaded != true) { 
+		String line;
+		do {
 			line = reader.readLine();
-		} catch(IOException e) {
-			e.printStackTrace();
-			line = null;
 		}
-		String[] ch = split(line, " ");
-		
-		for(Sting go: ch) 
-		{
-			switch (go) 
-			{
-				case "Platform":
-					gos.add(new Platform());
-				case "ManW":
-					gos.
-
-
-
-				
+		while(line != null) {
+			try{
+				line = reader.readLine();
+			} catch(IOException e) {
+				e.printStackTrace();
+				line = null;
 			}
+			String[] ch = split(line, " ");
 
-		}	
+				switch (ch[0]) 
+				{
+					case "Platform":
+						gos.add(new Platform(ch[1],ch[2],ch[3],ch[4]));
+						break;
+					case "WMan":
+						gos.add(new Man(ch[1],ch[2],ch[3],ch[4]));
+						break;
+					case "Man":
+						gos.add(new Man(ch[1],ch[2],ch[3],ch[4]));
+						break;
+					case "Door":
+						//gos.add(new Door(ch[1],ch[2],ch[3],ch[4])));
+						break;
+				}	
 		
+		}
 	}	
 
 }
