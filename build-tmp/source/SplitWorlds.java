@@ -40,7 +40,6 @@ BufferedReader reader;
 public void setup() 
 {
 	size(1200,800);
-
 	rectMode(CENTER);
 	initFisicaWorld();
 
