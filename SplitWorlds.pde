@@ -51,22 +51,14 @@ void drawLevel()
 			line = null;
 		}
 		String[] ch = split(line, " ");
-		for(Sting go: ch) {
-			switch (go) {
+		for(Sting go: ch) 
+		{
+			switch (go) 
+			{
 				case "Platform":
-
-
-				
 			}
-
-
-			}
-		}	
-
-	}
-		
-	
-
+		}
+	}	
 }
 
 void drawOverlay()
