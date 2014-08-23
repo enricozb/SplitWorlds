@@ -1,1 +1,2 @@
 Platform 20 20 32 32 true
+Platform 600 20 39 20 true
