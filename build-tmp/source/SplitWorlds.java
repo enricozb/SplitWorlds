@@ -47,26 +47,14 @@ public void setup()
 
 public void draw() 
 {
-<<<<<<< HEAD
-	background(83,119,122);
-=======
-<<<<<<< HEAD
 	background(0);
-	checkForFinish();
-=======
-	background(60);
->>>>>>> f61b8f08f31c19a7bc5fd963f6bb1ae887808ae0
->>>>>>> FETCH_HEAD
 	upDrawObjects();
-	
+	checkForFinish();
 }
 
 public void checkForFinish()
 {
-<<<<<<< HEAD
-	return man.box.isTouchingBody(wman.box);
-=======
-	if(man != null && wman != null && man.box.isTouchingBody(mExit.box) && wman.box.isTouchingBody(wExit.box))
+	if(man != null && wman != null && man.box.isTouchingBody(wman.box))
 	{
 		isLevelLoaded = false;
 		level++;
@@ -76,7 +64,6 @@ public void checkForFinish()
 		drawLevel();
 	}
 
->>>>>>> FETCH_HEAD
 }
 
 public void initFisicaWorld()
@@ -145,30 +132,11 @@ public void drawLevel()
 				String[] ch = split(line, " ");
 
 				if(ch[0].equals("Platform"))
-<<<<<<< HEAD
-						new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
-				if(ch[0].equals("Man"))
-						man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				if(ch[0].equals("Woman"))
-						wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				 if(ch[0].equals("mExit"))
-					mExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				 if(ch[0].equals("wExit"))
-					wExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-=======
 					new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
 				else if(ch[0].equals("Man"))
 					man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-<<<<<<< HEAD
-=======
-				else if(ch[0].equals("wExit"))
-					wExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				else if(ch[0].equals("mExit"))
-					mExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
->>>>>>> f61b8f08f31c19a7bc5fd963f6bb1ae887808ae0
->>>>>>> FETCH_HEAD
 			} catch(IOException e) 
 			{
 			}
