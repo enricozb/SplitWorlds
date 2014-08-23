@@ -12,14 +12,41 @@ import java.io.InputStream;
 import java.io.OutputStream; 
 import java.io.IOException; 
 
-public class Split-Worlds extends PApplet {
-  public void setup() {
+public class SplitWorlds extends PApplet {
 
-    noLoop();
-  }
+public void setup() 
+{
+	size(500,500,OPENGL);
+}
 
+public void draw() 
+{
+	rect(0,0,0,0);
+}
+
+final PVector G = new PVector(0,1);
+
+abstract class GameObject 
+{
+	float x, y;
+	PVector v;
+	PVector p;
+
+ 	GameObject(float x, float y)
+ 	{
+		this.x = x;
+ 		this.y = y;
+ 	}
+
+ 	public abstract void update();
+
+ 	public void display() 
+ 	{
+ 		rect(0,0,50,50);
+ 	}
+}
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "Split-Worlds" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
