@@ -1,19 +1,27 @@
 Man m;
 Man w;
+
 int level;
+
 BufferedReader reader;
 
 void setup() 
 {
 	size(800,800,OPENGL);
 	smooth(8);
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 	rectMode(CENTER);
 	noStroke();
 	reader = createReader("level00.txt");
 	level = 0;
 	drawLevel();
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 }
 
 void draw() 
@@ -51,9 +59,12 @@ void drawLevel()
 			line = null;
 		}
 		String[] ch = split(line, " ");
-		for(Sting go: ch) {
-			switch (go) {
+		for(Sting go: ch) 
+		{
+			switch (go) 
+			{
 				case "Platform":
+<<<<<<< HEAD
 
 
 				
@@ -67,6 +78,11 @@ void drawLevel()
 		
 	
 
+=======
+			}
+		}
+	}	
+>>>>>>> origin/master
 }
 boolean checkCollision(GameObject go1, GameObject go2) {
 	Rectangle r1 = new Rectangle((int) go1.x, (int) go1.y, (int) go1.sx, (int) go1.sy);
@@ -85,10 +101,7 @@ void drawOverlay()
 //**********Classes***********
 
 final PVector G = new PVector(0,1);
-<<<<<<< HEAD
 final PVector UP_VECTOR = new PVector(0,-5);
-=======
->>>>>>> FETCH_HEAD
 abstract class GameObject 
 {
 	float x, y;
