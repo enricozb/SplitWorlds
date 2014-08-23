@@ -1,11 +1,14 @@
 void setup() 
 {
 	size(500,500,OPENGL);
+	smooth(8);
 }
 
 void draw() 
 {
-	rect(0,0,0,0);
+	
+	upDrawObjects();
+	overlay();
 }
 
 final PVector G = new PVector(0,1);
