@@ -8,9 +8,6 @@ Platform divider;
 Man man;
 Man wman;
 
-Exit mExit;
-Exit wExit;
-
 //ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
@@ -32,15 +29,18 @@ void setup()
 void draw() 
 {
 	background(0);
+<<<<<<< HEAD
 	checkForFinish();
 	background(60);
+=======
+>>>>>>> 020ed3dfa9d19cc56af60089784711b16591083f
 	upDrawObjects();
-	
+	checkForFinish();
 }
 
 void checkForFinish()
 {
-	if(man != null && wman != null && man.box.isTouchingBody(mExit.box) && wman.box.isTouchingBody(wExit.box))
+	if(man != null && wman != null && man.box.isTouchingBody(wman.box))
 	{
 		isLevelLoaded = false;
 		level++;
@@ -94,8 +94,8 @@ void keyReleased()
 
 void upDrawObjects()
 {
-	man.move();
-	wman.move();
+	man.move(-1);
+	wman.move(1);
 	world.step();
 	world.draw();
 }
@@ -123,22 +123,29 @@ void drawLevel()
 					man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+<<<<<<< HEAD
 				else if(ch[0].equals("wExit"))
 					wExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("mExit"))
 					mExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+=======
+>>>>>>> 020ed3dfa9d19cc56af60089784711b16591083f
 			} catch(IOException e) 
 			{
 			}
 		}
 	}
-	while(line != null);
-	
+	while(line != null);	
+	man.box.setFriction(0);
+	wman.box.setFriction(0);
+	wman.box.setFill(204,42,65);
+	man.box.setFill(100,144,138);
 }
 
 //**********Classes***********
 
 final String SPIKE = "Spike";
+final String DOORBUTTON = "DoorButton";
 
 final PVector G = new PVector(0,1);
 final PVector UP_VECTOR = new PVector(0,-5);
@@ -161,16 +168,6 @@ class Platform extends GameObject
 	{
 		super(x, y, sx, sy);
 		this.box.setStatic(isStatic);
-	}
-};
-
-class Exit extends Platform
-{
-	Exit(float x, float y, float sx, float sy)
-	{
-		super(x, y, sx, sy, true);
-		box.setSensor(true);
-		box.setFillColor(color(255,0,0));
 	}
 };
 
@@ -248,7 +245,7 @@ class Man extends GameObject
 		box.setVelocity(0,0);
 	}
 
-	void move()
+	void move(int sign)
 	{	
 		ArrayList<FBody> temp = box.getTouching();
 		for(FBody fb : temp)
@@ -265,8 +262,15 @@ class Man extends GameObject
 			{
 				die();
 			}
+			if(fb.getName() == DOORBUTTON)
+			{
+				//UNSUPPORTED
+			}
 		}
-		if(rPressed) box.setVelocity(100, box.getVelocityY());
-		if(lPressed) box.setVelocity(-100, box.getVelocityY());
+		if(rPressed) box.setVelocity(sign * 100, box.getVelocityY());
+		if(lPressed) box.setVelocity(sign *-100, box.getVelocityY());
+		if(!lPressed && !rPressed && temp.size() != 0)
+			box.setVelocity(0,box.getVelocityY());
+
 	}
 };
