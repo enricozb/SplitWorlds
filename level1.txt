@@ -1,4 +1,2 @@
 Man 300 300 20 20
 Woman 800 550 20 20
-Platform 20 20 32 33 true 
-Platform 600 600 32 32 true

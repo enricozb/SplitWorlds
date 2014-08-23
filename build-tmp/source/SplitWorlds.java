@@ -109,7 +109,6 @@ public void updateLevel()
 {
 	reader = createReader("level" + level + ".txt");
 	background(0);
-<<<<<<< HEAD
 	initFisicaWorld();
 	drawLevel();
 }
@@ -161,15 +160,6 @@ public void checkForChoice()
 			initTransition(man.box,fb);
 		}
 	}
-=======
-<<<<<<< HEAD
-	checkForFinish();
-	background(60);
-=======
->>>>>>> 020ed3dfa9d19cc56af60089784711b16591083f
-	upDrawObjects();
-	checkForFinish();
->>>>>>> FETCH_HEAD
 }
 
 public void checkForFinish()
@@ -237,7 +227,6 @@ public void drawLevel()
 	String line = null;
 	do 
 	{
-<<<<<<< HEAD
 		try
 		{
 			line = reader.readLine();
@@ -253,33 +242,6 @@ public void drawLevel()
 				wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
 		} catch(IOException e) 
 		{
-=======
-		if(isLevelLoaded != true ) 
-		{ 
-			try 
-			{
-				line = reader.readLine();
-				if(line == null)
-					break;
-				String[] ch = split(line, " ");
-
-				if(ch[0].equals("Platform"))
-					new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
-				else if(ch[0].equals("Man"))
-					man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				else if(ch[0].equals("Woman"))
-					wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-<<<<<<< HEAD
-				else if(ch[0].equals("wExit"))
-					wExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				else if(ch[0].equals("mExit"))
-					mExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-=======
->>>>>>> 020ed3dfa9d19cc56af60089784711b16591083f
-			} catch(IOException e) 
-			{
-			}
->>>>>>> FETCH_HEAD
 		}
 	}
 	while(line != null);	
@@ -421,7 +383,7 @@ class Man extends GameObject
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "SplitWorlds" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
