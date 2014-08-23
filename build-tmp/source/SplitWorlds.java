@@ -31,7 +31,7 @@ Man wman;
 
 int currentBackground = color(0);
 int newBackground = color(0);
-//ArrayList<GameObject> gos = new ArrayList<GameObject>();
+ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
 boolean isLevelLoaded;
@@ -179,7 +179,7 @@ public void initFisicaWorld()
 {
 	Fisica.init(this);
 	world = new FWorld();
-	world.setGrabbable(false);
+	world.setGrabbable(true);
 	world.setEdges();
 	world.setGravity(0, 1e3f);
 }
@@ -216,19 +216,10 @@ public void keyReleased()
 public void updateWorld()
 {
 	world.step();
-	ArrayList<FBody> tempfb = world.getBodies();
-	for(FBody fb : tempfb)
-	{
-		if(fb.getName() == MOVINGPLATFORM)
-		{
-
-		}
-	}
 }
 
 public void upDrawObjects()
 {
-
 	if(man != null)	 man.move(1);
 	if(wman != null) wman.move(-1);
 	if(state != TRANSITION)
@@ -297,13 +288,17 @@ class Platform extends GameObject
 	}
 };
 
-class Spikes
+class Spikes extends GameObject
 {
 	final float X_REPEAT_SIZE = 20;
 	FCompound mainBody;
 
 	Spikes(float x, float y, float sx, float sy)
 	{
+		super(x,y,sx,sy);
+		box.setSensor(true);
+		box.setNoFill();
+		box.setStatic(true);
 		mainBody = new FCompound();
 		int num = PApplet.parseInt(sx/X_REPEAT_SIZE);
 		for(float i = x - X_REPEAT_SIZE*num/2; i <= x + X_REPEAT_SIZE*num/2; i += X_REPEAT_SIZE)
@@ -328,7 +323,6 @@ class Spikes
 
 class MovingPlatform extends Platform
 {
-
 	float moveTime;
 	float speed;
 	float xoff;
