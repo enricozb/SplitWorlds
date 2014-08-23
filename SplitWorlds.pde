@@ -6,10 +6,16 @@ void setup()
 
 void draw() 
 {
-	
 	upDrawObjects();
 	overlay();
 }
+
+void keyPressed()
+{
+
+}
+
+//**********Classes***********
 
 final PVector G = new PVector(0,1);
 
