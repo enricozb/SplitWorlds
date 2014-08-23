@@ -97,7 +97,6 @@ void upDrawObjects()
 	world.draw();
 }
 
-
 // Format : ClassName xpos ypos sx sy
 
 void drawLevel()
@@ -129,8 +128,6 @@ void drawLevel()
 	while(line != null);
 	
 }
-
-
 
 //**********Classes***********
 
