@@ -27,7 +27,6 @@ abstract class GameObject
 
 class Man extends GameObject
 {
-
 	Man(float x, float y)
 	{
 		super(x,y);
