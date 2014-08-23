@@ -36,6 +36,7 @@ void upDrawObjects()
 {
 
 }
+/*
 void drawLevel()
 {
 	String line;
@@ -59,6 +60,12 @@ void drawLevel()
 			}
 		}
 	}	
+}
+*/
+
+boolean doCollide(GameObject go1, GameObject go2)
+{
+	
 }
 
 void drawOverlay()
