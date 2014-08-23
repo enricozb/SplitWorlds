@@ -22,8 +22,6 @@ public class SplitWorlds extends PApplet {
 
 FWorld world;
 
-Platform divider;
-
 Man man;
 Man wman;
 
@@ -47,12 +45,8 @@ public void setup()
 
 public void draw() 
 {
-	background(0);
-<<<<<<< HEAD
 	checkForFinish();
 	background(60);
-=======
->>>>>>> 020ed3dfa9d19cc56af60089784711b16591083f
 	upDrawObjects();
 	checkForFinish();
 }
@@ -68,7 +62,6 @@ public void checkForFinish()
 		initFisicaWorld();
 		drawLevel();
 	}
-
 }
 
 public void initFisicaWorld()
@@ -79,7 +72,6 @@ public void initFisicaWorld()
 	world.setEdges();
 	world.setGravity(0, 1e3f);
 
-	divider = new Platform(width/2,height/2,20,height,true); //Remove later
 }
 
 //Key press events, simultaneous key presses working.
@@ -142,13 +134,7 @@ public void drawLevel()
 					man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-<<<<<<< HEAD
-				else if(ch[0].equals("wExit"))
-					wExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				else if(ch[0].equals("mExit"))
-					mExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-=======
->>>>>>> 020ed3dfa9d19cc56af60089784711b16591083f
+
 			} catch(IOException e) 
 			{
 			}
