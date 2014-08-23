@@ -9,7 +9,7 @@ Man man;
 Man wman;
 
 
-float level;
+int level;
 boolean isLevelLoaded;
 
 BufferedReader reader;
