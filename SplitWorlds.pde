@@ -1,11 +1,19 @@
+<<<<<<< HEAD
 Man m;
 Man w;
 
+=======
+BufferedReader reader;
+>>>>>>> FETCH_HEAD
 void setup() 
 {
 	size(500,500,OPENGL);
 	smooth(8);
+<<<<<<< HEAD
 	
+=======
+	reader = createReader();
+>>>>>>> FETCH_HEAD
 }
 
 void draw() 
