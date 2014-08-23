@@ -1,2 +1,2 @@
-Split-Worlds
+SplitWorlds
 ============
