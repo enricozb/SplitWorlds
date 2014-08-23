@@ -20,6 +20,10 @@ public class SplitWorlds extends PApplet {
 
 
 
+final String SPIKE = "Spike";
+final String DOORBUTTON = "DoorButton";
+final String MOVINGPLATFORM ="mPlatform";
+
 FWorld world;
 
 Man man;
@@ -209,13 +213,28 @@ public void keyReleased()
 	}
 }
 
+public void updateWorld()
+{
+	world.step();
+	ArrayList<FBody> tempfb = world.getBodies();
+	for(FBody fb : tempfb)
+	{
+		if(fb.getName() == MOVINGPLATFORM)
+		{
+
+		}
+	}
+}
+
 public void upDrawObjects()
 {
 
 	if(man != null)	 man.move(1);
 	if(wman != null) wman.move(-1);
 	if(state != TRANSITION)
-		world.step();
+	{
+		updateWorld();
+	}
 	world.draw();
 }
 
@@ -249,12 +268,6 @@ public void drawLevel()
 }
 
 //**********Classes***********
-
-final String SPIKE = "Spike";
-final String DOORBUTTON = "DoorButton";
-
-final PVector G = new PVector(0,1);
-final PVector UP_VECTOR = new PVector(0,-5);
 
 abstract class GameObject 
 {
@@ -304,6 +317,33 @@ class Spikes
 		ptemp.vertex(x, y - sy/2);
 		ptemp.setNoStroke();
 		return ptemp;
+	}
+};
+
+class MovingPlatform extends Platform
+{
+
+	float moveTime;
+	float speed;
+	float xoff;
+	float yoff;
+	float ix;
+	float iy;
+	MovingPlatform(float x, float y, float sx, float sy, float xoff, float yoff, float speed)
+	{
+		super(x,y,sx,sy,true);
+		moveTime = 0;
+		this.speed = 0;
+		this.xoff = xoff;
+		this.yoff = yoff;
+		ix = x;
+		iy = y;
+	}
+	public void move()
+	{
+		box.setName(MOVINGPLATFORM);
+		box.setPosition(ix + (xoff - ix) * sin(speed), iy + (yoff - iy) * sin(speed));
+		moveTime += speed;
 	}
 };
 
@@ -374,8 +414,8 @@ class Man extends GameObject
 				//UNSUPPORTED
 			}
 		}
-		if(rPressed) box.setVelocity(sign * 100, box.getVelocityY());
-		if(lPressed) box.setVelocity(sign *-100, box.getVelocityY());
+		if(rPressed) box.setVelocity(sign * 150, box.getVelocityY());
+		if(lPressed) box.setVelocity(sign *-150, box.getVelocityY());
 		if(!lPressed && !rPressed && temp.size() != 0)
 			box.setVelocity(0,box.getVelocityY());
 
