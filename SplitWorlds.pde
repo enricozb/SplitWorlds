@@ -150,7 +150,6 @@ void checkForFinish()
 		initTransition(man.box,wman.box);
 		level++;
 	}
-
 }
 
 void initFisicaWorld()
