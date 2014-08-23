@@ -51,18 +51,14 @@ void upDrawObjects()
 /*
 void drawLevel()
 {
-<<<<<<< HEAD
 	String line;
 	do {
 		try{
-=======
 	if(isLevelLoaded != true) { 
 		String line;
 		do {
->>>>>>> FETCH_HEAD
 			line = reader.readLine();
 		}
-<<<<<<< HEAD
 		String[] ch = split(line, " ");
 		
 		for(Sting go: ch) 
@@ -77,7 +73,6 @@ void drawLevel()
 		}
 	}
 	while(line != null);
-=======
 		while(line != null) {
 			try{
 				line = reader.readLine();
@@ -106,12 +101,6 @@ void drawLevel()
 		}
 	}	
 
-}
-boolean checkCollision(GameObject go1, GameObject go2) {
-	Rectangle r1 = new Rectangle((int) go1.x, (int) go1.y, (int) go1.sx, (int) go1.sy);
-    Rectangle r2 = new Rectangle((int) go2.x, (int) go2.y, (int) go2.sx, (int) go2.sy);
-    return r1.intersects(r2);
->>>>>>> FETCH_HEAD
 }
 */
 
