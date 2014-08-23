@@ -20,7 +20,7 @@ BufferedReader reader;
 
 void setup() 
 {
-	size(1200,800);
+	size(1200, 600);
 	rectMode(CENTER);
 	initFisicaWorld();
 
@@ -120,8 +120,10 @@ void drawLevel()
 						man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				if(ch[0].equals("Woman"))
 						wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-				// if(ch[0].equals("Exit"))
-				// 		new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				 if(ch[0].equals("MExit"))
+					new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				 if(ch[0],equals("WExit"))
+					new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 			} catch(IOException e) 
 			{
 			}

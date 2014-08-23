@@ -39,7 +39,7 @@ BufferedReader reader;
 
 public void setup() 
 {
-	size(1200,800);
+	size(1400, 700);
 	rectMode(CENTER);
 	initFisicaWorld();
 
