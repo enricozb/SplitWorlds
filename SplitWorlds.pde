@@ -1,21 +1,19 @@
 Man m;
 Man w;
+
 int level;
+
 BufferedReader reader;
 
 void setup() 
 {
 	size(800,800,OPENGL);
 	smooth(8);
-<<<<<<< HEAD
 	rectMode(CENTER);
 	noStroke();
-	//reader = createReader();
-=======
 	reader = createReader("level00.txt");
 	level = 0;
 	drawLevel();
->>>>>>> FETCH_HEAD
 }
 
 void draw() 
@@ -82,10 +80,7 @@ void drawOverlay()
 //**********Classes***********
 
 final PVector G = new PVector(0,1);
-<<<<<<< HEAD
 final PVector UP_VECTOR = new PVector(0,-5);
-=======
->>>>>>> FETCH_HEAD
 abstract class GameObject 
 {
 	float x, y;
