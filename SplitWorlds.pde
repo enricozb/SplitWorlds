@@ -106,19 +106,21 @@ void drawLevel()
 	String line = null;
 	do 
 	{
-		if(isLevelLoaded != true) 
+		if(isLevelLoaded != true ) 
 		{ 
 			try 
 			{
 				line = reader.readLine();
+				if(line == null)
+					break;
 				String[] ch = split(line, " ");
 
 				if(ch[0].equals("Platform"))
 						new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
 				if(ch[0].equals("Man"))
-						new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+						man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				if(ch[0].equals("Woman"))
-						new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+						wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				// if(ch[0].equals("Exit"))
 				// 		new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 			} catch(IOException e) 
