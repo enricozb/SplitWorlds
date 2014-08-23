@@ -21,24 +21,43 @@ void setup()
 	rectMode(CENTER);
 	initFisicaWorld();
 
-	reader = createReader("level00.txt");
+	reader = createReader("level" + level + ".txt");
 	level = 0;
 	drawLevel();
 }
 
 void draw() 
 {
+<<<<<<< HEAD
 	background(83,119,122);
+=======
+<<<<<<< HEAD
+	background(0);
+	checkForFinish();
+=======
+	background(60);
+>>>>>>> f61b8f08f31c19a7bc5fd963f6bb1ae887808ae0
+>>>>>>> FETCH_HEAD
 	upDrawObjects();
-	if(checkForFinish())
-	{
-		//pass
-	}
+	
 }
 
-boolean checkForFinish()
+void checkForFinish()
 {
+<<<<<<< HEAD
 	return man.box.isTouchingBody(wman.box);
+=======
+	if(man != null && wman != null && man.box.isTouchingBody(mExit.box) && wman.box.isTouchingBody(wExit.box))
+	{
+		isLevelLoaded = false;
+		level++;
+		reader = createReader("level" + level + ".txt");
+		background(0);
+		initFisicaWorld();
+		drawLevel();
+	}
+
+>>>>>>> FETCH_HEAD
 }
 
 void initFisicaWorld()
@@ -107,11 +126,30 @@ void drawLevel()
 				String[] ch = split(line, " ");
 
 				if(ch[0].equals("Platform"))
+<<<<<<< HEAD
+						new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
+				if(ch[0].equals("Man"))
+						man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				if(ch[0].equals("Woman"))
+						wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				 if(ch[0].equals("mExit"))
+					mExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				 if(ch[0].equals("wExit"))
+					wExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+=======
 					new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
 				else if(ch[0].equals("Man"))
 					man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+<<<<<<< HEAD
+=======
+				else if(ch[0].equals("wExit"))
+					wExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				else if(ch[0].equals("mExit"))
+					mExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+>>>>>>> f61b8f08f31c19a7bc5fd963f6bb1ae887808ae0
+>>>>>>> FETCH_HEAD
 			} catch(IOException e) 
 			{
 			}
