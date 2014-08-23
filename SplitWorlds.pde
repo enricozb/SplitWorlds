@@ -22,15 +22,18 @@ abstract class GameObject
  		this.y = y;
  	}
 
- 	abstract void update();
-
- 	void display() 
- 	{
- 		rect(0,0,50,50);
- 	}
+	abstract void upDraw();
 }
 
-class Man
+class Man extends GameObject
 {
-	
+
+	Man(float x, float y)
+	{
+		super(x,y);
+	}
+	void upDraw()
+	{
+
+	}
 }

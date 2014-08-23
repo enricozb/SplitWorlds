@@ -38,12 +38,20 @@ abstract class GameObject
  		this.y = y;
  	}
 
- 	public abstract void update();
+	public abstract void upDraw();
+}
 
- 	public void display() 
- 	{
- 		rect(0,0,50,50);
- 	}
+class Man extends GameObject
+{
+
+	Man(float x, float y)
+	{
+		super(x,y);
+	}
+	public void upDraw()
+	{
+
+	}
 }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
