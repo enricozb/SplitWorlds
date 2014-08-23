@@ -34,6 +34,15 @@ void draw()
 {
 	background(0);
 	upDrawObjects();
+	if(checkForFinish())
+	{
+		//pass
+	}
+}
+
+boolean checkForFinish()
+{
+	return man.box.isTouchingBody(mExit.box) && wman.box.isTouchingBody(wExit.box);
 }
 
 void initFisicaWorld()
@@ -48,7 +57,8 @@ void initFisicaWorld()
 	new Platform(width/2,height,width,50,true);
 	man = new Man(width/4,height/2, 20, 20);
 	wman = new Man(3 * width/4,height/2, 20, 20);
-	mExit = new Exit(width/4,height/2, 20, 20);
+	mExit = new Exit(width/4,700, 20, 20);
+	wExit = new Exit(3 * width/4 + 20,700, 20, 20);
 }
 
 //Key press events, simultaneous key presses working.
@@ -88,35 +98,43 @@ void upDrawObjects()
 	world.draw();
 }
 
-/*
 void drawLevel()
 {
 	String line;
-	do {
-		try{
-	if(isLevelLoaded != true) { 
-		String line;
-		do {
-			line = reader.readLine();
-		}
-		String[] ch = split(line, " ");
-		
-		for(Sting go: ch) 
+	do 
+	{
+		try
 		{
-			switch (go) 
-			{
-				case "Platform":
-					gos.add(new Platform());
-				case "ManW":
-					gos.add(new Man());
+			if(isLevelLoaded != true) 
+			{ 
+				String line;
+				do 
+				{
+					line = reader.readLine();
+				}
+				String[] ch = split(line, " ");
+				
+				for(Sting go: ch) 
+				{
+					switch (go) 
+					{
+						case "Platform":
+							gos.add(new Platform());
+						case "ManW":
+							gos.add(new Man());
+					}
+				}
 			}
 		}
 	}
 	while(line != null);
-		while(line != null) {
-			try{
+		while(line != null) 
+		{
+			try
+			{
 				line = reader.readLine();
-			} catch(IOException e) {
+			} catch(IOException e) 
+			{
 				e.printStackTrace();
 				line = null;
 			}
@@ -141,7 +159,7 @@ void drawLevel()
 		}
 	}	
 }
-*/
+
 
 //**********Classes***********
 

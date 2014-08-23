@@ -53,6 +53,17 @@ public void draw()
 {
 	background(0);
 	upDrawObjects();
+	if(checkForFinish())
+	{
+		//pass
+	}
+}
+
+public boolean checkForFinish()
+{
+	if(man.box.isTouchingBody(mExit.box) && wman.box.isTouchingBody(wExit.box))
+		println("finish");
+	return false;
 }
 
 public void initFisicaWorld()
@@ -67,7 +78,8 @@ public void initFisicaWorld()
 	new Platform(width/2,height,width,50,true);
 	man = new Man(width/4,height/2, 20, 20);
 	wman = new Man(3 * width/4,height/2, 20, 20);
-	mExit = new Exit(width/4,height/2, 20, 20);
+	mExit = new Exit(width/4,700, 20, 20);
+	wExit = new Exit(3 * width/4 + 20,700, 20, 20);
 }
 
 //Key press events, simultaneous key presses working.
