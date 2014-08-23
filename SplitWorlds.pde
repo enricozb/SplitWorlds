@@ -4,6 +4,8 @@ import fisica.*;
 
 FWorld world;
 
+Platform divider;
+
 Man man;
 Man wman;
 
@@ -17,13 +19,25 @@ BufferedReader reader;
 void setup() 
 {
 	size(800,800,OPENGL);
+	Fisica.init(this);
+
 	smooth(8);
 
 	rectMode(CENTER);
 	noStroke();
-	reader = createReader("level00.txt");
-	level = 0;
-	drawLevel();
+
+	world = new FWorld();
+	world.setGrabbable(false);
+	world.setEdges();
+	world.setGravity(0,1e3);
+
+	divider = new Platform(width/2,height/2,20,height,true);
+
+	man = new Man(width/4,height/2,40,40);
+	wman = new Man(3 * width/4,height/2,40,40);
+	//reader = createReader("level00.txt");
+	//level = 0;
+	//drawLevel();
 
 }
 
@@ -31,21 +45,41 @@ void draw()
 {
 	background(0);
 	upDrawObjects();
-	drawOverlay();
 }
+
+boolean rPressed = false;
+boolean lPressed = false;
+boolean uPressed = false;
+boolean dPressed = false;
 
 void keyPressed()
 {
 	if(key == CODED)
 	{
-		man.move(keyCode);
-		wman.move(keyCode);
+		if(keyCode == RIGHT) rPressed = true;
+		if(keyCode == LEFT)  lPressed = true;
+		if(keyCode == UP)    uPressed = true;
+		if(keyCode == DOWN)  dPressed = true;
+	}
+}
+
+void keyReleased()
+{
+	if(key == CODED)
+	{
+		if(keyCode == RIGHT) rPressed = false;
+		if(keyCode == LEFT)  lPressed = false;
+		if(keyCode == UP)    uPressed = false;
+		if(keyCode == DOWN)  dPressed = false;
 	}
 }
 
 void upDrawObjects()
 {
-
+	man.move();
+	wman.move();
+	world.step();
+	world.draw();
 }
 
 /*
@@ -119,28 +153,22 @@ final PVector G = new PVector(0,1);
 final PVector UP_VECTOR = new PVector(0,-5);
 abstract class GameObject 
 {
-
 	FBox box;
 
  	GameObject(float x, float y, float sx, float sy)
  	{
-		box = FBox(sx,sy);
+		box = new FBox(sx,sy);
 		box.setPosition(x,y);
+		world.add(box);
  	}
-
-	abstract void upDraw();
 }
 
 class Platform extends GameObject
 {
-	Platform(float x, float y, float sx, float sy)
+	Platform(float x, float y, float sx, float sy, boolean isStatic)
 	{
 		super(x,y,sx,sy);
-	}
-
-	void upDraw()
-	{
-		rect(x,y,sx,sy);
+		this.box.setStatic(isStatic);
 	}
 }
 
@@ -151,21 +179,10 @@ class Man extends GameObject
 		super(x, y, sx, sy);
 	}
 
-	void upDraw()
+	void move()
 	{
-		v.add(g)
-	}
-
-	void move(int dir)
-	{
-		switch(dir)
-		{
-			case UP: v.add(UP_VECTOR);
-			break;
-			case RIGHT: p.add(new PVector(1,0));
-			break;
-			case LEFT: p.add(new PVector(-1,0));
-			break;
-		}
+		if(uPressed) this.box.addImpulse(0,-1000);
+		if(rPressed) this.box.addForce(1e4,0);
+		if(lPressed) this.box.addForce(-1e4,0);
 	}
 }
