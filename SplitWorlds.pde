@@ -102,7 +102,7 @@ void upDrawObjects()
 
 void drawLevel()
 {
-	/*
+	
 	String line = null;
 	do 
 	{
@@ -127,7 +127,7 @@ void drawLevel()
 		}
 	}
 	while(line != null);
-	*/
+	
 }
 
 
