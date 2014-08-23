@@ -8,13 +8,10 @@ Platform divider;
 Man man;
 Man wman;
 
-<<<<<<< HEAD
-=======
 Exit mExit;
 Exit wExit;
 
 //ArrayList<GameObject> gos = new ArrayList<GameObject>();
->>>>>>> b8644d305fc47899c8558ab444be694d3a9f1c28
 
 int level;
 boolean isLevelLoaded;
@@ -23,20 +20,7 @@ BufferedReader reader;
 
 void setup() 
 {
-<<<<<<< HEAD
-	size(1200, 800);
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-	size(1200,800,OPENGL);
-	smooth(8);
-=======
 	size(1200,800);
->>>>>>> b8644d305fc47899c8558ab444be694d3a9f1c28
-=======
-	size(1200, 800.0);
->>>>>>> 7afe23aa6331fb9b26a67ac2768884ddbf16b4b3
->>>>>>> FETCH_HEAD
 
 	rectMode(CENTER);
 	initFisicaWorld();
@@ -116,25 +100,37 @@ void upDrawObjects()
 
 
 // Format : ClassName xpos ypos sx sy
+
 void drawLevel()
 {
+	/*
 	String line = null;
-	do {
-		if(isLevelLoaded != true) { 
-			try {
-					line = reader.readLine();
-					String[] ch = split(line, " ");
+	do 
+	{
+		if(isLevelLoaded != true) 
+		{ 
+			try 
+			{
+				line = reader.readLine();
+				String[] ch = split(line, " ");
 
-					if(ch[0].equals("Platform"))
-							new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
-					if(ch[0].equals("Man"))
-							new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-					if(ch[0].equals("Woman"))
-							new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-					// if(ch[0].equals("Exit"))
-					// 		new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-			} catch(IOException e) {
+				if(ch[0].equals("Platform"))
+						new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
+				if(ch[0].equals("Man"))
+						new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				if(ch[0].equals("Woman"))
+						new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				// if(ch[0].equals("Exit"))
+				// 		new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+			} catch(IOException e) 
+			{
+			}
+		}
+	}
+	while(line != null);
+	*/
 }
+
 
 
 //**********Classes***********

@@ -27,35 +27,19 @@ Platform divider;
 Man man;
 Man wman;
 
-<<<<<<< HEAD
-=======
 Exit mExit;
 Exit wExit;
 
 //ArrayList<GameObject> gos = new ArrayList<GameObject>();
->>>>>>> b8644d305fc47899c8558ab444be694d3a9f1c28
 
-float level;
+int level;
 boolean isLevelLoaded;
 
 BufferedReader reader;
 
 public void setup() 
 {
-<<<<<<< HEAD
-	size(1200, 800);
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-	size(1200,800,OPENGL);
-	smooth(8);
-=======
 	size(1200,800);
->>>>>>> b8644d305fc47899c8558ab444be694d3a9f1c28
-=======
-	size(1200, 800.0f);
->>>>>>> 7afe23aa6331fb9b26a67ac2768884ddbf16b4b3
->>>>>>> FETCH_HEAD
 
 	rectMode(CENTER);
 	initFisicaWorld();
@@ -132,76 +116,40 @@ public void upDrawObjects()
 	world.step();
 	world.draw();
 }
-<<<<<<< HEAD
+
 
 // Format : ClassName xpos ypos sx sy
+
 public void drawLevel()
 {
+	/*
 	String line = null;
-	do {
-		if(isLevelLoaded != true) { 
-			try {
-					line = reader.readLine();
-					String[] ch = split(line, " ");
-
-					if(ch[0].equals("Platform"))
-							new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
-					if(ch[0].equals("Man"))
-							new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-					if(ch[0].equals("Woman"))
-							new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-					// if(ch[0].equals("Exit"))
-					// 		new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-			} catch(IOException e) {
-=======
-/*
-void drawLevel()
-{
-	String line;
 	do 
 	{
-		try
-		{
-			if(isLevelLoaded != true) 
-			{ 
-				String line;
-				do 
-				{
-					line = reader.readLine();
-				}
+		if(isLevelLoaded != true) 
+		{ 
+			try 
+			{
+				line = reader.readLine();
 				String[] ch = split(line, " ");
-				
-				for(Sting go: ch) 
-				{
-					switch (go) 
-					{
-						case "Platform":
-							gos.add(new Platform());
-						case "ManW":
-							gos.add(new Man());
-					}
-				}
+
+				if(ch[0].equals("Platform"))
+						new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
+				if(ch[0].equals("Man"))
+						new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				if(ch[0].equals("Woman"))
+						new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				// if(ch[0].equals("Exit"))
+				// 		new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+			} catch(IOException e) 
+			{
 			}
 		}
 	}
 	while(line != null);
-		while(line != null) 
-		{
-			try
-			{
-				line = reader.readLine();
-			} catch(IOException e) 
-			{
->>>>>>> b8644d305fc47899c8558ab444be694d3a9f1c28
-				e.printStackTrace();
-				line = null;
-			} catch(NullPointerException e) {
-				break;
-			}
-		}
-	}
-	while(line != null); 	
+	*/
 }
+
 
 
 //**********Classes***********
