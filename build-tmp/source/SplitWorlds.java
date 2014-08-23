@@ -14,28 +14,67 @@ import java.io.IOException;
 
 public class SplitWorlds extends PApplet {
 
+Man m;
+Man w;
+
+BufferedReader reader;
+
 public void setup() 
 {
-	size(500,500,OPENGL);
+	size(800,800,OPENGL);
+	smooth(8);
+	rectMode(CENTER);
+	noStroke();
+	//reader = createReader();
 }
 
 public void draw() 
 {
-	rect(0,0,0,0);
+	background(0);
+	upDrawObjects();
+	drawOverlay();
 }
+
+public void keyPressed()
+{
+	if(key == CODED)
+	{
+		m.move(keyCode);
+		w.move(keyCode);
+	}
+}
+
+public void upDrawObjects()
+{
+
+}
+
+public void drawOverlay()
+{
+	pushStyle();
+	fill(255);
+	rect(width/2,height/2,20,height);
+	popStyle();
+}
+
+//**********Classes***********
 
 final PVector G = new PVector(0,1);
 
 abstract class GameObject 
 {
 	float x, y;
+	float dx, dy;
+
 	PVector v;
 	PVector p;
 
- 	GameObject(float x, float y)
+ 	GameObject(float x, float y, float dx, float dy)
  	{
 		this.x = x;
  		this.y = y;
+ 		this.dx = dx;
+ 		this.dy = dy;
  	}
 
 	public abstract void upDraw();
@@ -43,12 +82,17 @@ abstract class GameObject
 
 class Man extends GameObject
 {
-
-	Man(float x, float y)
+	Man(float x, float y, float dx, float dy)
 	{
-		super(x,y);
+		super(x, y, dx, dy);
 	}
+
 	public void upDraw()
+	{
+
+	}
+
+	public void move(int dir)
 	{
 
 	}
