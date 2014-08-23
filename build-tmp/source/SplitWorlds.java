@@ -39,11 +39,7 @@ BufferedReader reader;
 
 public void setup() 
 {
-<<<<<<< HEAD
 	size(1200,600);
-=======
-	size(1200, 600);
->>>>>>> FETCH_HEAD
 	rectMode(CENTER);
 	initFisicaWorld();
 
@@ -133,7 +129,6 @@ public void drawLevel()
 				String[] ch = split(line, " ");
 
 				if(ch[0].equals("Platform"))
-<<<<<<< HEAD
 					new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
 				else if(ch[0].equals("Man"))
 					man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
@@ -143,17 +138,6 @@ public void drawLevel()
 					wExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
 				else if(ch[0].equals("mExit"))
 					mExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-=======
-						new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
-				if(ch[0].equals("Man"))
-						man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				if(ch[0].equals("Woman"))
-						wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				 if(ch[0].equals("MExit"))
-					new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				 if(ch[0].equals("WExit"))
-					new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
->>>>>>> FETCH_HEAD
 			} catch(IOException e) 
 			{
 			}
