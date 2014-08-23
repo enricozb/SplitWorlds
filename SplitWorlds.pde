@@ -19,10 +19,23 @@ BufferedReader reader;
 
 void setup() 
 {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+	size(1200, 800);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> origin/master
 	size(1200,800,OPENGL);
 	smooth(8);
 	size(1200,800);
 	size(1200, 800.0);
+<<<<<<< HEAD
+=======
+>>>>>>> 7afe23aa6331fb9b26a67ac2768884ddbf16b4b3
+>>>>>>> FETCH_HEAD
+>>>>>>> origin/master
 
 	rectMode(CENTER);
 	initFisicaWorld();
