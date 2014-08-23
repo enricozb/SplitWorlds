@@ -50,12 +50,9 @@ public void setup()
 
 public void draw() 
 {
-<<<<<<< HEAD
 	background(0);
 	checkForFinish();
-=======
 	background(60);
->>>>>>> f61b8f08f31c19a7bc5fd963f6bb1ae887808ae0
 	upDrawObjects();
 	
 }
@@ -140,17 +137,6 @@ public void drawLevel()
 				String[] ch = split(line, " ");
 
 				if(ch[0].equals("Platform"))
-<<<<<<< HEAD
-						new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
-				if(ch[0].equals("Man"))
-						man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				if(ch[0].equals("Woman"))
-						wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				 if(ch[0].equals("mExit"))
-					mExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				 if(ch[0].equals("wExit"))
-					wExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-=======
 					new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
 				else if(ch[0].equals("Man"))
 					man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
@@ -160,7 +146,6 @@ public void drawLevel()
 					wExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
 				else if(ch[0].equals("mExit"))
 					mExit = new Exit(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
->>>>>>> f61b8f08f31c19a7bc5fd963f6bb1ae887808ae0
 			} catch(IOException e) 
 			{
 			}
@@ -305,7 +290,7 @@ class Man extends GameObject
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
+    String[] appletArgs = new String[] { "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
