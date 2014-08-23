@@ -36,8 +36,7 @@ BufferedReader reader;
 
 public void setup() 
 {
-	size(800,800,OPENGL);
-	smooth(8);
+	size(1200,800);
 
 	rectMode(CENTER);
 	initFisicaWorld();
@@ -62,8 +61,8 @@ public void initFisicaWorld()
 	world.setGravity(0,1e3f);
 
 	divider = new Platform(width/2,height/2,20,height,true); //Remove later
-	man = new Man(width/4,height/2, 30, 30);
-	wman = new Man(3 * width/4,height/2, 30, 30);
+	man = new Man(width/4,height/2, 20, 20);
+	wman = new Man(3 * width/4,height/2, 20, 20);
 }
 
 //Key press events, simultaneous key presses working.
@@ -155,7 +154,6 @@ void drawLevel()
 		
 		}
 	}	
-
 }
 */
 
@@ -182,6 +180,14 @@ class Platform extends GameObject
 	{
 		super(x,y,sx,sy);
 		this.box.setStatic(isStatic);
+	}
+}
+
+class Exit extends Platform
+{
+	Exit(float x, float y, float sx, float sy)
+	{
+		super(x,y,sx,sy,false);
 	}
 }
 
