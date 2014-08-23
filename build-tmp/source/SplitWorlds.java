@@ -61,6 +61,7 @@ public void setup()
 
 public void draw() 
 {
+<<<<<<< HEAD
 	background(currentBackground);
 	if(state == LAUNCHER)
 	{
@@ -160,6 +161,12 @@ public void checkForChoice()
 			initTransition(man.box,fb);
 		}
 	}
+=======
+	checkForFinish();
+	background(60);
+	upDrawObjects();
+	checkForFinish();
+>>>>>>> FETCH_HEAD
 }
 
 public void checkForFinish()
@@ -178,6 +185,10 @@ public void initFisicaWorld()
 	world.setGrabbable(false);
 	world.setEdges();
 	world.setGravity(0, 1e3f);
+<<<<<<< HEAD
+=======
+
+>>>>>>> FETCH_HEAD
 }
 
 //Key press events, simultaneous key presses working.
@@ -226,6 +237,7 @@ public void drawLevel()
 	String line = null;
 	do 
 	{
+<<<<<<< HEAD
 		try
 		{
 			line = reader.readLine();
@@ -241,6 +253,27 @@ public void drawLevel()
 				wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
 		} catch(IOException e) 
 		{
+=======
+		if(isLevelLoaded != true ) 
+		{ 
+			try 
+			{
+				line = reader.readLine();
+				if(line == null)
+					break;
+				String[] ch = split(line, " ");
+
+				if(ch[0].equals("Platform"))
+					new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
+				else if(ch[0].equals("Man"))
+					man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+				else if(ch[0].equals("Woman"))
+					wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+
+			} catch(IOException e) 
+			{
+			}
+>>>>>>> FETCH_HEAD
 		}
 	}
 	while(line != null);	
