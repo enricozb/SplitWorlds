@@ -143,6 +143,8 @@ public void drawLevel()
 		}
 	}
 	while(line != null);	
+	man.box.setFriction(0);
+	wman.box.setFriction(0);
 	wman.box.setFill(204,42,65);
 	man.box.setFill(100,144,138);
 }
@@ -274,6 +276,9 @@ class Man extends GameObject
 		}
 		if(rPressed) box.setVelocity(sign * 100, box.getVelocityY());
 		if(lPressed) box.setVelocity(sign *-100, box.getVelocityY());
+		if(!lPressed && !rPressed && temp.size() != 0)
+			box.setVelocity(0,box.getVelocityY());
+
 	}
 };
   static public void main(String[] passedArgs) {
