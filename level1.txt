@@ -1,6 +1,2 @@
-Man 300 300 32 32
-WMan 800 550 32 32
-Platform 20 20 32 33 true 
-Platform 600 600 32 32 true
-mExit 200 550 32 32
-wExit 800 550 32 32
+Man 300 300 20 20
+Woman 800 550 20 20

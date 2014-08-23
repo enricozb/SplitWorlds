@@ -25,42 +25,149 @@ FWorld world;
 Man man;
 Man wman;
 
+int currentBackground = color(0);
+int newBackground = color(0);
 //ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
 boolean isLevelLoaded;
+
+int state;
+
+PVector transitionVector;
+float transitionTime;
+final float MAX_TRANSITION = 1;
+
+//STATE CONSTANTS
+final int LAUNCHER = 0;
+final int TRANSITION = 1;
+final int PLAYING = 2;
 
 BufferedReader reader;
 
 public void setup() 
 {
 	size(1200,600);
+	textAlign(CENTER,CENTER);
 	rectMode(CENTER);
 	initFisicaWorld();
 
+	state = LAUNCHER;
+	transitionTime = 0.0f;
 	reader = createReader("level" + level + ".txt");
 	level = 0;
-	drawLevel();
+	drawLauncher();
 }
 
 public void draw() 
 {
-	checkForFinish();
-	background(60);
-	upDrawObjects();
-	checkForFinish();
+	background(currentBackground);
+	if(state == LAUNCHER)
+	{
+		upDrawObjects();
+		checkForChoice();
+	}
+	else if(state == PLAYING)
+	{
+		upDrawObjects();
+		checkForFinish();
+	}
+	else if(state == TRANSITION)
+	{
+		upDrawObjects();
+		continueTransition();
+	}
+}
+
+public void clearWorld()
+{
+	world.clear();
+	world.setEdges();
+}
+
+public void continueTransition()
+{
+	float a = map(transitionTime, 0, MAX_TRANSITION, 0, width * 2);
+	pushStyle();
+	noStroke();
+	fill(newBackground);
+	rect(transitionVector.x, transitionVector.y, a,a);
+	popStyle();
+	transitionTime += .01f;
+
+	if(transitionTime >= MAX_TRANSITION)
+	{
+		currentBackground = newBackground;
+		state = PLAYING;
+		clearWorld();
+		drawLevel();
+		updateLevel();
+	}
+}
+
+public void updateLevel()
+{
+	reader = createReader("level" + level + ".txt");
+	background(0);
+	initFisicaWorld();
+	drawLevel();
+}
+
+public void initTransition(FBody a, FBody b)
+{
+	transitionTime = 0;
+	state = TRANSITION;
+	transitionVector = new PVector((a.getX() + b.getX())/2, (a.getY() + b.getY())/2);
+	newBackground = lerpColor(a.getFillColor(), b.getFillColor(), .5f);
+}
+
+public void drawLauncher()
+{
+	Platform ptemp;
+	man = new Man(width/2,lerp(0,height,.75f) - 20, 20, 20);
+
+	ptemp = new Platform(lerp(0,width,.25f),height/2,100,50,true);
+	ptemp.box.setName("PLAY");
+	ptemp.box.setFill(75,182,192);
+	ptemp = new Platform(lerp(0,width,.5f),height/2,100,50,true);
+	ptemp.box.setName("HELP");
+	ptemp.box.setFill(75,182,192);
+	ptemp = new Platform(lerp(0,width,.75f),height/2,100,50,true);
+	ptemp.box.setName("ABOUT");
+	ptemp.box.setFill(75,182,192);
+	new Platform(width/2, lerp(0,height,.75f),width,20,true);
+}
+
+//Method to check for user decisions on Launcher options
+public void checkForChoice()
+{
+	ArrayList<FBody> temp = man.box.getTouching();
+	for(FBody fb : temp)
+	{
+		if(fb.getName() == "PLAY")
+		{
+			state = TRANSITION;
+			initTransition(man.box,fb);
+		}
+		else if(fb.getName() == "HELP")
+		{
+			state = TRANSITION;
+			initTransition(man.box,fb);
+		}
+		else if(fb.getName() == "ABOUT")
+		{
+			state = TRANSITION;
+			initTransition(man.box,fb);
+		}
+	}
 }
 
 public void checkForFinish()
 {
 	if(man != null && wman != null && man.box.isTouchingBody(wman.box))
 	{
-		isLevelLoaded = false;
+		initTransition(man.box,wman.box);
 		level++;
-		reader = createReader("level" + level + ".txt");
-		background(0);
-		initFisicaWorld();
-		drawLevel();
 	}
 }
 
@@ -71,7 +178,6 @@ public void initFisicaWorld()
 	world.setGrabbable(false);
 	world.setEdges();
 	world.setGravity(0, 1e3f);
-
 }
 
 //Key press events, simultaneous key presses working.
@@ -105,9 +211,11 @@ public void keyReleased()
 
 public void upDrawObjects()
 {
-	man.move(-1);
-	wman.move(1);
-	world.step();
+
+	if(man != null)	 man.move(1);
+	if(wman != null) wman.move(-1);
+	if(state != TRANSITION)
+		world.step();
 	world.draw();
 }
 
@@ -115,10 +223,10 @@ public void upDrawObjects()
 
 public void drawLevel()
 {
-	
 	String line = null;
 	do 
 	{
+<<<<<<< HEAD
 		if(isLevelLoaded != true ) 
 		{ 
 			try 
@@ -140,13 +248,28 @@ public void drawLevel()
 			} catch(IOException e) 
 			{
 			}
+=======
+		try
+		{
+			line = reader.readLine();
+			if(line == null)
+				break;
+			String[] ch = split(line, " ");
+
+			if(ch[0].equals("Platform"))
+				new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
+			else if(ch[0].equals("Man"))
+				man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+			else if(ch[0].equals("Woman"))
+				wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+		} catch(IOException e) 
+		{
+>>>>>>> origin/master
 		}
 	}
 	while(line != null);	
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
-	wman.box.setFill(204,42,65);
-	man.box.setFill(100,144,138);
 }
 
 //**********Classes***********
@@ -165,6 +288,7 @@ abstract class GameObject
 		box = new FBox(sx, sy);
 		box.setPosition(x, y);
 		box.setNoStroke();
+		box.setFill(232,202,164);
 		world.add(box);
  	}
 }
@@ -192,7 +316,7 @@ class Spikes
 			mainBody.addBody(getTriangle(i,y,X_REPEAT_SIZE,sy));
 		}
 		mainBody.setName(SPIKE);
-
+		mainBody.setStatic(true);
 		world.add(mainBody);
 	}
 
@@ -259,7 +383,7 @@ class Man extends GameObject
 		{
 			if(uPressed) 
 			{
-				if(fb.getY() > box.getY() && !fb.isSensor())
+				if(fb.getY() > box.getY() && !fb.isSensor()) //FIX FOR CERTAIN CASES
 				{
 					box.addImpulse(0, -250);
 					break;
@@ -282,7 +406,7 @@ class Man extends GameObject
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "SplitWorlds" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
