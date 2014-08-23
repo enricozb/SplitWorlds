@@ -90,6 +90,7 @@ void updateLevel()
 {
 	reader = createReader("level" + level + ".txt");
 	background(0);
+<<<<<<< HEAD
 	initFisicaWorld();
 	drawLevel();
 }
@@ -141,6 +142,15 @@ void checkForChoice()
 			initTransition(man.box,fb);
 		}
 	}
+=======
+<<<<<<< HEAD
+	checkForFinish();
+	background(60);
+=======
+>>>>>>> 020ed3dfa9d19cc56af60089784711b16591083f
+	upDrawObjects();
+	checkForFinish();
+>>>>>>> FETCH_HEAD
 }
 
 void checkForFinish()
@@ -208,6 +218,7 @@ void drawLevel()
 	String line = null;
 	do 
 	{
+<<<<<<< HEAD
 		try
 		{
 			line = reader.readLine();
@@ -223,6 +234,33 @@ void drawLevel()
 				wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 		} catch(IOException e) 
 		{
+=======
+		if(isLevelLoaded != true ) 
+		{ 
+			try 
+			{
+				line = reader.readLine();
+				if(line == null)
+					break;
+				String[] ch = split(line, " ");
+
+				if(ch[0].equals("Platform"))
+					new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
+				else if(ch[0].equals("Man"))
+					man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				else if(ch[0].equals("Woman"))
+					wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+<<<<<<< HEAD
+				else if(ch[0].equals("wExit"))
+					wExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				else if(ch[0].equals("mExit"))
+					mExit = new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+=======
+>>>>>>> 020ed3dfa9d19cc56af60089784711b16591083f
+			} catch(IOException e) 
+			{
+			}
+>>>>>>> FETCH_HEAD
 		}
 	}
 	while(line != null);	
