@@ -44,6 +44,7 @@ void upDrawObjects()
 {
 
 }
+/*
 void drawLevel()
 {
 	String line;
@@ -88,6 +89,12 @@ boolean checkCollision(GameObject go1, GameObject go2) {
 	Rectangle r1 = new Rectangle((int) go1.x, (int) go1.y, (int) go1.sx, (int) go1.sy);
     Rectangle r2 = new Rectangle((int) go2.x, (int) go2.y, (int) go2.sx, (int) go2.sy);
     return r1.intersects(r2);
+}
+*/
+
+boolean doCollide(GameObject go1, GameObject go2)
+{
+	
 }
 
 void drawOverlay()
