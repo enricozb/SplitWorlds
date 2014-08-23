@@ -3,6 +3,9 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
+import java.awt.Rectangle; 
+import fisica.*; 
+
 import java.util.HashMap; 
 import java.util.ArrayList; 
 import java.io.File; 

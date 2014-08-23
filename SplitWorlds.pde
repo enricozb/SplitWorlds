@@ -1,7 +1,13 @@
 import java.awt.Rectangle;
+
+import fisica.*;
+
+FWorld world;
+
 Man man;
 Man wman;
-ArrayList<GameObject> gos = new ArrayList<GameObject>();
+
+//ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
 
@@ -41,13 +47,11 @@ void upDrawObjects()
 
 }
 
+/*
 void drawLevel()
 {
 	String line;
 	do {
-		line = reader.readLine();
-	}
-	while(line != null) {
 		try{
 			line = reader.readLine();
 		} catch(IOException e) {
@@ -63,23 +67,13 @@ void drawLevel()
 				case "Platform":
 					gos.add(new Platform());
 				case "ManW":
-					gos.
-
-
-
-				
+					gos.add(new Man());
 			}
-
-		}	
-		
-	}	
-
+		}
+	}
+	while(line != null);
 }
-boolean checkCollision(GameObject go1, GameObject go2) {
-	Rectangle r1 = new Rectangle((int) go1.x, (int) go1.y, (int) go1.sx, (int) go1.sy);
-    Rectangle r2 = new Rectangle((int) go2.x, (int) go2.y, (int) go2.sx, (int) go2.sy);
-    return r1.intersects(r2);
-}
+*/
 
 
 void drawOverlay()
@@ -96,18 +90,13 @@ final PVector G = new PVector(0,1);
 final PVector UP_VECTOR = new PVector(0,-5);
 abstract class GameObject 
 {
-	float x, y;
-	float sx, sy;
 
-	PVector v;
-	PVector p;
+	FBox box;
 
  	GameObject(float x, float y, float sx, float sy)
  	{
-		this.x = x;
- 		this.y = y;
- 		this.sx = sx;
- 		this.sy = sy;
+		box = FBox(sx,sy);
+		box.setPosition(x,y);
  	}
 
 	abstract void upDraw();
