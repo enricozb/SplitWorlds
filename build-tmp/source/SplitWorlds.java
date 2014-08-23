@@ -73,10 +73,12 @@ public void initFisicaWorld()
 
 	divider = new Platform(width/2,height/2,20,height,true); //Remove later
 	//new Platform(width/2,height,width,50,true);
+	/*
 	man = new Man(width/4, height/2, 20, 20);
 	wman = new Man(3 * width/4, height/2, 20, 20);
 	mExit = new Exit(width/4, 700, 20, 20);
 	wExit = new Exit(3 * width/4 + 20, 700, 20, 20);
+	*/
 }
 
 //Key press events, simultaneous key presses working.
