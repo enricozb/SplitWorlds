@@ -1,5 +1,4 @@
 import java.awt.Rectangle;
-
 import fisica.*;
 
 FWorld world;
@@ -19,26 +18,14 @@ BufferedReader reader;
 void setup() 
 {
 	size(800,800,OPENGL);
-	Fisica.init(this);
-
 	smooth(8);
 
 	rectMode(CENTER);
-	noStroke();
+	initFisicaWorld();
 
-	world = new FWorld();
-	world.setGrabbable(false);
-	world.setEdges();
-	world.setGravity(0,1e3);
-
-	divider = new Platform(width/2,height/2,20,height,true);
-
-	man = new Man(width/4,height/2,40,40);
-	wman = new Man(3 * width/4,height/2,40,40);
 	//reader = createReader("level00.txt");
 	//level = 0;
 	//drawLevel();
-
 }
 
 void draw() 
@@ -46,6 +33,21 @@ void draw()
 	background(0);
 	upDrawObjects();
 }
+
+void initFisicaWorld()
+{
+	Fisica.init(this);
+	world = new FWorld();
+	world.setGrabbable(false);
+	world.setEdges();
+	world.setGravity(0,1e3);
+
+	divider = new Platform(width/2,height/2,20,height,true); //Remove later
+	man = new Man(width/4,height/2, 30, 30);
+	wman = new Man(3 * width/4,height/2, 30, 30);
+}
+
+//Key press events, simultaneous key presses working.
 
 boolean rPressed = false;
 boolean lPressed = false;
@@ -137,19 +139,11 @@ void drawLevel()
 }
 */
 
-
-void drawOverlay()
-{
-	pushStyle();
-	fill(255);
-	rect(width/2,height/2,20,height);
-	popStyle();
-}
-
 //**********Classes***********
 
 final PVector G = new PVector(0,1);
 final PVector UP_VECTOR = new PVector(0,-5);
+
 abstract class GameObject 
 {
 	FBox box;
@@ -180,7 +174,7 @@ class Man extends GameObject
 
 	void move()
 	{
-		if(uPressed) this.box.addImpulse(0,-1000);
+		if(uPressed) this.box.addImpulse(0,-1e3);
 		if(rPressed) this.box.addForce(1e4,0);
 		if(lPressed) this.box.addForce(-1e4,0);
 	}
