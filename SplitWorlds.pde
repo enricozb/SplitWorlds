@@ -41,7 +41,7 @@ void upDrawObjects()
 void drawLevel()
 {
 	String line;
-	GameObject[][] grid
+	ArrayList<
 	do {
 		line = reader.readLine();
 	}
@@ -56,7 +56,11 @@ void drawLevel()
 		for(Sting go: ch) {
 			switch (go) {
 				case "Platform":
+
+
 				
+			}
+
 
 			}
 		}	
