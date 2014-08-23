@@ -1,7 +1,9 @@
+BufferedReader reader;
 void setup() 
 {
 	size(500,500,OPENGL);
 	smooth(8);
+	reader = createReader();
 }
 
 void draw() 
