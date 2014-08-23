@@ -7,15 +7,13 @@ void setup()
 {
 	size(800,800,OPENGL);
 	smooth(8);
-<<<<<<< HEAD
+
 	rectMode(CENTER);
 	noStroke();
-	//reader = createReader();
-=======
 	reader = createReader("level00.txt");
 	level = 0;
 	drawLevel();
->>>>>>> FETCH_HEAD
+
 }
 
 void draw() 
@@ -41,7 +39,7 @@ void upDrawObjects()
 void drawLevel()
 {
 	String line;
-	ArrayList<
+	ArrayList<GameObject> gos = new ArrayList<GameObject>();
 	do {
 		line = reader.readLine();
 	}
@@ -62,13 +60,18 @@ void drawLevel()
 			}
 
 
-			}
+			
 		}	
 
 	}
 		
 	
 
+}
+boolean checkCollision(GameObject go1, GameObject go2) {
+	Rectangle r1 = new Rectangle((int) go1.x, (int) go1.y, (int) go1.sx, (int) go1.sy);
+    Rectangle r2 = new Rectangle((int) go2.x, (int) go2.y, (int) go2.sx, (int) go2.sy);
+    return r1.intersects(r2);
 }
 
 void drawOverlay()
