@@ -55,6 +55,7 @@ void drawLevel()
 			line = null;
 		}
 		String[] ch = split(line, " ");
+		
 		for(Sting go: ch) 
 		{
 			switch (go) 
@@ -62,6 +63,7 @@ void drawLevel()
 				case "Platform":
 					gos.add(new Platform());
 				case "ManW":
+					gos.
 
 
 
@@ -95,17 +97,17 @@ final PVector UP_VECTOR = new PVector(0,-5);
 abstract class GameObject 
 {
 	float x, y;
-	float dx, dy;
+	float sx, sy;
 
 	PVector v;
 	PVector p;
 
- 	GameObject(float x, float y, float dx, float dy)
+ 	GameObject(float x, float y, float sx, float sy)
  	{
 		this.x = x;
  		this.y = y;
- 		this.dx = dx;
- 		this.dy = dy;
+ 		this.sx = sx;
+ 		this.sy = sy;
  	}
 
 	abstract void upDraw();
@@ -113,22 +115,22 @@ abstract class GameObject
 
 class Platform extends GameObject
 {
-	Platform(float x, float y, float dx, float dy)
+	Platform(float x, float y, float sx, float sy)
 	{
-		super(x,y,dx,dy);
+		super(x,y,sx,sy);
 	}
 
 	void upDraw()
 	{
-		rect(x,y,dx,dy);
+		rect(x,y,sx,sy);
 	}
 }
 
 class Man extends GameObject
 {
-	Man(float x, float y, float dx, float dy)
+	Man(float x, float y, float sx, float sy)
 	{
-		super(x, y, dx, dy);
+		super(x, y, sx, sy);
 	}
 
 	void upDraw()
