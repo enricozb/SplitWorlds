@@ -1,13 +1,22 @@
+Man m;
+Man w;
+
 void setup() 
 {
 	size(500,500,OPENGL);
 	smooth(8);
+	
 }
 
 void draw() 
 {
 	upDrawObjects();
-	overlay();
+	drawOverlay();
+}
+
+void drawOverlay()
+{
+
 }
 
 void keyPressed()
