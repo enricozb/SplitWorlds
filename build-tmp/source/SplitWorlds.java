@@ -39,7 +39,7 @@ BufferedReader reader;
 
 public void setup() 
 {
-	size(1200,800);
+	size(1200, 800.0f);
 
 	rectMode(CENTER);
 	initFisicaWorld();
@@ -70,14 +70,14 @@ public void initFisicaWorld()
 	world = new FWorld();
 	world.setGrabbable(false);
 	world.setEdges();
-	world.setGravity(0,1e3f);
+	world.setGravity(0, 1e3f);
 
 	divider = new Platform(width/2,height/2,20,height,true); //Remove later
 	//new Platform(width/2,height,width,50,true);
-	man = new Man(width/4,height/2, 20, 20);
-	wman = new Man(3 * width/4,height/2, 20, 20);
-	mExit = new Exit(width/4,700, 20, 20);
-	wExit = new Exit(3 * width/4 + 20,700, 20, 20);
+	man = new Man(width/4, height/2, 20, 20);
+	wman = new Man(3 * width/4, height/2, 20, 20);
+	mExit = new Exit(width/4, 700, 20, 20);
+	wExit = new Exit(3 * width/4 + 20, 700, 20, 20);
 }
 
 //Key press events, simultaneous key presses working.
@@ -191,8 +191,8 @@ abstract class GameObject
 
  	GameObject(float x, float y, float sx, float sy)
  	{
-		box = new FBox(sx,sy);
-		box.setPosition(x,y);
+		box = new FBox(sx, sy);
+		box.setPosition(x, y);
 		world.add(box);
  	}
 }
@@ -201,7 +201,7 @@ class Platform extends GameObject
 {
 	Platform(float x, float y, float sx, float sy, boolean isStatic)
 	{
-		super(x,y,sx,sy);
+		super(x, y, sx, sy);
 		this.box.setStatic(isStatic);
 	}
 };
@@ -210,7 +210,7 @@ class Exit extends Platform
 {
 	Exit(float x, float y, float sx, float sy)
 	{
-		super(x,y,sx,sy,true);
+		super(x, y, sx, sy, true);
 		box.setSensor(true);
 		box.setFillColor(color(255,0,0));
 	}
@@ -221,11 +221,11 @@ class Door extends Platform
 	FBox buttonBox;
 	Door(float x, float y, float bx, float by, float sx, float sy, float bsx, float bsy)
 	{
-		super(x,y,sx,sy,true);
-		buttonBox = new FBox(bsx,bsy);
-		buttonBox.setPosition(bx,by);
+		super(x, y, sx, sy, true);
+		buttonBox = new FBox(bsx, bsy);
+		buttonBox.setPosition(bx, by);
 		buttonBox.setSensor(true);
-		buttonBox.setFill(color(0,255,0));
+		buttonBox.setFill(color(0, 255, 0));
 		world.add(buttonBox);
 	}
 };
@@ -246,13 +246,13 @@ class Man extends GameObject
 			{
 				if(fb.getY() > box.getY() && !fb.isSensor())
 				{
-					box.addImpulse(0,-250);
+					box.addImpulse(0, -250);
 					break;
 				}
 			}
 		}
-		if(rPressed) box.setVelocity(100,box.getVelocityY());
-		if(lPressed) box.setVelocity(-100,box.getVelocityY());
+		if(rPressed) box.setVelocity(100, box.getVelocityY());
+		if(lPressed) box.setVelocity(-100, box.getVelocityY());
 	}
 };
   static public void main(String[] passedArgs) {
