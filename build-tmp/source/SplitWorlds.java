@@ -27,6 +27,13 @@ Platform divider;
 Man man;
 Man wman;
 
+<<<<<<< HEAD
+=======
+Exit mExit;
+Exit wExit;
+
+//ArrayList<GameObject> gos = new ArrayList<GameObject>();
+>>>>>>> b8644d305fc47899c8558ab444be694d3a9f1c28
 
 float level;
 boolean isLevelLoaded;
@@ -35,8 +42,12 @@ BufferedReader reader;
 
 public void setup() 
 {
+<<<<<<< HEAD
 	size(1200,800,OPENGL);
 	smooth(8);
+=======
+	size(1200,800);
+>>>>>>> b8644d305fc47899c8558ab444be694d3a9f1c28
 
 	rectMode(CENTER);
 	initFisicaWorld();
@@ -50,6 +61,15 @@ public void draw()
 {
 	background(0);
 	upDrawObjects();
+	if(checkForFinish())
+	{
+		//pass
+	}
+}
+
+public boolean checkForFinish()
+{
+	return man.box.isTouchingBody(mExit.box) && wman.box.isTouchingBody(wExit.box);
 }
 
 public void initFisicaWorld()
@@ -61,8 +81,11 @@ public void initFisicaWorld()
 	world.setGravity(0,1e3f);
 
 	divider = new Platform(width/2,height/2,20,height,true); //Remove later
-	man = new Man(width/4,height/2, 30, 30);
-	wman = new Man(3 * width/4,height/2, 30, 30);
+	//new Platform(width/2,height,width,50,true);
+	man = new Man(width/4,height/2, 20, 20);
+	wman = new Man(3 * width/4,height/2, 20, 20);
+	mExit = new Exit(width/4,700, 20, 20);
+	wExit = new Exit(3 * width/4 + 20,700, 20, 20);
 }
 
 //Key press events, simultaneous key presses working.
@@ -101,6 +124,7 @@ public void upDrawObjects()
 	world.step();
 	world.draw();
 }
+<<<<<<< HEAD
 
 // Format : ClassName xpos ypos sx sy
 public void drawLevel()
@@ -121,6 +145,46 @@ public void drawLevel()
 					// if(ch[0].equals("Exit"))
 					// 		new Exit(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 			} catch(IOException e) {
+=======
+/*
+void drawLevel()
+{
+	String line;
+	do 
+	{
+		try
+		{
+			if(isLevelLoaded != true) 
+			{ 
+				String line;
+				do 
+				{
+					line = reader.readLine();
+				}
+				String[] ch = split(line, " ");
+				
+				for(Sting go: ch) 
+				{
+					switch (go) 
+					{
+						case "Platform":
+							gos.add(new Platform());
+						case "ManW":
+							gos.add(new Man());
+					}
+				}
+			}
+		}
+	}
+	while(line != null);
+		while(line != null) 
+		{
+			try
+			{
+				line = reader.readLine();
+			} catch(IOException e) 
+			{
+>>>>>>> b8644d305fc47899c8558ab444be694d3a9f1c28
 				e.printStackTrace();
 				line = null;
 			} catch(NullPointerException e) {
@@ -156,7 +220,31 @@ class Platform extends GameObject
 		super(x,y,sx,sy);
 		this.box.setStatic(isStatic);
 	}
-}
+};
+
+class Exit extends Platform
+{
+	Exit(float x, float y, float sx, float sy)
+	{
+		super(x,y,sx,sy,true);
+		box.setSensor(true);
+		box.setFillColor(color(255,0,0));
+	}
+};
+
+class Door extends Platform
+{
+	FBox buttonBox;
+	Door(float x, float y, float bx, float by, float sx, float sy, float bsx, float bsy)
+	{
+		super(x,y,sx,sy,true);
+		buttonBox = new FBox(bsx,bsy);
+		buttonBox.setPosition(bx,by);
+		buttonBox.setSensor(true);
+		buttonBox.setFill(color(0,255,0));
+		world.add(buttonBox);
+	}
+};
 
 class Man extends GameObject
 {
@@ -167,13 +255,24 @@ class Man extends GameObject
 
 	public void move()
 	{
-		if(uPressed) this.box.addImpulse(0,-1e3f);
-		if(rPressed) this.box.addForce(1e4f,0);
-		if(lPressed) this.box.addForce(-1e4f,0);
+		if(uPressed) 
+		{
+			ArrayList<FBody> temp = box.getTouching();
+			for(FBody fb : temp)
+			{
+				if(fb.getY() > box.getY() && !fb.isSensor())
+				{
+					box.addImpulse(0,-250);
+					break;
+				}
+			}
+		}
+		if(rPressed) box.setVelocity(100,box.getVelocityY());
+		if(lPressed) box.setVelocity(-100,box.getVelocityY());
 	}
-}
+};
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "SplitWorlds" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
