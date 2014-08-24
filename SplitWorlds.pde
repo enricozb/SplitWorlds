@@ -64,6 +64,15 @@ void draw()
 	}
 }
 
+void initFisicaWorld()
+{
+	Fisica.init(this);
+	world = new FWorld();
+	world.setGrabbable(false);
+	world.setEdges();
+	world.setGravity(0, 1e3);
+}
+
 void clearWorld()
 {
 	world.clear();
@@ -84,18 +93,8 @@ void continueTransition()
 	{
 		currentBackground = newBackground;
 		state = PLAYING;
-		clearWorld();
-		drawLevel();
 		updateLevel();
 	}
-}
-
-void updateLevel()
-{
-	reader = createReader("level" + level + ".txt");
-	background(255);
-	initFisicaWorld();
-	drawLevel();
 }
 
 void initTransition(FBody a, FBody b)
@@ -156,15 +155,6 @@ void checkForFinish()
 	}
 }
 
-void initFisicaWorld()
-{
-	Fisica.init(this);
-	world = new FWorld();
-	world.setGrabbable(false);
-	world.setEdges();
-	world.setGravity(0, 1e3);
-}
-
 //Key press events, simultaneous key presses working.
 
 boolean rPressed = false;
@@ -219,17 +209,15 @@ void upDrawObjects()
 
 // Format : ClassName xpos ypos sx sy
 
-public void mouseClicked() {
-	for(GameObject go : gos) {
 
-		println(go.getClass().getName().replace("SplitWorlds$", "") + " " + go.box.getX() + " " + go.box.getY() + " " + go.box.getWidth() + " " + go.box.getHeight());
-	}
-	println( "Man" + " " + man.box.getX() + " " + man.box.getY() + " " + man.box.getWidth() + " " + man.box.getHeight());
-	println("Woman" + " " + wman.box.getX() + " " + wman.box.getY() + " " + wman.box.getWidth() + " " + wman.box.getHeight());
 
-	println("END");
+void updateLevel()
+{
+	reader = createReader("level" + level + ".txt");
+	background(255);
+	clearWorld();
+	drawLevel();
 }
-
 
 void drawLevel()
 {
@@ -261,7 +249,7 @@ void drawLevel()
 			}
 		}
 	}
-	while(line != null);	
+	while(line != null);
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
 
@@ -311,7 +299,6 @@ class Spikes extends GameObject
 		mainBody.setName(SPIKE);
 		mainBody.setStatic(true);
 		world.add(mainBody);
-		
 	}
 
 	FPoly getTriangle(float x, float y, float sx, float sy)

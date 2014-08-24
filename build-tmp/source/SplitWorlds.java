@@ -83,6 +83,15 @@ public void draw()
 	}
 }
 
+public void initFisicaWorld()
+{
+	Fisica.init(this);
+	world = new FWorld();
+	world.setGrabbable(false);
+	world.setEdges();
+	world.setGravity(0, 1e3f);
+}
+
 public void clearWorld()
 {
 	world.clear();
@@ -103,18 +112,8 @@ public void continueTransition()
 	{
 		currentBackground = newBackground;
 		state = PLAYING;
-		clearWorld();
-		drawLevel();
 		updateLevel();
 	}
-}
-
-public void updateLevel()
-{
-	reader = createReader("level" + level + ".txt");
-	background(255);
-	initFisicaWorld();
-	drawLevel();
 }
 
 public void initTransition(FBody a, FBody b)
@@ -175,15 +174,6 @@ public void checkForFinish()
 	}
 }
 
-public void initFisicaWorld()
-{
-	Fisica.init(this);
-	world = new FWorld();
-	world.setGrabbable(false);
-	world.setEdges();
-	world.setGravity(0, 1e3f);
-}
-
 //Key press events, simultaneous key presses working.
 
 boolean rPressed = false;
@@ -238,6 +228,16 @@ public void upDrawObjects()
 
 // Format : ClassName xpos ypos sx sy
 
+
+
+public void updateLevel()
+{
+	reader = createReader("level" + level + ".txt");
+	background(255);
+	clearWorld();
+	drawLevel();
+}
+
 public void drawLevel()
 {
 	String line = null;
@@ -268,7 +268,7 @@ public void drawLevel()
 			}
 		}
 	}
-	while(line != null);	
+	while(line != null);
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
 
@@ -318,7 +318,6 @@ class Spikes extends GameObject
 		mainBody.setName(SPIKE);
 		mainBody.setStatic(true);
 		world.add(mainBody);
-		
 	}
 
 	public FPoly getTriangle(float x, float y, float sx, float sy)
