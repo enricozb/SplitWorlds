@@ -59,7 +59,7 @@ public void setup()
 	state = LAUNCHER;
 	transitionTime = 0.0f;
 	reader = createReader("level" + level + ".txt");
-	level = 0;
+	level = 3;
 	drawLauncher();
 }
 
@@ -187,6 +187,18 @@ public void checkForFinish()
 	}
 }
 
+<<<<<<< HEAD
+=======
+public void initFisicaWorld()
+{
+	Fisica.init(this);
+	world = new FWorld();
+	world.setGrabbable(true);
+	world.setEdges();
+	world.setGravity(0, 1e3f);
+}
+
+>>>>>>> FETCH_HEAD
 //Key press events, simultaneous key presses working.
 
 boolean rPressed = false;
@@ -262,6 +274,24 @@ public void updateLevel()
 	drawLevel();
 }
 
+public void mouseClicked() {
+	for(GameObject go : gos) {
+
+		println(go.getClass().getName().replace("SplitWorlds$", "") + " " + go.box.getX() + " " + go.box.getY() + " " + go.box.getWidth() + " " + go.box.getHeight());
+	}
+
+	println( "Man" + " " + man.box.getX() + " " + man.box.getY() + " " + man.box.getWidth() + " " + man.box.getHeight());
+	try {
+	println("Woman" + " " + wman.box.getX() + " " + wman.box.getY() + " " + wman.box.getWidth() + " " + wman.box.getHeight());
+		
+	}
+	catch(NullPointerException e)
+	{}
+
+	println("END");
+}
+
+
 public void drawLevel()
 {
 	String line = null;
@@ -275,17 +305,16 @@ public void drawLevel()
 				if(line == null)
 					break;
 				String[] ch = split(line, " ");
-
 				if(ch[0].equals("Platform"))
-					gos.add(new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5])));
+					gos.add(new Platform(PApplet.parseInt(ch[1]),PApplet.parseInt(ch[2]),PApplet.parseInt(ch[3]),PApplet.parseInt(ch[4]), PApplet.parseBoolean(ch[5])));
 				else if(ch[0].equals("Spikes"))
-					gos.add(new Spikes(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4])));
+					gos.add(new Spikes(PApplet.parseInt(ch[1]),PApplet.parseInt(ch[2]),PApplet.parseInt(ch[3]),PApplet.parseInt(ch[4])));
 				else if(ch[0].equals("Moving"))
-					gos.add(new MovingPlatform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]),PApplet.parseFloat(ch[5]),PApplet.parseFloat(ch[6]),PApplet.parseFloat(ch[7])));
+					gos.add(new MovingPlatform(PApplet.parseInt(ch[1]),PApplet.parseInt(ch[2]),PApplet.parseInt(ch[3]),PApplet.parseInt(ch[4]),PApplet.parseInt(ch[5]),PApplet.parseInt(ch[6]),PApplet.parseInt(ch[7])));
 				else if(ch[0].equals("Man"))
-					man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+					man = new Man(PApplet.parseInt(ch[1]),PApplet.parseInt(ch[2]),PApplet.parseInt(ch[3]),PApplet.parseInt(ch[4]));
 				else if(ch[0].equals("Woman"))
-					wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
+					wman = new Man(PApplet.parseInt(ch[1]),PApplet.parseInt(ch[2]),PApplet.parseInt(ch[3]),PApplet.parseInt(ch[4]));
 
 			} catch(IOException e)
 			{
@@ -477,7 +506,7 @@ class Man extends GameObject
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
+    String[] appletArgs = new String[] { "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Spikes 160 590 130 20
 Spikes 840 590 500 20
 Platform 23 32 32 32 true
@@ -7,3 +8,8 @@ Platform 100 100 50 32 true
 Platform 0 0 50 32 true
 Woman 500 500 20 20
 Man 25 25 20 20 
+=======
+Man 1155.0 550 20.0 20.0
+Woman 42 550 20.0 20.0
+
+>>>>>>> FETCH_HEAD

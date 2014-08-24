@@ -40,7 +40,7 @@ void setup()
 	state = LAUNCHER;
 	transitionTime = 0.0;
 	reader = createReader("level" + level + ".txt");
-	level = 0;
+	level = 3;
 	drawLauncher();
 }
 
@@ -168,6 +168,18 @@ void checkForFinish()
 	}
 }
 
+<<<<<<< HEAD
+=======
+void initFisicaWorld()
+{
+	Fisica.init(this);
+	world = new FWorld();
+	world.setGrabbable(true);
+	world.setEdges();
+	world.setGravity(0, 1e3);
+}
+
+>>>>>>> FETCH_HEAD
 //Key press events, simultaneous key presses working.
 
 boolean rPressed = false;
@@ -236,11 +248,31 @@ void upDrawObjects()
 	world.draw();
 }
 
+<<<<<<< HEAD
 void updateLevel()
 {
 	reader = createReader("level" + level + ".txt");
 	clearWorld();
 	drawLevel();
+=======
+// Format : ClassName xpos ypos sx sy
+
+public void mouseClicked() {
+	for(GameObject go : gos) {
+
+		println(go.getClass().getName().replace("SplitWorlds$", "") + " " + go.box.getX() + " " + go.box.getY() + " " + go.box.getWidth() + " " + go.box.getHeight());
+	}
+
+	println( "Man" + " " + man.box.getX() + " " + man.box.getY() + " " + man.box.getWidth() + " " + man.box.getHeight());
+	try {
+	println("Woman" + " " + wman.box.getX() + " " + wman.box.getY() + " " + wman.box.getWidth() + " " + wman.box.getHeight());
+		
+	}
+	catch(NullPointerException e)
+	{}
+
+	println("END");
+>>>>>>> FETCH_HEAD
 }
 
 void drawLevel()
@@ -256,17 +288,16 @@ void drawLevel()
 				if(line == null)
 					break;
 				String[] ch = split(line, " ");
-
 				if(ch[0].equals("Platform"))
-					gos.add(new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5])));
+					gos.add(new Platform(int(ch[1]),int(ch[2]),int(ch[3]),int(ch[4]), boolean(ch[5])));
 				else if(ch[0].equals("Spikes"))
-					gos.add(new Spikes(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4])));
+					gos.add(new Spikes(int(ch[1]),int(ch[2]),int(ch[3]),int(ch[4])));
 				else if(ch[0].equals("Moving"))
-					gos.add(new MovingPlatform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]),float(ch[5]),float(ch[6]),float(ch[7])));
+					gos.add(new MovingPlatform(int(ch[1]),int(ch[2]),int(ch[3]),int(ch[4]),int(ch[5]),int(ch[6]),int(ch[7])));
 				else if(ch[0].equals("Man"))
-					man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+					man = new Man(int(ch[1]),int(ch[2]),int(ch[3]),int(ch[4]));
 				else if(ch[0].equals("Woman"))
-					wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+					wman = new Man(int(ch[1]),int(ch[2]),int(ch[3]),int(ch[4]));
 
 			} catch(IOException e)
 			{
