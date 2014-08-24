@@ -1,4 +1,23 @@
+<<<<<<< HEAD
 Platform 100 100 20 20 true
 Spikes 200 200 200 20
 Man 300 300 20 20
 Woman 800 550 20 20
+=======
+<<<<<<< HEAD
+=======
+Spikes 160 590 130 20
+Spikes 840 590 500 20
+<<<<<<< HEAD
+Moving 100 500 50 50 50 0 1
+=======
+Platform 23 32 32 32 true
+Platform 500 500 32 32 true 
+Platform 45 45 50 32 true
+Platform 100 100 50 32 true
+Platform 0 0 50 32 true
+>>>>>>> origin/master
+Man 500 500 0 20 20
+Woman 25 25 20 20
+>>>>>>> FETCH_HEAD
+>>>>>>> FETCH_HEAD

@@ -96,6 +96,7 @@ public void clearWorld()
 {
 	world.clear();
 	world.setEdges();
+	gos.clear();
 }
 
 public void continueTransition()

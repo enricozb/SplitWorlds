@@ -77,6 +77,7 @@ void clearWorld()
 {
 	world.clear();
 	world.setEdges();
+	gos.clear();
 }
 
 void continueTransition()
