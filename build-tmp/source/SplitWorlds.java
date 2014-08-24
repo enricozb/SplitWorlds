@@ -25,8 +25,8 @@ FWorld world;
 Man man;
 Man wman;
 
-int currentBackground = color(0);
-int newBackground = color(0);
+int currentBackground = color(255);
+int newBackground = color(255);
 //ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
@@ -108,7 +108,7 @@ public void continueTransition()
 public void updateLevel()
 {
 	reader = createReader("level" + level + ".txt");
-	background(0);
+	background(255);
 	initFisicaWorld();
 	drawLevel();
 }
@@ -226,7 +226,6 @@ public void drawLevel()
 	String line = null;
 	do 
 	{
-<<<<<<< HEAD
 		if(isLevelLoaded != true ) 
 		{ 
 			try 
@@ -238,6 +237,20 @@ public void drawLevel()
 
 				if(ch[0].equals("Platform"))
 					new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
+				else if(ch[0].equals("Platform(c)")) {
+					float width = abs(PApplet.parseFloat(ch[1]) - PApplet.parseFloat(ch[3]));
+					float height = abs(PApplet.parseFloat(ch[2]) - PApplet.parseFloat(ch[4]));
+					float x = (PApplet.parseFloat(ch[1]) + PApplet.parseFloat(ch[3])) / 2;
+					float y = (PApplet.parseFloat(ch[2]) + PApplet.parseFloat(ch[4])) / 2;
+					new Platform(x,y,width,height, PApplet.parseBoolean(ch[5]));
+				}
+				else if(ch[0].equals("Spikes(c)")) {
+					float width = abs(PApplet.parseFloat(ch[1]) - PApplet.parseFloat(ch[3]));
+					float height = abs(PApplet.parseFloat(ch[2]) - PApplet.parseFloat(ch[4]));
+					float x = (PApplet.parseFloat(ch[1]) + PApplet.parseFloat(ch[3])) / 2;
+					float y = (PApplet.parseFloat(ch[2]) + PApplet.parseFloat(ch[4])) / 2;
+					new Spikes(x,y,width,height);
+				}
 				else if(ch[0].equals("Man"))
 					man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
 				else if(ch[0].equals("Woman"))
@@ -248,23 +261,6 @@ public void drawLevel()
 			} catch(IOException e) 
 			{
 			}
-=======
-		try
-		{
-			line = reader.readLine();
-			if(line == null)
-				break;
-			String[] ch = split(line, " ");
-
-			if(ch[0].equals("Platform"))
-				new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5]));
-			else if(ch[0].equals("Man"))
-				man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-			else if(ch[0].equals("Woman"))
-				wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-		} catch(IOException e) 
-		{
->>>>>>> origin/master
 		}
 	}
 	while(line != null);	
@@ -288,7 +284,7 @@ abstract class GameObject
 		box = new FBox(sx, sy);
 		box.setPosition(x, y);
 		box.setNoStroke();
-		box.setFill(232,202,164);
+		box.setFill(63,63,63);
 		world.add(box);
  	}
 }
@@ -318,6 +314,7 @@ class Spikes
 		mainBody.setName(SPIKE);
 		mainBody.setStatic(true);
 		world.add(mainBody);
+		
 	}
 
 	public FPoly getTriangle(float x, float y, float sx, float sy)
@@ -398,15 +395,15 @@ class Man extends GameObject
 				//UNSUPPORTED
 			}
 		}
-		if(rPressed) box.setVelocity(sign * 100, box.getVelocityY());
-		if(lPressed) box.setVelocity(sign *-100, box.getVelocityY());
+		if(rPressed) box.setVelocity(sign * 150, box.getVelocityY());
+		if(lPressed) box.setVelocity(sign *-150, box.getVelocityY());
 		if(!lPressed && !rPressed && temp.size() != 0)
 			box.setVelocity(0,box.getVelocityY());
 
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
+    String[] appletArgs = new String[] { "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {

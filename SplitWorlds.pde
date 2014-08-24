@@ -6,8 +6,8 @@ FWorld world;
 Man man;
 Man wman;
 
-color currentBackground = color(0);
-color newBackground = color(0);
+color currentBackground = color(255);
+color newBackground = color(255);
 //ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
@@ -89,7 +89,7 @@ void continueTransition()
 void updateLevel()
 {
 	reader = createReader("level" + level + ".txt");
-	background(0);
+	background(255);
 	initFisicaWorld();
 	drawLevel();
 }
@@ -156,7 +156,7 @@ void initFisicaWorld()
 {
 	Fisica.init(this);
 	world = new FWorld();
-	world.setGrabbable(false);
+	world.setGrabbable(true);
 	world.setEdges();
 	world.setGravity(0, 1e3);
 }
@@ -207,7 +207,6 @@ void drawLevel()
 	String line = null;
 	do 
 	{
-<<<<<<< HEAD
 		if(isLevelLoaded != true ) 
 		{ 
 			try 
@@ -219,6 +218,20 @@ void drawLevel()
 
 				if(ch[0].equals("Platform"))
 					new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
+				else if(ch[0].equals("Platform(c)")) {
+					float width = abs(float(ch[1]) - float(ch[3]));
+					float height = abs(float(ch[2]) - float(ch[4]));
+					float x = (float(ch[1]) + float(ch[3])) / 2;
+					float y = (float(ch[2]) + float(ch[4])) / 2;
+					new Platform(x,y,width,height, boolean(ch[5]));
+				}
+				else if(ch[0].equals("Spikes(c)")) {
+					float width = abs(float(ch[1]) - float(ch[3]));
+					float height = abs(float(ch[2]) - float(ch[4]));
+					float x = (float(ch[1]) + float(ch[3])) / 2;
+					float y = (float(ch[2]) + float(ch[4])) / 2;
+					new Spikes(x,y,width,height);
+				}
 				else if(ch[0].equals("Man"))
 					man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("Woman"))
@@ -229,28 +242,15 @@ void drawLevel()
 			} catch(IOException e) 
 			{
 			}
-=======
-		try
-		{
-			line = reader.readLine();
-			if(line == null)
-				break;
-			String[] ch = split(line, " ");
-
-			if(ch[0].equals("Platform"))
-				new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
-			else if(ch[0].equals("Man"))
-				man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-			else if(ch[0].equals("Woman"))
-				wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-		} catch(IOException e) 
-		{
->>>>>>> origin/master
 		}
 	}
 	while(line != null);	
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
+
+}
+ void mousePressed() {
+	
 }
 
 //**********Classes***********
@@ -269,7 +269,7 @@ abstract class GameObject
 		box = new FBox(sx, sy);
 		box.setPosition(x, y);
 		box.setNoStroke();
-		box.setFill(232,202,164);
+		box.setFill(63,63,63);
 		world.add(box);
  	}
 }
@@ -299,6 +299,7 @@ class Spikes
 		mainBody.setName(SPIKE);
 		mainBody.setStatic(true);
 		world.add(mainBody);
+		
 	}
 
 	FPoly getTriangle(float x, float y, float sx, float sy)
@@ -379,8 +380,8 @@ class Man extends GameObject
 				//UNSUPPORTED
 			}
 		}
-		if(rPressed) box.setVelocity(sign * 100, box.getVelocityY());
-		if(lPressed) box.setVelocity(sign *-100, box.getVelocityY());
+		if(rPressed) box.setVelocity(sign * 150, box.getVelocityY());
+		if(lPressed) box.setVelocity(sign *-150, box.getVelocityY());
 		if(!lPressed && !rPressed && temp.size() != 0)
 			box.setVelocity(0,box.getVelocityY());
 
