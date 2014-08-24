@@ -29,8 +29,8 @@ FWorld world;
 Man man;
 Man wman;
 
-int currentBackground = color(255);
-int newBackground = color(255);
+int[][] colors = new int[10][5];
+
 ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
@@ -55,7 +55,7 @@ public void setup()
 	textAlign(CENTER,CENTER);
 	rectMode(CENTER);
 	initFisicaWorld();
-
+	initColors();
 	state = LAUNCHER;
 	transitionTime = 0.0f;
 	reader = createReader("level" + level + ".txt");
@@ -65,7 +65,7 @@ public void setup()
 
 public void draw() 
 {
-	background(currentBackground);
+	background(colors[level][0]);
 	if(state == LAUNCHER)
 	{
 		upDrawObjects();
@@ -81,6 +81,20 @@ public void draw()
 		upDrawObjects();
 		continueTransition();
 	}
+}
+
+public void initColors()
+{
+	colors[0] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[1] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[2] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[3] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[4] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[5] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[6] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[7] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[8] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[9] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
 }
 
 public void initFisicaWorld()
@@ -104,14 +118,13 @@ public void continueTransition()
 	float a = map(transitionTime, 0, MAX_TRANSITION, 0, width * 2);
 	pushStyle();
 	noStroke();
-	fill(newBackground);
+	fill(colors[level + 1][0]);
 	rect(transitionVector.x, transitionVector.y, a,a);
 	popStyle();
 	transitionTime += .01f;
 
 	if(transitionTime >= MAX_TRANSITION)
 	{
-		currentBackground = newBackground;
 		state = PLAYING;
 		updateLevel();
 	}
@@ -122,7 +135,6 @@ public void initTransition(FBody a, FBody b)
 	transitionTime = 0;
 	state = TRANSITION;
 	transitionVector = new PVector((a.getX() + b.getX())/2, (a.getY() + b.getY())/2);
-	newBackground = lerpColor(a.getFillColor(), b.getFillColor(), .5f);
 }
 
 public void drawLauncher()
@@ -222,7 +234,14 @@ public void updateWorld()
 				((Button) go).activate();
 		}
 	}
+	try 
+	{
 	world.step();
+	}
+	catch(AssertionError e)
+	{
+
+	}
 }
 
 public void upDrawObjects()
@@ -239,7 +258,6 @@ public void upDrawObjects()
 public void updateLevel()
 {
 	reader = createReader("level" + level + ".txt");
-	background(255);
 	clearWorld();
 	drawLevel();
 }
@@ -275,6 +293,8 @@ public void drawLevel()
 		}
 	}
 	while(line != null);
+	man.box.setFillColor(colors[level][4]);
+	wman.box.setFillColor(colors[level][3]);
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
 }
@@ -289,7 +309,7 @@ abstract class GameObject
 		box = new FBox(sx, sy);
 		box.setPosition(x, y);
 		box.setNoStroke();
-		box.setFill(63,63,63);
+		box.setFillColor(colors[level][1]);
 		world.add(box);
  	}
 }

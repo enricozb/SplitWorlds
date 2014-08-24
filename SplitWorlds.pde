@@ -64,6 +64,20 @@ void draw()
 	}
 }
 
+void initColors()
+{
+	colors[0] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[1] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[2] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[3] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[4] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[5] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[6] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[7] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[8] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[9] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+}
+
 void initFisicaWorld()
 {
 	Fisica.init(this);
@@ -85,7 +99,7 @@ void continueTransition()
 	float a = map(transitionTime, 0, MAX_TRANSITION, 0, width * 2);
 	pushStyle();
 	noStroke();
-	fill(colors[levels + 1][0]);
+	fill(colors[level + 1][0]);
 	rect(transitionVector.x, transitionVector.y, a,a);
 	popStyle();
 	transitionTime += .01;
@@ -201,7 +215,14 @@ void updateWorld()
 				((Button) go).activate();
 		}
 	}
+	try 
+	{
 	world.step();
+	}
+	catch(AssertionError e)
+	{
+
+	}
 }
 
 void upDrawObjects()
@@ -253,6 +274,8 @@ void drawLevel()
 		}
 	}
 	while(line != null);
+	man.box.setFillColor(colors[level][4]);
+	wman.box.setFillColor(colors[level][3]);
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
 }
@@ -267,7 +290,7 @@ abstract class GameObject
 		box = new FBox(sx, sy);
 		box.setPosition(x, y);
 		box.setNoStroke();
-		box.setFill(63,63,63);
+		box.setFillColor(colors[level][1]);
 		world.add(box);
  	}
 }
