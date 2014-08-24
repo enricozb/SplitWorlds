@@ -267,7 +267,7 @@ public void drawLevel()
 		}
 	}
 	while(line != null);	
-	gos.add(new MovingPlatform(100,100,50,50,100,100,1));
+	gos.add(new MovingPlatform(100,500,50,50,50,0,1));
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
 
@@ -347,7 +347,7 @@ class MovingPlatform extends Platform
 		super(x,y,sx,sy,true);
 		box.setName(MOVINGPLATFORM);
 		moveTime = 0;
-		this.speed = 0;
+		this.speed = speed;
 		this.xoff = xoff;
 		this.yoff = yoff;
 		ix = x;
@@ -355,7 +355,7 @@ class MovingPlatform extends Platform
 	}
 	public void move()
 	{
-		box.setPosition(ix + (xoff - ix) * sin(moveTime), iy + (yoff - iy) * sin(moveTime));
+		box.setPosition(ix + (xoff) * sin(radians(moveTime)), iy + (yoff) * sin(radians(moveTime)));
 		moveTime += speed;
 	}
 };
