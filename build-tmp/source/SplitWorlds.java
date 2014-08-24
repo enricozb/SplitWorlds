@@ -178,10 +178,9 @@ public void checkForFinish()
 
 public void initFisicaWorld()
 {
-	gos.clear();
 	Fisica.init(this);
 	world = new FWorld();
-	world.setGrabbable(true);
+	world.setGrabbable(false);
 	world.setEdges();
 	world.setGravity(0, 1e3f);
 }
@@ -256,12 +255,14 @@ public void drawLevel()
 
 				if(ch[0].equals("Platform"))
 					gos.add(new Platform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]), PApplet.parseBoolean(ch[5])));
+				else if(ch[0].equals("Spikes"))
+					gos.add(new Spikes(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4])));
+				else if(ch[0].equals("Moving"))
+					gos.add(new MovingPlatform(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]),PApplet.parseFloat(ch[5]),PApplet.parseFloat(ch[6]),PApplet.parseFloat(ch[7])));
 				else if(ch[0].equals("Man"))
 					man = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
-				else if(ch[0].equals("Spikes"))
-					gos.add(new Spikes(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4])));
 
 			} catch(IOException e) 
 			{
@@ -272,16 +273,6 @@ public void drawLevel()
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
 
-}
- public void mouseClicked() {
-	for(GameObject go : gos) {
-
-		println(go.getClass().getName().replace("SplitWorlds$", "") + " " + go.box.getX() + " " + go.box.getY() + " " + go.box.getWidth() + " " + go.box.getHeight());
-	}
-	println( "Man" + " " + man.box.getX() + " " + man.box.getY() + " " + man.box.getWidth() + " " + man.box.getHeight());
-	println("Woman" + " " + wman.box.getX() + " " + wman.box.getY() + " " + wman.box.getWidth() + " " + wman.box.getHeight());
-
-	println("END");
 }
 
 //**********Classes***********
@@ -350,48 +341,53 @@ class MovingPlatform extends Platform
 	float yoff;
 	float ix;
 	float iy;
+	boolean active;
+
 	MovingPlatform(float x, float y, float sx, float sy, float xoff, float yoff, float speed)
 	{
 		super(x,y,sx,sy,true);
 		box.setName(MOVINGPLATFORM);
 		moveTime = 0;
-		this.speed = 0;
+		this.speed = speed;
 		this.xoff = xoff;
 		this.yoff = yoff;
 		ix = x;
 		iy = y;
+		active = true;
 	}
+
 	public void move()
 	{
-		box.setPosition(ix + (xoff - ix) * sin(moveTime), iy + (yoff - iy) * sin(moveTime));
+		if(!active)
+			return;
+		box.setPosition(ix + (xoff) * sin(radians(moveTime)), iy + (yoff) * sin(radians(moveTime)));
 		moveTime += speed;
 	}
 };
 
-class Door extends Platform
+class Door extends GameObject
 {
-	FBox buttonBox;
-	boolean active;
+	MovingPlatform door;
+	boolean done;
 
-	Door(float x, float y, float sx, float sy, float bx, float by, float bsx, float bsy)
+	Door(float x, float y, float sx, float sy, float xoff, float yoff, float speed, float bx, float by, float bsx, float bsy)
 	{
-		super(x, y, sx, sy, true);
+		super(bx, by, bsx, bsy);
 		box.setFillColor(color(0,0,255));
+		box.setSensor(true);
 
-		buttonBox = new FBox(bsx, bsy);
-		buttonBox.setPosition(bx, by);
-		buttonBox.setSensor(true);
-		buttonBox.setStatic(true);
-		buttonBox.setFillColor(color(0, 255, 0));
-
-		buttonBox.setNoStroke();
-
-		world.add(buttonBox);
+		door = new MovingPlatform(x, y, sx, sy, xoff, yoff, speed);
+		door.active = false;
 	}
 
-	public void activate()
+	public void move()
 	{
-		buttonBox.setPosition(buttonBox.getX(),buttonBox.getY() + 1);
+		door.move();
+		if(door.moveTime >= PI/2)
+		{
+			door.active = false;
+			done = true;
+		}
 	}
 };
 
@@ -443,7 +439,7 @@ class Man extends GameObject
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "SplitWorlds" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
