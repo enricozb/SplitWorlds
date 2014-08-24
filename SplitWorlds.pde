@@ -160,7 +160,7 @@ void initFisicaWorld()
 {
 	Fisica.init(this);
 	world = new FWorld();
-	world.setGrabbable(true);
+	world.setGrabbable(false);
 	world.setEdges();
 	world.setGravity(0, 1e3);
 }
@@ -241,6 +241,8 @@ void drawLevel()
 					wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("Spikes"))
 					gos.add(new Spikes(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4])));
+				else if(ch[0].equals("Moving"))
+					gos.add(new MovingPlatform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]),float(ch[5]),float(ch[6]),float(ch[7])));
 
 			} catch(IOException e) 
 			{
@@ -248,13 +250,9 @@ void drawLevel()
 		}
 	}
 	while(line != null);	
-	gos.add(new MovingPlatform(100,500,50,50,50,0,1));
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
 
-}
- void mousePressed() {
-	
 }
 
 //**********Classes***********
