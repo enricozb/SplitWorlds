@@ -1,5 +1,6 @@
 Platform 70 540 28 28 true
 Platform 200 565 28 28 true
+<<<<<<< HEAD
 
 Platform 600 250 20 500 true
 
@@ -10,3 +11,8 @@ Spikes 160 590 130 20
 Spikes 840 590 500 20
 
 
+=======
+Woman 70 350 20 20
+Man 800 300 32 329 20
+Spikes 160 590 130 20
+>>>>>>> origin/master

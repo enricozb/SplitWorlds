@@ -1,14 +1,24 @@
 import java.awt.Rectangle;
 import fisica.*;
 
+final String SPIKE = "Spike";
+final String DOORBUTTON = "DoorButton";
+final String MOVINGPLATFORM ="mPlatform";
+
 FWorld world;
 
 Man man;
 Man wman;
 
+<<<<<<< HEAD
 color currentBackground = color(255);
 color newBackground = color(255);
 //ArrayList<GameObject> gos = new ArrayList<GameObject>();
+=======
+color currentBackground = color(0);
+color newBackground = color(0);
+ArrayList<GameObject> gos = new ArrayList<GameObject>();
+>>>>>>> origin/master
 
 int level;
 boolean isLevelLoaded;
@@ -190,13 +200,19 @@ void keyReleased()
 	}
 }
 
+void updateWorld()
+{
+	world.step();
+}
+
 void upDrawObjects()
 {
-
 	if(man != null)	 man.move(1);
 	if(wman != null) wman.move(-1);
 	if(state != TRANSITION)
-		world.step();
+	{
+		updateWorld();
+	}
 	world.draw();
 }
 
@@ -255,12 +271,6 @@ void drawLevel()
 
 //**********Classes***********
 
-final String SPIKE = "Spike";
-final String DOORBUTTON = "DoorButton";
-
-final PVector G = new PVector(0,1);
-final PVector UP_VECTOR = new PVector(0,-5);
-
 abstract class GameObject 
 {
 	FBox box;
@@ -283,13 +293,17 @@ class Platform extends GameObject
 	}
 };
 
-class Spikes
+class Spikes extends GameObject
 {
 	final float X_REPEAT_SIZE = 20;
 	FCompound mainBody;
 
 	Spikes(float x, float y, float sx, float sy)
 	{
+		super(x,y,sx,sy);
+		box.setSensor(true);
+		box.setNoFill();
+		box.setStatic(true);
 		mainBody = new FCompound();
 		int num = int(sx/X_REPEAT_SIZE);
 		for(float i = x - X_REPEAT_SIZE*num/2; i <= x + X_REPEAT_SIZE*num/2; i += X_REPEAT_SIZE)
@@ -310,6 +324,32 @@ class Spikes
 		ptemp.vertex(x, y - sy/2);
 		ptemp.setNoStroke();
 		return ptemp;
+	}
+};
+
+class MovingPlatform extends Platform
+{
+	float moveTime;
+	float speed;
+	float xoff;
+	float yoff;
+	float ix;
+	float iy;
+	MovingPlatform(float x, float y, float sx, float sy, float xoff, float yoff, float speed)
+	{
+		super(x,y,sx,sy,true);
+		moveTime = 0;
+		this.speed = 0;
+		this.xoff = xoff;
+		this.yoff = yoff;
+		ix = x;
+		iy = y;
+	}
+	void move()
+	{
+		box.setName(MOVINGPLATFORM);
+		box.setPosition(ix + (xoff - ix) * sin(speed), iy + (yoff - iy) * sin(speed));
+		moveTime += speed;
 	}
 };
 
