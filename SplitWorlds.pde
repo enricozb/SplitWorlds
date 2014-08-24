@@ -68,6 +68,7 @@ void clearWorld()
 {
 	world.clear();
 	world.setEdges();
+	gos.clear();
 }
 
 void continueTransition()
@@ -298,7 +299,7 @@ class Spikes extends GameObject
 		super(x,y,sx,sy);
 		box.setSensor(true);
 		box.setNoFill();
-		box.setStatic(false);
+		box.setStatic(true);
 		mainBody = new FCompound();
 		int num = int(sx/X_REPEAT_SIZE);
 		for(float i = x - X_REPEAT_SIZE*num/2; i <= x + X_REPEAT_SIZE*num/2; i += X_REPEAT_SIZE)
