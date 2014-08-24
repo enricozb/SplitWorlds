@@ -86,7 +86,7 @@ public void draw()
 public void clearWorld()
 {
 	world.clear();
-	world.setEdges();
+	world.setEdges(0, 0, width, height, currentBackground);
 	gos.clear();
 }
 
@@ -181,7 +181,7 @@ public void initFisicaWorld()
 	Fisica.init(this);
 	world = new FWorld();
 	world.setGrabbable(true);
-	world.setEdges();
+	world.setEdges(0, 0, width, height, currentBackground);
 	world.setGravity(0, 1e3f);
 }
 
@@ -240,6 +240,13 @@ public void upDrawObjects()
 // Format : ClassName xpos ypos sx sy
 
 public void mouseClicked() {
+	// if(keyPressed && key == 'z')
+	// {
+	// 	GameObject go = new GameObject(world.getBody(mouseX, mouseY));
+	// 	go.box.setX(100);
+	// 	go.box.setY(100);
+	// 	gos.add(go);
+	// }
 	for(GameObject go : gos) {
 
 		println(go.getClass().getName().replace("SplitWorlds$", "") + " " + go.box.getX() + " " + go.box.getY() + " " + go.box.getWidth() + " " + go.box.getHeight());
@@ -304,6 +311,10 @@ abstract class GameObject
 		box.setNoStroke();
 		box.setFill(63,63,63);
 		world.add(box);
+ 	}
+ 	GameObject(FBox box) {
+ 		this.box = box;
+ 		world.add(box);
  	}
 }
 
