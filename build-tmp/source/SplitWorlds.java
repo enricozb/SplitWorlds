@@ -177,7 +177,6 @@ public void checkForFinish()
 
 public void initFisicaWorld()
 {
-	gos.clear();
 	Fisica.init(this);
 	world = new FWorld();
 	world.setGrabbable(false);
@@ -274,19 +273,6 @@ public void drawLevel()
 	wman.box.setFriction(0);
 
 }
-<<<<<<< HEAD
-=======
- public void mouseClicked() {
-	for(GameObject go : gos) {
-
-		println(go.getClass().getName().replace("SplitWorlds$", "") + " " + go.box.getX() + " " + go.box.getY() + " " + go.box.getWidth() + " " + go.box.getHeight());
-	}
-	println( "Man" + " " + man.box.getX() + " " + man.box.getY() + " " + man.box.getWidth() + " " + man.box.getHeight());
-	println("Woman" + " " + wman.box.getX() + " " + wman.box.getY() + " " + wman.box.getWidth() + " " + wman.box.getHeight());
-
-	println("END");
-}
->>>>>>> FETCH_HEAD
 
 //**********Classes***********
 
@@ -322,7 +308,7 @@ class Spikes extends GameObject
 		super(x,y,sx,sy);
 		box.setSensor(true);
 		box.setNoFill();
-		box.setStatic(false);
+		box.setStatic(true);
 		mainBody = new FCompound();
 		int num = PApplet.parseInt(sx/X_REPEAT_SIZE);
 		for(float i = x - X_REPEAT_SIZE*num/2; i <= x + X_REPEAT_SIZE*num/2; i += X_REPEAT_SIZE)
@@ -452,7 +438,7 @@ class Man extends GameObject
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "SplitWorlds" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
