@@ -10,15 +10,9 @@ FWorld world;
 Man man;
 Man wman;
 
-<<<<<<< HEAD
 color currentBackground = color(255);
 color newBackground = color(255);
-//ArrayList<GameObject> gos = new ArrayList<GameObject>();
-=======
-color currentBackground = color(0);
-color newBackground = color(0);
 ArrayList<GameObject> gos = new ArrayList<GameObject>();
->>>>>>> origin/master
 
 int level;
 boolean isLevelLoaded;
@@ -240,27 +234,9 @@ void drawLevel()
 				String[] ch = split(line, " ");
 
 				if(ch[0].equals("Platform"))
-<<<<<<< HEAD
 					gos.add(new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5])));
-=======
-					new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
-				else if(ch[0].equals("Platform(c)")) {
-					float width = abs(float(ch[1]) - float(ch[3]));
-					float height = abs(float(ch[2]) - float(ch[4]));
-					float x = (float(ch[1]) + float(ch[3])) / 2;
-					float y = (float(ch[2]) + float(ch[4])) / 2;
-					new Platform(x,y,width,height, boolean(ch[5]));
-				}
-				else if(ch[0].equals("Spikes(c)")) {
-					float width = abs(float(ch[1]) - float(ch[3]));
-					float height = abs(float(ch[2]) - float(ch[4]));
-					float x = (float(ch[1]) + float(ch[3])) / 2;
-					float y = (float(ch[2]) + float(ch[4])) / 2;
-					new Spikes(x,y,width,height);
-				}
->>>>>>> FETCH_HEAD
 				else if(ch[0].equals("Man"))
-					gos.add(man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4])));
+					man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("Spikes"))
