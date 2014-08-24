@@ -1,2 +1,9 @@
-Man 300 300 20 20
-Woman 800 550 20 20
+Spikes 160 590 130 20
+Spikes 840 590 500 20
+Platform 23 32 32 32 true
+Platform 500 500 32 32 true 
+Platform 45 45 50 32 true
+Platform 100 100 50 32 true
+Platform 0 0 50 32 true
+Woman 500 500 20 20
+Man 25 25 20 20 

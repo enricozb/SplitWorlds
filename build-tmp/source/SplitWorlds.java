@@ -86,7 +86,7 @@ public void draw()
 public void initColors()
 {
 	colors[0] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[1] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[1] = new int[] {color(42,54,59),color(255,132,124),color(254,206,168),color(232,74,95),color(153,184,152)};
 	colors[2] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
 	colors[3] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
 	colors[4] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
@@ -119,12 +119,13 @@ public void continueTransition()
 	pushStyle();
 	noStroke();
 	fill(colors[level + 1][0]);
-	rect(transitionVector.x, transitionVector.y, a,a);
+	rect(transitionVector.x, transitionVector.y, a, a);
 	popStyle();
 	transitionTime += .01f;
 
 	if(transitionTime >= MAX_TRANSITION)
 	{
+		level++;
 		state = PLAYING;
 		updateLevel();
 	}
@@ -141,16 +142,16 @@ public void drawLauncher()
 {
 	Platform ptemp;
 	man = new Man(width/2,lerp(0,height,.75f) - 20, 20, 20);
-
+	man.box.setFillColor(colors[level][4]);
 	ptemp = new Platform(lerp(0,width,.25f),height/2,100,50,true);
 	ptemp.box.setName("PLAY");
-	ptemp.box.setFill(75,182,192);
+	ptemp.box.setFillColor(colors[level][1]);
 	ptemp = new Platform(lerp(0,width,.5f),height/2,100,50,true);
 	ptemp.box.setName("HELP");
-	ptemp.box.setFill(75,182,192);
+	ptemp.box.setFillColor(colors[level][1]);
 	ptemp = new Platform(lerp(0,width,.75f),height/2,100,50,true);
 	ptemp.box.setName("ABOUT");
-	ptemp.box.setFill(75,182,192);
+	ptemp.box.setFillColor(colors[level][1]);
 	new Platform(width/2, lerp(0,height,.75f),width,20,true);
 }
 
@@ -183,7 +184,6 @@ public void checkForFinish()
 	if(man != null && wman != null && man.box.isTouchingBody(wman.box))
 	{
 		initTransition(man.box,wman.box);
-		level++;
 	}
 }
 
@@ -287,7 +287,7 @@ public void drawLevel()
 				else if(ch[0].equals("Woman"))
 					wman = new Man(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]));
 
-			} catch(IOException e) 
+			} catch(IOException e)
 			{
 			}
 		}
@@ -369,7 +369,6 @@ class MovingPlatform extends Platform
 	MovingPlatform(float x, float y, float sx, float sy, float xoff, float yoff, float speed)
 	{
 		super(x,y,sx,sy,true);
-		box.setName(MOVINGPLATFORM);
 		moveTime = 0;
 		this.speed = speed;
 		this.xoff = xoff;
