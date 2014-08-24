@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+Spikes 160 590 130 20
+Spikes 840 590 500 20
+Platform 23 32 32 32 true
+Platform 500 500 32 32 true 
+Platform 45 45 50 32 true
+Platform 100 100 50 32 true
+Platform 0 0 50 32 true
+Woman 500 500 20 20
+Man 25 25 20 20 
+=======
 Spikes 160.0 590.0 130.0 20.0
 Spikes 840.0 590.0 500.0 20.0
 Platform 221.0 530.0 32.0 32.0 true
@@ -7,3 +18,4 @@ Platform 962.0 348.0 50.0 32.0 true
 Platform 816.0 436.0 50.0 32.0 true
 Man 32.566566 437.0882 20.0 20.0
 Woman 981.45496 321.04547 20.0 20.0
+>>>>>>> FETCH_HEAD

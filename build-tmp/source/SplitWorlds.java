@@ -29,8 +29,8 @@ FWorld world;
 Man man;
 Man wman;
 
-int currentBackground = color(255);
-int newBackground = color(255);
+int[][] colors = new int[10][5];
+
 ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
@@ -55,17 +55,17 @@ public void setup()
 	textAlign(CENTER,CENTER);
 	rectMode(CENTER);
 	initFisicaWorld();
-
+	initColors();
 	state = LAUNCHER;
 	transitionTime = 0.0f;
 	reader = createReader("level" + level + ".txt");
-	level = 3;
+	level = 0;
 	drawLauncher();
 }
 
 public void draw() 
 {
-	background(currentBackground);
+	background(colors[level][0]);
 	if(state == LAUNCHER)
 	{
 		upDrawObjects();
@@ -83,6 +83,20 @@ public void draw()
 	}
 }
 
+public void initColors()
+{
+	colors[0] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[1] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[2] = new int[] {color(42,54,59),color(255,132,124),color(254,206,168),color(232,74,95),color(153,184,152)};
+	colors[3] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[4] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[5] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[6] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[7] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[8] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	colors[9] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+}
+
 public void clearWorld()
 {
 	world.clear();
@@ -95,27 +109,17 @@ public void continueTransition()
 	float a = map(transitionTime, 0, MAX_TRANSITION, 0, width * 2);
 	pushStyle();
 	noStroke();
-	fill(newBackground);
-	rect(transitionVector.x, transitionVector.y, a,a);
+	fill(colors[level + 1][0]);
+	rect(transitionVector.x, transitionVector.y, a, a);
 	popStyle();
 	transitionTime += .01f;
 
 	if(transitionTime >= MAX_TRANSITION)
 	{
-		currentBackground = newBackground;
+		level++;
 		state = PLAYING;
-		clearWorld();
-		drawLevel();
 		updateLevel();
 	}
-}
-
-public void updateLevel()
-{
-	reader = createReader("level" + level + ".txt");
-	background(255);
-	initFisicaWorld();
-	drawLevel();
 }
 
 public void initTransition(FBody a, FBody b)
@@ -123,23 +127,22 @@ public void initTransition(FBody a, FBody b)
 	transitionTime = 0;
 	state = TRANSITION;
 	transitionVector = new PVector((a.getX() + b.getX())/2, (a.getY() + b.getY())/2);
-	newBackground = lerpColor(a.getFillColor(), b.getFillColor(), .5f);
 }
 
 public void drawLauncher()
 {
 	Platform ptemp;
 	man = new Man(width/2,lerp(0,height,.75f) - 20, 20, 20);
-
+	man.box.setFillColor(colors[level][4]);
 	ptemp = new Platform(lerp(0,width,.25f),height/2,100,50,true);
 	ptemp.box.setName("PLAY");
-	ptemp.box.setFill(75,182,192);
+	ptemp.box.setFillColor(colors[level][1]);
 	ptemp = new Platform(lerp(0,width,.5f),height/2,100,50,true);
 	ptemp.box.setName("HELP");
-	ptemp.box.setFill(75,182,192);
+	ptemp.box.setFillColor(colors[level][1]);
 	ptemp = new Platform(lerp(0,width,.75f),height/2,100,50,true);
 	ptemp.box.setName("ABOUT");
-	ptemp.box.setFill(75,182,192);
+	ptemp.box.setFillColor(colors[level][1]);
 	new Platform(width/2, lerp(0,height,.75f),width,20,true);
 }
 
@@ -172,7 +175,6 @@ public void checkForFinish()
 	if(man != null && wman != null && man.box.isTouchingBody(wman.box))
 	{
 		initTransition(man.box,wman.box);
-		level++;
 	}
 }
 
@@ -222,8 +224,24 @@ public void updateWorld()
 		{
 			((MovingPlatform) go).move();
 		}
+		if(go instanceof Door)
+		{
+			((Door) go).move();
+		}
+		if(go instanceof Button)
+		{
+			if(man.box.isTouchingBody(go.box) || wman.box.isTouchingBody(go.box))
+				((Button) go).activate();
+		}
 	}
+	try 
+	{
 	world.step();
+	}
+	catch(AssertionError e)
+	{
+
+	}
 }
 
 public void upDrawObjects()
@@ -237,8 +255,13 @@ public void upDrawObjects()
 	world.draw();
 }
 
+public void updateLevel()
+{
+	reader = createReader("level" + level + ".txt");
+	clearWorld();
+	drawLevel();
 // Format : ClassName xpos ypos sx sy
-
+}
 public void mouseClicked() {
 	// if(keyPressed && key == 'z')
 	// {
@@ -262,7 +285,6 @@ public void mouseClicked() {
 
 	println("END");
 }
-
 
 public void drawLevel()
 {
@@ -288,15 +310,16 @@ public void drawLevel()
 				else if(ch[0].equals("Woman"))
 					wman = new Man(PApplet.parseInt(ch[1]),PApplet.parseInt(ch[2]),PApplet.parseInt(ch[3]),PApplet.parseInt(ch[4]));
 
-			} catch(IOException e) 
+			} catch(IOException e)
 			{
 			}
 		}
 	}
-	while(line != null);	
+	while(line != null);
+	man.box.setFillColor(colors[level][4]);
+	wman.box.setFillColor(colors[level][3]);
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
-
 }
 
 //**********Classes***********
@@ -309,7 +332,7 @@ abstract class GameObject
 		box = new FBox(sx, sy);
 		box.setPosition(x, y);
 		box.setNoStroke();
-		box.setFill(63,63,63);
+		box.setFillColor(colors[level][1]);
 		world.add(box);
  	}
  	GameObject(FBox box) {
@@ -347,7 +370,6 @@ class Spikes extends GameObject
 		mainBody.setName(SPIKE);
 		mainBody.setStatic(true);
 		world.add(mainBody);
-		
 	}
 
 	public FPoly getTriangle(float x, float y, float sx, float sy)
@@ -374,7 +396,6 @@ class MovingPlatform extends Platform
 	MovingPlatform(float x, float y, float sx, float sy, float xoff, float yoff, float speed)
 	{
 		super(x,y,sx,sy,true);
-		box.setName(MOVINGPLATFORM);
 		moveTime = 0;
 		this.speed = speed;
 		this.xoff = xoff;
@@ -393,7 +414,22 @@ class MovingPlatform extends Platform
 	}
 };
 
-class Door extends GameObject
+class Button extends GameObject
+{
+	boolean active;
+	Button(float x, float y, float sx, float sy)
+	{
+		super(x, y, sx, sy);
+		box.setSensor(true);
+		box.setStatic(true);
+	}
+	public void activate()
+	{
+		active = true;
+	}
+};
+
+class Door extends Button
 {
 	MovingPlatform door;
 	boolean done;
@@ -402,16 +438,17 @@ class Door extends GameObject
 	{
 		super(bx, by, bsx, bsy);
 		box.setFillColor(color(0,0,255));
-		box.setSensor(true);
-
 		door = new MovingPlatform(x, y, sx, sy, xoff, yoff, speed);
-		door.active = false;
+		door.active = true;
 	}
 
 	public void move()
 	{
+		if(done || !active)
+			return;
+		door.active = true;
 		door.move();
-		if(door.moveTime >= PI/2)
+		if(door.moveTime >= 90)
 		{
 			door.active = false;
 			done = true;
@@ -467,7 +504,7 @@ class Man extends GameObject
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "SplitWorlds" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
