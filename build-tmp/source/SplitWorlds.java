@@ -211,6 +211,15 @@ public void updateWorld()
 		{
 			((MovingPlatform) go).move();
 		}
+		if(go instanceof Door)
+		{
+			((Door) go).move();
+		}
+		if(go instanceof Button)
+		{
+			if(man.box.isTouchingBody(go.box) || wman.box.isTouchingBody(go.box))
+				((Button) go).activate();
+		}
 	}
 	world.step();
 }
@@ -225,10 +234,6 @@ public void upDrawObjects()
 	}
 	world.draw();
 }
-
-// Format : ClassName xpos ypos sx sy
-
-
 
 public void updateLevel()
 {
@@ -271,7 +276,6 @@ public void drawLevel()
 	while(line != null);
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
-
 }
 
 //**********Classes***********
@@ -363,7 +367,22 @@ class MovingPlatform extends Platform
 	}
 };
 
-class Door extends GameObject
+class Button extends GameObject
+{
+	boolean active;
+	Button(float x, float y, float sx, float sy)
+	{
+		super(x, y, sx, sy);
+		box.setSensor(true);
+		box.setStatic(true);
+	}
+	public void activate()
+	{
+		active = true;
+	}
+};
+
+class Door extends Button
 {
 	MovingPlatform door;
 	boolean done;
@@ -372,16 +391,17 @@ class Door extends GameObject
 	{
 		super(bx, by, bsx, bsy);
 		box.setFillColor(color(0,0,255));
-		box.setSensor(true);
-
 		door = new MovingPlatform(x, y, sx, sy, xoff, yoff, speed);
-		door.active = false;
+		door.active = true;
 	}
 
 	public void move()
 	{
+		if(done || !active)
+			return;
+		door.active = true;
 		door.move();
-		if(door.moveTime >= PI/2)
+		if(door.moveTime >= 90)
 		{
 			door.active = false;
 			done = true;

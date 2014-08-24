@@ -10,8 +10,8 @@ FWorld world;
 Man man;
 Man wman;
 
-color currentBackground = color(255);
-color newBackground = color(255);
+color[][] colors = new color[10][5];
+
 ArrayList<GameObject> gos = new ArrayList<GameObject>();
 
 int level;
@@ -36,7 +36,7 @@ void setup()
 	textAlign(CENTER,CENTER);
 	rectMode(CENTER);
 	initFisicaWorld();
-
+	initColors();
 	state = LAUNCHER;
 	transitionTime = 0.0;
 	reader = createReader("level" + level + ".txt");
@@ -46,7 +46,7 @@ void setup()
 
 void draw() 
 {
-	background(currentBackground);
+	background(colors[level][0]);
 	if(state == LAUNCHER)
 	{
 		upDrawObjects();
@@ -84,14 +84,13 @@ void continueTransition()
 	float a = map(transitionTime, 0, MAX_TRANSITION, 0, width * 2);
 	pushStyle();
 	noStroke();
-	fill(newBackground);
+	fill(colors[levels + 1][0]);
 	rect(transitionVector.x, transitionVector.y, a,a);
 	popStyle();
 	transitionTime += .01;
 
 	if(transitionTime >= MAX_TRANSITION)
 	{
-		currentBackground = newBackground;
 		state = PLAYING;
 		updateLevel();
 	}
@@ -102,7 +101,6 @@ void initTransition(FBody a, FBody b)
 	transitionTime = 0;
 	state = TRANSITION;
 	transitionVector = new PVector((a.getX() + b.getX())/2, (a.getY() + b.getY())/2);
-	newBackground = lerpColor(a.getFillColor(), b.getFillColor(), .5);
 }
 
 void drawLauncher()
@@ -192,6 +190,15 @@ void updateWorld()
 		{
 			((MovingPlatform) go).move();
 		}
+		if(go instanceof Door)
+		{
+			((Door) go).move();
+		}
+		if(go instanceof Button)
+		{
+			if(man.box.isTouchingBody(go.box) || wman.box.isTouchingBody(go.box))
+				((Button) go).activate();
+		}
 	}
 	world.step();
 }
@@ -207,14 +214,9 @@ void upDrawObjects()
 	world.draw();
 }
 
-// Format : ClassName xpos ypos sx sy
-
-
-
 void updateLevel()
 {
 	reader = createReader("level" + level + ".txt");
-	background(255);
 	clearWorld();
 	drawLevel();
 }
@@ -252,7 +254,6 @@ void drawLevel()
 	while(line != null);
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
-
 }
 
 //**********Classes***********
@@ -344,7 +345,22 @@ class MovingPlatform extends Platform
 	}
 };
 
-class Door extends GameObject
+class Button extends GameObject
+{
+	boolean active;
+	Button(float x, float y, float sx, float sy)
+	{
+		super(x, y, sx, sy);
+		box.setSensor(true);
+		box.setStatic(true);
+	}
+	void activate()
+	{
+		active = true;
+	}
+};
+
+class Door extends Button
 {
 	MovingPlatform door;
 	boolean done;
@@ -353,16 +369,17 @@ class Door extends GameObject
 	{
 		super(bx, by, bsx, bsy);
 		box.setFillColor(color(0,0,255));
-		box.setSensor(true);
-
 		door = new MovingPlatform(x, y, sx, sy, xoff, yoff, speed);
-		door.active = false;
+		door.active = true;
 	}
 
 	void move()
 	{
+		if(done || !active)
+			return;
+		door.active = true;
 		door.move();
-		if(door.moveTime >= PI/2)
+		if(door.moveTime >= 90)
 		{
 			door.active = false;
 			done = true;
