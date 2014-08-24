@@ -196,6 +196,13 @@ void keyReleased()
 
 void updateWorld()
 {
+	for(GameObject go : gos)
+	{
+		if(go instanceof MovingPlatform)
+		{
+			((MovingPlatform) go).move();
+		}
+	}
 	world.step();
 }
 
@@ -227,27 +234,13 @@ void drawLevel()
 				String[] ch = split(line, " ");
 
 				if(ch[0].equals("Platform"))
-					new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5]));
-				else if(ch[0].equals("Platform(c)")) {
-					float width = abs(float(ch[1]) - float(ch[3]));
-					float height = abs(float(ch[2]) - float(ch[4]));
-					float x = (float(ch[1]) + float(ch[3])) / 2;
-					float y = (float(ch[2]) + float(ch[4])) / 2;
-					new Platform(x,y,width,height, boolean(ch[5]));
-				}
-				else if(ch[0].equals("Spikes(c)")) {
-					float width = abs(float(ch[1]) - float(ch[3]));
-					float height = abs(float(ch[2]) - float(ch[4]));
-					float x = (float(ch[1]) + float(ch[3])) / 2;
-					float y = (float(ch[2]) + float(ch[4])) / 2;
-					new Spikes(x,y,width,height);
-				}
+					gos.add(new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5])));
 				else if(ch[0].equals("Man"))
 					man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("Spikes"))
-					new Spikes(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+					gos.add(new Spikes(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4])));
 
 			} catch(IOException e) 
 			{
@@ -255,6 +248,7 @@ void drawLevel()
 		}
 	}
 	while(line != null);	
+	gos.add(new MovingPlatform(100,100,50,50,100,100,1));
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
 
@@ -332,6 +326,7 @@ class MovingPlatform extends Platform
 	MovingPlatform(float x, float y, float sx, float sy, float xoff, float yoff, float speed)
 	{
 		super(x,y,sx,sy,true);
+		box.setName(MOVINGPLATFORM);
 		moveTime = 0;
 		this.speed = 0;
 		this.xoff = xoff;
@@ -341,8 +336,7 @@ class MovingPlatform extends Platform
 	}
 	void move()
 	{
-		box.setName(MOVINGPLATFORM);
-		box.setPosition(ix + (xoff - ix) * sin(speed), iy + (yoff - iy) * sin(speed));
+		box.setPosition(ix + (xoff - ix) * sin(moveTime), iy + (yoff - iy) * sin(moveTime));
 		moveTime += speed;
 	}
 };
