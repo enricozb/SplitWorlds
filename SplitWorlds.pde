@@ -235,14 +235,14 @@ void drawLevel()
 
 				if(ch[0].equals("Platform"))
 					gos.add(new Platform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]), boolean(ch[5])));
-				else if(ch[0].equals("Man"))
-					man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
-				else if(ch[0].equals("Woman"))
-					wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 				else if(ch[0].equals("Spikes"))
 					gos.add(new Spikes(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4])));
 				else if(ch[0].equals("Moving"))
 					gos.add(new MovingPlatform(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]),float(ch[5]),float(ch[6]),float(ch[7])));
+				else if(ch[0].equals("Man"))
+					man = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
+				else if(ch[0].equals("Woman"))
+					wman = new Man(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]));
 
 			} catch(IOException e) 
 			{
@@ -321,6 +321,8 @@ class MovingPlatform extends Platform
 	float yoff;
 	float ix;
 	float iy;
+	boolean active;
+
 	MovingPlatform(float x, float y, float sx, float sy, float xoff, float yoff, float speed)
 	{
 		super(x,y,sx,sy,true);
@@ -331,38 +333,41 @@ class MovingPlatform extends Platform
 		this.yoff = yoff;
 		ix = x;
 		iy = y;
+		active = true;
 	}
+
 	void move()
 	{
+		if(!active)
+			return;
 		box.setPosition(ix + (xoff) * sin(radians(moveTime)), iy + (yoff) * sin(radians(moveTime)));
 		moveTime += speed;
 	}
 };
 
-class Door extends Platform
+class Door extends GameObject
 {
-	FBox buttonBox;
-	boolean active;
+	MovingPlatform door;
+	boolean done;
 
-	Door(float x, float y, float sx, float sy, float bx, float by, float bsx, float bsy)
+	Door(float x, float y, float sx, float sy, float xoff, float yoff, float speed, float bx, float by, float bsx, float bsy)
 	{
-		super(x, y, sx, sy, true);
+		super(bx, by, bsx, bsy);
 		box.setFillColor(color(0,0,255));
+		box.setSensor(true);
 
-		buttonBox = new FBox(bsx, bsy);
-		buttonBox.setPosition(bx, by);
-		buttonBox.setSensor(true);
-		buttonBox.setStatic(true);
-		buttonBox.setFillColor(color(0, 255, 0));
-
-		buttonBox.setNoStroke();
-
-		world.add(buttonBox);
+		door = new MovingPlatform(x, y, sx, sy, xoff, yoff, speed);
+		door.active = false;
 	}
 
-	void activate()
+	void move()
 	{
-		buttonBox.setPosition(buttonBox.getX(),buttonBox.getY() + 1);
+		door.move();
+		if(door.moveTime >= PI/2)
+		{
+			door.active = false;
+			done = true;
+		}
 	}
 };
 
