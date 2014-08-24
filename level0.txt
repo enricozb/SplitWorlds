@@ -1,5 +1,9 @@
-Platform(c) 718 550 790 530 true
-Man 70 350 20 20
-Woman 800 300 20 20
 Spikes 160 590 130 20
 Spikes 840 590 500 20
+Platform 23 32 32 32 true
+Platform 500 500 32 32 true 
+Platform 45 45 50 32 true
+Platform 100 100 50 32 true
+Platform 0 0 50 32 true
+Man 500 500 0 20 20
+Woman 25 25 20 20
