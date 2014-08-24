@@ -40,7 +40,7 @@ void setup()
 	state = LAUNCHER;
 	transitionTime = 0.0;
 	reader = createReader("level" + level + ".txt");
-	level = 3;
+	level = 0;
 	drawLauncher();
 }
 
@@ -76,15 +76,6 @@ void initColors()
 	colors[7] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
 	colors[8] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
 	colors[9] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-}
-
-void initFisicaWorld()
-{
-	Fisica.init(this);
-	world = new FWorld();
-	world.setGrabbable(false);
-	world.setEdges();
-	world.setGravity(0, 1e3);
 }
 
 void clearWorld()
@@ -168,8 +159,6 @@ void checkForFinish()
 	}
 }
 
-<<<<<<< HEAD
-=======
 void initFisicaWorld()
 {
 	Fisica.init(this);
@@ -179,7 +168,6 @@ void initFisicaWorld()
 	world.setGravity(0, 1e3);
 }
 
->>>>>>> FETCH_HEAD
 //Key press events, simultaneous key presses working.
 
 boolean rPressed = false;
@@ -248,15 +236,13 @@ void upDrawObjects()
 	world.draw();
 }
 
-<<<<<<< HEAD
 void updateLevel()
 {
 	reader = createReader("level" + level + ".txt");
 	clearWorld();
 	drawLevel();
-=======
 // Format : ClassName xpos ypos sx sy
-
+}
 public void mouseClicked() {
 	for(GameObject go : gos) {
 
@@ -272,7 +258,6 @@ public void mouseClicked() {
 	{}
 
 	println("END");
->>>>>>> FETCH_HEAD
 }
 
 void drawLevel()
