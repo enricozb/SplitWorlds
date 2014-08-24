@@ -29,15 +29,9 @@ FWorld world;
 Man man;
 Man wman;
 
-<<<<<<< HEAD
 int currentBackground = color(255);
 int newBackground = color(255);
-//ArrayList<GameObject> gos = new ArrayList<GameObject>();
-=======
-int currentBackground = color(0);
-int newBackground = color(0);
 ArrayList<GameObject> gos = new ArrayList<GameObject>();
->>>>>>> origin/master
 
 int level;
 boolean isLevelLoaded;
@@ -282,6 +276,10 @@ public void drawLevel()
 	while(line != null);	
 	man.box.setFriction(0);
 	wman.box.setFriction(0);
+
+}
+ public void mousePressed() {
+	
 }
 
 //**********Classes***********

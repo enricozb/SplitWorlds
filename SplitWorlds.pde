@@ -10,15 +10,9 @@ FWorld world;
 Man man;
 Man wman;
 
-<<<<<<< HEAD
 color currentBackground = color(255);
 color newBackground = color(255);
-//ArrayList<GameObject> gos = new ArrayList<GameObject>();
-=======
-color currentBackground = color(0);
-color newBackground = color(0);
 ArrayList<GameObject> gos = new ArrayList<GameObject>();
->>>>>>> origin/master
 
 int level;
 boolean isLevelLoaded;
