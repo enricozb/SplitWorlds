@@ -29,11 +29,15 @@ FWorld world;
 Man man;
 Man wman;
 
-int[][] colors = new int[10][5];
-
 ArrayList<GameObject> gos = new ArrayList<GameObject>();
+ArrayList<TextObject> tos = new ArrayList<TextObject>();
 
 int level;
+int STARTING_LEVEL = 7;
+int MAX_LEVELS = 20;
+
+int[][] colors = new int[MAX_LEVELS][5];
+
 boolean isLevelLoaded;
 
 int state;
@@ -59,7 +63,7 @@ public void setup()
 	state = LAUNCHER;
 	transitionTime = 0.0f;
 	reader = createReader("level" + level + ".txt");
-	level = 0;
+	level = STARTING_LEVEL - 1; //Adjust for launcher appearance
 	drawLauncher();
 }
 
@@ -69,6 +73,7 @@ public void draw()
 	if(state == LAUNCHER)
 	{
 		upDrawObjects();
+		drawLauncherText();
 		checkForChoice();
 	}
 	else if(state == PLAYING)
@@ -85,23 +90,18 @@ public void draw()
 
 public void initColors()
 {
-	colors[0] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[1] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[2] = new int[] {color(42,54,59),color(255,132,124),color(254,206,168),color(232,74,95),color(153,184,152)};
-	colors[3] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[4] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[5] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[6] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[7] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[8] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[9] = new int[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	for(int i = 0; i < MAX_LEVELS; i++)
+	{
+		colors[i] = new int[] {color(42,54,59),color(255,132,124),color(254,206,168),color(232,74,95),color(153,184,152)};
+	}
 }
 
 public void clearWorld()
 {
 	world.clear();
-	world.setEdges();
+	world.setEdges(colors[level][1]);
 	gos.clear();
+	tos.clear();
 }
 
 public void continueTransition()
@@ -127,6 +127,13 @@ public void initTransition(FBody a, FBody b)
 	transitionTime = 0;
 	state = TRANSITION;
 	transitionVector = new PVector((a.getX() + b.getX())/2, (a.getY() + b.getY())/2);
+}
+
+public void drawLauncherText()
+{
+	text("PLAY",lerp(0,width,.25f),height/2);
+	text("ABOUT",lerp(0,width,.5f),height/2);
+	text("HELP",lerp(0,width,.75f),height/2);
 }
 
 public void drawLauncher()
@@ -183,8 +190,8 @@ public void initFisicaWorld()
 	Fisica.init(this);
 	world = new FWorld();
 	world.setGrabbable(true);
-	world.setEdges();
 	world.setGravity(0, 1e3f);
+	clearWorld();
 }
 
 //Key press events, simultaneous key presses working.
@@ -194,6 +201,13 @@ boolean lPressed = false;
 boolean uPressed = false;
 boolean dPressed = false;
 
+public void restartLevel()
+{
+	if(state != PLAYING)
+		return;
+	updateLevel();
+}
+
 public void keyPressed()
 {
 	if(key == CODED)
@@ -202,6 +216,11 @@ public void keyPressed()
 		if(keyCode == LEFT)  lPressed = true;
 		if(keyCode == UP)    uPressed = true;
 		if(keyCode == DOWN)  dPressed = true;
+	}
+	else if(key == 'r')
+	{
+		println("DOING");
+		restartLevel();
 	}
 }
 
@@ -251,6 +270,10 @@ public void upDrawObjects()
 	if(state != TRANSITION)
 	{
 		updateWorld();
+	}
+	for(TextObject to : tos)
+	{
+		to.draw();
 	}
 	world.draw();
 }
@@ -302,6 +325,10 @@ public void drawLevel()
 					man = new Man(PApplet.parseInt(ch[1]),PApplet.parseInt(ch[2]),PApplet.parseInt(ch[3]),PApplet.parseInt(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(PApplet.parseInt(ch[1]),PApplet.parseInt(ch[2]),PApplet.parseInt(ch[3]),PApplet.parseInt(ch[4]));
+				else if(ch[0].equals("Text"))
+					tos.add(new TextObject(PApplet.parseInt(ch[1]), PApplet.parseInt(ch[2]), ch[3]));
+				else if(ch[0].equals("Door"))
+					gos.add(new Door(PApplet.parseFloat(ch[1]),PApplet.parseFloat(ch[2]),PApplet.parseFloat(ch[3]),PApplet.parseFloat(ch[4]),PApplet.parseFloat(ch[5]),PApplet.parseFloat(ch[6]),PApplet.parseFloat(ch[7]),PApplet.parseFloat(ch[8]),PApplet.parseFloat(ch[9]),PApplet.parseFloat(ch[10]),PApplet.parseFloat(ch[11])));
 
 			} catch(IOException e)
 			{
@@ -329,6 +356,26 @@ abstract class GameObject
 		world.add(box);
  	}
 }
+
+class TextObject
+{
+	String message;
+	float x;
+	float y;
+
+	TextObject(float x, float y, String message)
+	{
+		this.message = message.replace("_"," ");
+		this.x = x;
+		this.y = y;
+	}
+
+	public void draw()
+	{
+		text(message, x, y);
+	}
+
+};
 
 class Platform extends GameObject
 {
@@ -426,7 +473,7 @@ class Door extends Button
 	Door(float x, float y, float sx, float sy, float xoff, float yoff, float speed, float bx, float by, float bsx, float bsy)
 	{
 		super(bx, by, bsx, bsy);
-		box.setFillColor(color(0,0,255));
+		box.setFillColor(color(255,255,255));
 		door = new MovingPlatform(x, y, sx, sy, xoff, yoff, speed);
 		door.active = true;
 	}
@@ -463,18 +510,37 @@ class Man extends GameObject
 		box.setVelocity(0,0);
 	}
 
+	boolean lastJump = false;
+	int jumpCallCount = 0;
+	final int JUMP_CALL_COUNT_MAX = 40;
 	public void move(int sign)
 	{	
+		//Made to prevent stride jumps
+		if(lastJump)
+		{
+			if(jumpCallCount >= JUMP_CALL_COUNT_MAX)
+			{
+				jumpCallCount = 0;
+				lastJump = false;
+			}
+			jumpCallCount++;
+		}
 		ArrayList<FBody> temp = box.getTouching();
 		for(FBody fb : temp)
 		{
 			if(uPressed) 
 			{
-				if(fb.getY() > box.getY() && !fb.isSensor()) //FIX FOR CERTAIN CASES
+				if(fb.getY() > box.getY() && !fb.isSensor() && !lastJump) //FIX FOR CERTAIN CASES
 				{
-					box.addImpulse(0, -250);
+					lastJump = true;
+					box.addImpulse(0, -500);
 					break;
 				}	
+			}
+			else
+			{
+				lastJump = false;
+				jumpCallCount = 0;
 			}
 			if(fb.getName() == SPIKE)
 			{
