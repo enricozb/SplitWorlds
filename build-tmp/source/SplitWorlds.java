@@ -58,8 +58,8 @@ public void setup()
 	initColors();
 	state = LAUNCHER;
 	transitionTime = 0.0f;
-	reader = createReader("level" + level + ".txt");
 	level = 0;
+	reader = createReader("level" + level + ".txt");
 	drawLauncher();
 }
 
@@ -100,7 +100,7 @@ public void initColors()
 public void clearWorld()
 {
 	world.clear();
-	world.setEdges(0, 0, width, height, currentBackground);
+	world.setEdges(0, 0, width, height, colors[level][0]);
 	gos.clear();
 }
 
@@ -183,7 +183,7 @@ public void initFisicaWorld()
 	Fisica.init(this);
 	world = new FWorld();
 	world.setGrabbable(true);
-	world.setEdges(0, 0, width, height, currentBackground);
+	world.setEdges(0, 0, width, height, colors[level][0]);
 	world.setGravity(0, 1e3f);
 }
 
@@ -234,14 +234,8 @@ public void updateWorld()
 				((Button) go).activate();
 		}
 	}
-	try 
-	{
 	world.step();
-	}
-	catch(AssertionError e)
-	{
 
-	}
 }
 
 public void upDrawObjects()
@@ -271,14 +265,18 @@ public void mouseClicked() {
 	// 	gos.add(go);
 	// }
 	for(GameObject go : gos) {
-
-		println(go.getClass().getName().replace("SplitWorlds$", "") + " " + go.box.getX() + " " + go.box.getY() + " " + go.box.getWidth() + " " + go.box.getHeight());
+		if(go instanceof Door) {
+			Door d = (Door) go;
+			print("Door " + d.door.box.getX() + " " + d.door.box.getY() + " " + d.door.box.getWidth() + " " + d.door.box.getHeight() + " " + d.door.xoff +  " " + d.door.yoff + " " + d.door.speed + " ");
+			println(go.box.getX() + " " + go.box.getY() + " " + go.box.getWidth() + " " + go.box.getHeight());
+		}
+		else
+			println(go.getClass().getName().replace("SplitWorlds$", "") + " " + go.box.getX() + " " + go.box.getY() + " " + go.box.getWidth() + " " + go.box.getHeight());
 	}
 
 	println( "Man" + " " + man.box.getX() + " " + man.box.getY() + " " + man.box.getWidth() + " " + man.box.getHeight());
 	try {
-	println("Woman" + " " + wman.box.getX() + " " + wman.box.getY() + " " + wman.box.getWidth() + " " + wman.box.getHeight());
-		
+		println("Woman" + " " + wman.box.getX() + " " + wman.box.getY() + " " + wman.box.getWidth() + " " + wman.box.getHeight());
 	}
 	catch(NullPointerException e)
 	{}
@@ -309,9 +307,13 @@ public void drawLevel()
 					man = new Man(PApplet.parseInt(ch[1]),PApplet.parseInt(ch[2]),PApplet.parseInt(ch[3]),PApplet.parseInt(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(PApplet.parseInt(ch[1]),PApplet.parseInt(ch[2]),PApplet.parseInt(ch[3]),PApplet.parseInt(ch[4]));
+				else if(ch[0].equals("Door"))
+					gos.add(new Door(PApplet.parseInt(ch[1]),PApplet.parseInt(ch[2]),PApplet.parseInt(ch[3]),PApplet.parseInt(ch[4]),PApplet.parseInt(ch[4]),PApplet.parseInt(ch[6]),PApplet.parseInt(ch[7]),PApplet.parseInt(ch[8]),PApplet.parseInt(ch[9]),PApplet.parseInt(ch[10]),PApplet.parseInt(ch[11])));
 
-			} catch(IOException e)
-			{
+			} catch(NullPointerException e ) {
+				System.exit(0);
+			} catch (IOException e){
+				System.exit(0);
 			}
 		}
 	}
@@ -327,18 +329,18 @@ public void drawLevel()
 abstract class GameObject 
 {
 	FBox box;
- 	GameObject(float x, float y, float sx, float sy)
- 	{
+	GameObject(float x, float y, float sx, float sy)
+	{
 		box = new FBox(sx, sy);
 		box.setPosition(x, y);
 		box.setNoStroke();
 		box.setFillColor(colors[level][1]);
 		world.add(box);
- 	}
- 	GameObject(FBox box) {
- 		this.box = box;
- 		world.add(box);
- 	}
+	}
+	GameObject(FBox box) {
+		this.box = box;
+		world.add(box);
+	}
 }
 
 class Platform extends GameObject
@@ -504,7 +506,7 @@ class Man extends GameObject
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
+    String[] appletArgs = new String[] { "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
