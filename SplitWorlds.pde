@@ -70,6 +70,8 @@ void draw()
 	else if(state == TRANSITION)
 	{
 		upDrawObjects();
+		if(level == STARTING_LEVEL - 1)
+			drawLauncherText();
 		continueTransition();
 	}
 }
@@ -121,9 +123,9 @@ void initTransition(FBody a, FBody b)
 
 void drawLauncherText()
 {
-	text("PLAY",lerp(0,width,.25),height/2);
-	text("ABOUT",lerp(0,width,.5),height/2);
-	text("HELP",lerp(0,width,.75),height/2);
+	//text("PLAY",lerp(0,width,.25),height/2);
+	text("PLAY",lerp(0,width,.5),height/2);
+	//text("HELP",lerp(0,width,.75),height/2);
 }
 
 void drawLauncher()
@@ -131,15 +133,13 @@ void drawLauncher()
 	Platform ptemp;
 	man = new Man(width/2,lerp(0,height,.75) - 20, 20, 20);
 	man.box.setFillColor(colors[level][4]);
-	ptemp = new Platform(lerp(0,width,.25),height/2,100,50,true);
+	//ptemp = new Platform(lerp(0,width,.25),height/2,100,50,true);
+	//ptemp.box.setFillColor(colors[level][1]);
+	ptemp = new Platform(lerp(0,width,.5),height/2,100,50,true);
 	ptemp.box.setName("PLAY");
 	ptemp.box.setFillColor(colors[level][1]);
-	ptemp = new Platform(lerp(0,width,.5),height/2,100,50,true);
-	ptemp.box.setName("HELP");
-	ptemp.box.setFillColor(colors[level][1]);
-	ptemp = new Platform(lerp(0,width,.75),height/2,100,50,true);
-	ptemp.box.setName("ABOUT");
-	ptemp.box.setFillColor(colors[level][1]);
+	//ptemp = new Platform(lerp(0,width,.75),height/2,100,50,true);
+	//ptemp.box.setFillColor(colors[level][1]);
 	new Platform(width/2, lerp(0,height,.75),width,20,true);
 }
 
