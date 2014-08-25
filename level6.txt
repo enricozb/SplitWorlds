@@ -1,0 +1,11 @@
+Platform 600 470 20 300 true
+Platform 600 130 20 300 true
+Platform 810 100 60 60 false
+Platform 790 569 20 60 true
+Platform 790 510 200 20 false
+Platform 830 509 20 20 true
+Platform 780 180 80 20 true
+Platform 830 320 20 300 true
+Platform 930 320 20 300 true
+Woman 759 109 20 20
+Man 760 490 20 20

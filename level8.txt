@@ -1,0 +1,8 @@
+Platform 600 130 20 300 true
+Platform 600 400 20 300 true
+Text 300 150 Sometimes_it_won't_be_that_easy
+Text 900 150 Use_the_environment_around_you
+Door 620 575 20 50 0 100 .5 645 580 10 10 
+Door 580 575 20 50 0 100 .5 555 580 10 10 
+Man 300 550 20 20
+Woman 900 550 20 20

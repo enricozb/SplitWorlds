@@ -10,11 +10,15 @@ FWorld world;
 Man man;
 Man wman;
 
-color[][] colors = new color[10][5];
-
 ArrayList<GameObject> gos = new ArrayList<GameObject>();
+ArrayList<TextObject> tos = new ArrayList<TextObject>();
 
 int level;
+int STARTING_LEVEL = 7;
+int MAX_LEVELS = 20;
+
+color[][] colors = new color[MAX_LEVELS][5];
+
 boolean isLevelLoaded;
 
 int state;
@@ -39,8 +43,13 @@ void setup()
 	initColors();
 	state = LAUNCHER;
 	transitionTime = 0.0;
+<<<<<<< HEAD
 	level = 0;
 	reader = createReader("level" + level + ".txt");
+=======
+	reader = createReader("level" + level + ".txt");
+	level = STARTING_LEVEL - 1; //Adjust for launcher appearance
+>>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
 	drawLauncher();
 }
 
@@ -50,6 +59,7 @@ void draw()
 	if(state == LAUNCHER)
 	{
 		upDrawObjects();
+		drawLauncherText();
 		checkForChoice();
 	}
 	else if(state == PLAYING)
@@ -66,23 +76,22 @@ void draw()
 
 void initColors()
 {
-	colors[0] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[1] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[2] = new color[] {color(42,54,59),color(255,132,124),color(254,206,168),color(232,74,95),color(153,184,152)};
-	colors[3] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[4] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[5] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[6] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[7] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[8] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
-	colors[9] = new color[] {color(84,36,55),color(217,91,67),color(236,208,120),color(192,41,66),color(83,119,122)};
+	for(int i = 0; i < MAX_LEVELS; i++)
+	{
+		colors[i] = new color[] {color(42,54,59),color(255,132,124),color(254,206,168),color(232,74,95),color(153,184,152)};
+	}
 }
 
 void clearWorld()
 {
 	world.clear();
+<<<<<<< HEAD
 	world.setEdges(0, 0, width, height, colors[level][0]);
+=======
+	world.setEdges(colors[level][1]);
+>>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
 	gos.clear();
+	tos.clear();
 }
 
 void continueTransition()
@@ -108,6 +117,13 @@ void initTransition(FBody a, FBody b)
 	transitionTime = 0;
 	state = TRANSITION;
 	transitionVector = new PVector((a.getX() + b.getX())/2, (a.getY() + b.getY())/2);
+}
+
+void drawLauncherText()
+{
+	text("PLAY",lerp(0,width,.25),height/2);
+	text("ABOUT",lerp(0,width,.5),height/2);
+	text("HELP",lerp(0,width,.75),height/2);
 }
 
 void drawLauncher()
@@ -164,8 +180,12 @@ void initFisicaWorld()
 	Fisica.init(this);
 	world = new FWorld();
 	world.setGrabbable(true);
+<<<<<<< HEAD
 	world.setEdges(0, 0, width, height, colors[level][0]);
+=======
+>>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
 	world.setGravity(0, 1e3);
+	clearWorld();
 }
 
 //Key press events, simultaneous key presses working.
@@ -175,6 +195,13 @@ boolean lPressed = false;
 boolean uPressed = false;
 boolean dPressed = false;
 
+void restartLevel()
+{
+	if(state != PLAYING)
+		return;
+	updateLevel();
+}
+
 void keyPressed()
 {
 	if(key == CODED)
@@ -183,6 +210,11 @@ void keyPressed()
 		if(keyCode == LEFT)  lPressed = true;
 		if(keyCode == UP)    uPressed = true;
 		if(keyCode == DOWN)  dPressed = true;
+	}
+	else if(key == 'r')
+	{
+		println("DOING");
+		restartLevel();
 	}
 }
 
@@ -227,6 +259,10 @@ void upDrawObjects()
 	{
 		updateWorld();
 	}
+	for(TextObject to : tos)
+	{
+		to.draw();
+	}
 	world.draw();
 }
 
@@ -238,13 +274,6 @@ void updateLevel()
 // Format : ClassName xpos ypos sx sy
 }
 public void mouseClicked() {
-	// if(keyPressed && key == 'z')
-	// {
-	// 	GameObject go = new GameObject(world.getBody(mouseX, mouseY));
-	// 	go.box.setX(100);
-	// 	go.box.setY(100);
-	// 	gos.add(go);
-	// }
 	for(GameObject go : gos) {
 		if(go instanceof Door) {
 			Door d = (Door) go;
@@ -288,8 +317,15 @@ void drawLevel()
 					man = new Man(int(ch[1]),int(ch[2]),int(ch[3]),int(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(int(ch[1]),int(ch[2]),int(ch[3]),int(ch[4]));
+<<<<<<< HEAD
 				else if(ch[0].equals("Door"))
 					gos.add(new Door(int(ch[1]),int(ch[2]),int(ch[3]),int(ch[4]),int(ch[4]),int(ch[6]),int(ch[7]),int(ch[8]),int(ch[9]),int(ch[10]),int(ch[11])));
+=======
+				else if(ch[0].equals("Text"))
+					tos.add(new TextObject(int(ch[1]), int(ch[2]), ch[3]));
+				else if(ch[0].equals("Door"))
+					gos.add(new Door(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]),float(ch[5]),float(ch[6]),float(ch[7]),float(ch[8]),float(ch[9]),float(ch[10]),float(ch[11])));
+>>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
 
 			} catch(NullPointerException e ) {
 				System.exit(0);
@@ -317,12 +353,36 @@ abstract class GameObject
 		box.setNoStroke();
 		box.setFillColor(colors[level][1]);
 		world.add(box);
+<<<<<<< HEAD
 	}
 	GameObject(FBox box) {
 		this.box = box;
 		world.add(box);
 	}
+=======
+ 	}
+>>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
 }
+
+class TextObject
+{
+	String message;
+	float x;
+	float y;
+
+	TextObject(float x, float y, String message)
+	{
+		this.message = message.replace("_"," ");
+		this.x = x;
+		this.y = y;
+	}
+
+	void draw()
+	{
+		text(message, x, y);
+	}
+
+};
 
 class Platform extends GameObject
 {
@@ -420,7 +480,7 @@ class Door extends Button
 	Door(float x, float y, float sx, float sy, float xoff, float yoff, float speed, float bx, float by, float bsx, float bsy)
 	{
 		super(bx, by, bsx, bsy);
-		box.setFillColor(color(0,0,255));
+		box.setFillColor(color(255,255,255));
 		door = new MovingPlatform(x, y, sx, sy, xoff, yoff, speed);
 		door.active = true;
 	}
@@ -457,18 +517,37 @@ class Man extends GameObject
 		box.setVelocity(0,0);
 	}
 
+	boolean lastJump = false;
+	int jumpCallCount = 0;
+	final int JUMP_CALL_COUNT_MAX = 40;
 	void move(int sign)
 	{	
+		//Made to prevent stride jumps
+		if(lastJump)
+		{
+			if(jumpCallCount >= JUMP_CALL_COUNT_MAX)
+			{
+				jumpCallCount = 0;
+				lastJump = false;
+			}
+			jumpCallCount++;
+		}
 		ArrayList<FBody> temp = box.getTouching();
 		for(FBody fb : temp)
 		{
 			if(uPressed) 
 			{
-				if(fb.getY() > box.getY() && !fb.isSensor()) //FIX FOR CERTAIN CASES
+				if(fb.getY() > box.getY() && !fb.isSensor() && !lastJump) //FIX FOR CERTAIN CASES
 				{
-					box.addImpulse(0, -250);
+					lastJump = true;
+					box.addImpulse(0, -500);
 					break;
 				}	
+			}
+			else
+			{
+				lastJump = false;
+				jumpCallCount = 0;
 			}
 			if(fb.getName() == SPIKE)
 			{

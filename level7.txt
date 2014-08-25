@@ -1,0 +1,6 @@
+Platform 600 130 20 300 true
+Platform 600 400 20 300 true
+Text 300 150 The_Man_and_Woman_are_seperated
+Text 900 150 Bring_them_together_again
+Man 300 550 20 20
+Woman 900 550 20 20

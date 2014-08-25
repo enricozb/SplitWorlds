@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Platform 192.0 541.0 60.0 26.0 true 
 Platform 929.99963 209.99998 60.0 26.0 true 
 Platform 267.00003 538.0 60.0 26.0 true 
@@ -12,3 +13,14 @@ Door 841.0001 14.000015 20.0 70.0 70.0 70.0 5.0 620.0 416.0 20.0 20.0
 Man 418.0 500 20.0 20.0
 Woman 1184.0  500 20.0 20.0
 Moving 600 300 200 200 0 300 4
+=======
+Platform 600 470 20 300 true
+Platform 600 130 20 300 true
+Platform 760 340 20 20 true
+Platform 710 100 80 20 true
+Platform 760 180 20 280 false
+Platform 860 540 20 20 false
+Platform 860 580 20 20 true
+Man 300 300 20 20
+Woman 710 60 20 20
+>>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
