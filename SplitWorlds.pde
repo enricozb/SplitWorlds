@@ -20,16 +20,8 @@ ArrayList<GameObject> gos = new ArrayList<GameObject>();
 ArrayList<TextObject> tos = new ArrayList<TextObject>();
 
 int level;
-<<<<<<< HEAD
-int STARTING_LEVEL = 10;
-=======
-<<<<<<< HEAD
-int STARTING_LEVEL = 8;
-=======
-int STARTING_LEVEL = 7;
->>>>>>> origin/master
->>>>>>> FETCH_HEAD
-int MAX_LEVELS = 20;
+int STARTING_LEVEL = 1;
+int MAX_LEVELS = 8;
 
 color[][] colors = new color[MAX_LEVELS][5];
 
@@ -58,13 +50,8 @@ void setup()
 	initColors();
 	state = LAUNCHER;
 	transitionTime = 0.0;
-<<<<<<< HEAD
-	level = 8;
+	level = STARTING_LEVEL - 1;
 	reader = createReader("level" + level + ".txt");
-=======
->>>>>>> origin/master
-	reader = createReader("level" + level + ".txt");
-	level = STARTING_LEVEL - 1; //Adjust for launcher appearance
 	drawLauncher();
 
 }

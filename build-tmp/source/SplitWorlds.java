@@ -40,12 +40,8 @@ ArrayList<GameObject> gos = new ArrayList<GameObject>();
 ArrayList<TextObject> tos = new ArrayList<TextObject>();
 
 int level;
-<<<<<<< HEAD
-int STARTING_LEVEL = 10;
-=======
-int STARTING_LEVEL = 8;
->>>>>>> FETCH_HEAD
-int MAX_LEVELS = 20;
+int STARTING_LEVEL = 1;
+int MAX_LEVELS = 8;
 
 int[][] colors = new int[MAX_LEVELS][5];
 
@@ -74,13 +70,8 @@ public void setup()
 	initColors();
 	state = LAUNCHER;
 	transitionTime = 0.0f;
-<<<<<<< HEAD
-	level = 8;
+	level = STARTING_LEVEL - 1;
 	reader = createReader("level" + level + ".txt");
-=======
->>>>>>> origin/master
-	reader = createReader("level" + level + ".txt");
-	level = STARTING_LEVEL - 1; //Adjust for launcher appearance
 	drawLauncher();
 
 }
@@ -610,7 +601,7 @@ class Man extends GameObject
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--hide-stop", "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
