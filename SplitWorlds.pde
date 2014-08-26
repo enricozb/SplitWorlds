@@ -20,7 +20,7 @@ ArrayList<GameObject> gos = new ArrayList<GameObject>();
 ArrayList<TextObject> tos = new ArrayList<TextObject>();
 
 int level;
-int STARTING_LEVEL = 1;
+int STARTING_LEVEL = 2;
 int MAX_LEVELS = 8;
 
 color[][] colors = new color[MAX_LEVELS][5];
@@ -130,6 +130,7 @@ void continueTransition()
 
 void initTransition(FBody a, FBody b)
 {
+	playTransitionSound();
 	transitionTime = 0;
 	state = TRANSITION;
 	transitionVector = new PVector((a.getX() + b.getX())/2, (a.getY() + b.getY())/2);
@@ -141,7 +142,7 @@ void drawLauncherText()
 	text("PLAY",lerp(0,width,.5),height/2);
 	pushStyle();
 	//textSize(100);
-	text("Split Worlds", 600, 150);
+	text("Man and Woman", 600, 150);
 	popStyle();
 	//text("HELP",lerp(0,width,.75),height/2);
 }
@@ -202,6 +203,8 @@ void initFisicaWorld()
 	clearWorld();
 }
 
+
+
 //Play Sounds
 
 void playDeathSound()
@@ -215,6 +218,13 @@ void playClickSound()
 {
 	AudioPlayer sound;
 	sound = minim.loadFile("click.mp3");
+	sound.play();
+}
+
+void playTransitionSound()
+{
+	AudioPlayer sound;
+	sound = minim.loadFile("transition.mp3");
 	sound.play();
 }
 
@@ -243,7 +253,6 @@ void keyPressed()
 	}
 	else if(key == 'r')
 	{
-		println("DOING");
 		restartLevel();
 	}
 }
@@ -302,26 +311,6 @@ void updateLevel()
 	clearWorld();
 	drawLevel();
 // Format : ClassName xpos ypos sx sy
-}
-public void mouseClicked() {
-	for(GameObject go : gos) {
-		if(go instanceof Door) {
-			Door d = (Door) go;
-			print("Door " + d.door.box.getX() + " " + d.door.box.getY() + " " + d.door.box.getWidth() + " " + d.door.box.getHeight() + " " + d.door.xoff +  " " + d.door.yoff + " " + d.door.speed + " ");
-			println(go.box.getX() + " " + go.box.getY() + " " + go.box.getWidth() + " " + go.box.getHeight());
-		}
-		else
-			println(go.getClass().getName().replace("SplitWorlds$", "") + " " + go.box.getX() + " " + go.box.getY() + " " + go.box.getWidth() + " " + go.box.getHeight());
-	}
-
-	println( "Man" + " " + man.box.getX() + " " + man.box.getY() + " " + man.box.getWidth() + " " + man.box.getHeight());
-	try {
-		println("Woman" + " " + wman.box.getX() + " " + wman.box.getY() + " " + wman.box.getWidth() + " " + wman.box.getHeight());
-	}
-	catch(NullPointerException e)
-	{}
-
-	println("END");
 }
 
 void drawLevel()
@@ -474,6 +463,17 @@ class MovingPlatform extends Platform
 		if(!active)
 			return;
 		box.setPosition(ix + (xoff) * sin(radians(moveTime)), iy + (yoff) * sin(radians(moveTime)));
+		ArrayList<FBody> tempfb = box.getTouching();
+		for(FBody fb : tempfb)
+		{
+			if(!fb.isStatic())
+			{
+				float xtempdiff = (xoff) * sin(radians(moveTime)) - (xoff) * sin(radians(moveTime - speed));
+				fb.setPosition(fb.getX() + xtempdiff ,fb.getY());
+				//Refreshing Y position is not necessary since gravity is always on and penetration will take care of it.
+				//Since friction is nonexistant, X position updates are needed
+			}
+		}
 		moveTime += speed;
 	}
 };

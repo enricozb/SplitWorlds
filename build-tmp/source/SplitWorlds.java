@@ -40,7 +40,7 @@ ArrayList<GameObject> gos = new ArrayList<GameObject>();
 ArrayList<TextObject> tos = new ArrayList<TextObject>();
 
 int level;
-int STARTING_LEVEL = 1;
+int STARTING_LEVEL = 2;
 int MAX_LEVELS = 8;
 
 int[][] colors = new int[MAX_LEVELS][5];
@@ -150,6 +150,7 @@ public void continueTransition()
 
 public void initTransition(FBody a, FBody b)
 {
+	playTransitionSound();
 	transitionTime = 0;
 	state = TRANSITION;
 	transitionVector = new PVector((a.getX() + b.getX())/2, (a.getY() + b.getY())/2);
@@ -161,7 +162,7 @@ public void drawLauncherText()
 	text("PLAY",lerp(0,width,.5f),height/2);
 	pushStyle();
 	//textSize(100);
-	text("Split Worlds", 600, 150);
+	text("Man and Woman", 600, 150);
 	popStyle();
 	//text("HELP",lerp(0,width,.75),height/2);
 }
@@ -222,6 +223,8 @@ public void initFisicaWorld()
 	clearWorld();
 }
 
+
+
 //Play Sounds
 
 public void playDeathSound()
@@ -235,6 +238,13 @@ public void playClickSound()
 {
 	AudioPlayer sound;
 	sound = minim.loadFile("click.mp3");
+	sound.play();
+}
+
+public void playTransitionSound()
+{
+	AudioPlayer sound;
+	sound = minim.loadFile("transition.mp3");
 	sound.play();
 }
 
@@ -494,6 +504,17 @@ class MovingPlatform extends Platform
 		if(!active)
 			return;
 		box.setPosition(ix + (xoff) * sin(radians(moveTime)), iy + (yoff) * sin(radians(moveTime)));
+		ArrayList<FBody> tempfb = box.getTouching();
+		for(FBody fb : tempfb)
+		{
+			if(!fb.isStatic())
+			{
+				float xtempdiff = (xoff) * sin(radians(moveTime)) - (xoff) * sin(radians(moveTime - speed));
+				fb.setPosition(fb.getX() + xtempdiff ,fb.getY());
+				//Refreshing Y position is not necessary since gravity is always on and penetration will take care of it.
+				//Since friction is nonexistant, X position updates are needed
+			}
+		}
 		moveTime += speed;
 	}
 };
