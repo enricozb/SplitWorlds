@@ -1,9 +1,15 @@
 import java.awt.Rectangle;
 import fisica.*;
+//import Minim library
+import ddf.minim.*;
 
 final String SPIKE = "Spike";
 final String DOORBUTTON = "DoorButton";
 final String MOVINGPLATFORM ="mPlatform";
+
+Minim minim;
+//to make it play song files
+AudioPlayer song;
 
 FWorld world;
 
@@ -14,7 +20,7 @@ ArrayList<GameObject> gos = new ArrayList<GameObject>();
 ArrayList<TextObject> tos = new ArrayList<TextObject>();
 
 int level;
-int STARTING_LEVEL = 7;
+int STARTING_LEVEL = 10;
 int MAX_LEVELS = 20;
 
 color[][] colors = new color[MAX_LEVELS][5];
@@ -40,6 +46,7 @@ void setup()
 	textAlign(CENTER,CENTER);
 	rectMode(CENTER);
 	initFisicaWorld();
+	initMinim();
 	initColors();
 	state = LAUNCHER;
 	transitionTime = 0.0;
@@ -55,6 +62,7 @@ void setup()
 
 void draw() 
 {
+
 	background(colors[level][0]);
 	if(state == LAUNCHER)
 	{
@@ -74,6 +82,14 @@ void draw()
 			drawLauncherText();
 		continueTransition();
 	}
+}
+
+void initMinim()
+{
+	minim = new Minim(this);
+	song = minim.loadFile("bgs.wav");
+	song.play();
+	song.loop();
 }
 
 void initColors()
@@ -186,6 +202,15 @@ void initFisicaWorld()
 >>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
 	world.setGravity(0, 1e3);
 	clearWorld();
+}
+
+//Play Sounds
+
+void playDeathSound()
+{
+	AudioPlayer sound;
+	sound = minim.loadFile("die.wav");
+	sound.play();
 }
 
 //Key press events, simultaneous key presses working.
@@ -513,6 +538,7 @@ class Man extends GameObject
 
 	void die()
 	{
+		playDeathSound();
 		box.setPosition(ix,iy);
 		box.setVelocity(0,0);
 	}
