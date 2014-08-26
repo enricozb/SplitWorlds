@@ -70,8 +70,11 @@ public void setup()
 	initColors();
 	state = LAUNCHER;
 	transitionTime = 0.0f;
+<<<<<<< HEAD
 	level = 8;
 	reader = createReader("level" + level + ".txt");
+=======
+>>>>>>> origin/master
 	reader = createReader("level" + level + ".txt");
 	level = STARTING_LEVEL - 1; //Adjust for launcher appearance
 	drawLauncher();
@@ -119,8 +122,9 @@ public void initColors()
 
 public void clearWorld()
 {
+	man = null;
+	wman = null;
 	world.clear();
-	world.setEdges(0, 0, width, height, colors[level][0]);
 	world.setEdges(colors[level][1]);
 	gos.clear();
 	tos.clear();
@@ -210,7 +214,6 @@ public void initFisicaWorld()
 	Fisica.init(this);
 	world = new FWorld();
 	world.setGrabbable(true);
-	world.setEdges(0, 0, width, height, colors[level][0]);
 	world.setGravity(0, 1e3f);
 	clearWorld();
 }
@@ -279,7 +282,7 @@ public void updateWorld()
 		}
 		if(go instanceof Button)
 		{
-			if(man.box.isTouchingBody(go.box) || wman.box.isTouchingBody(go.box))
+			if(go.box.getTouching().size() > 0)
 				((Button) go).activate();
 		}
 	}
@@ -366,6 +369,10 @@ public void drawLevel()
 		}
 	}
 	while(line != null);
+	if(man == null)
+	{
+		System.exit(0);
+	}
 	man.box.setFillColor(colors[level][4]);
 	wman.box.setFillColor(colors[level][3]);
 	man.box.setFriction(0);
@@ -385,11 +392,6 @@ abstract class GameObject
 		box.setFillColor(colors[level][1]);
 		world.add(box);
 	}
-	GameObject(FBox box) {
-		this.box = box;
-		world.add(box);
-	}
-
 }
 
 class TextObject
@@ -595,7 +597,7 @@ class Man extends GameObject
 	}
 };
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "SplitWorlds" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "SplitWorlds" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {

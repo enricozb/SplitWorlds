@@ -20,7 +20,11 @@ ArrayList<GameObject> gos = new ArrayList<GameObject>();
 ArrayList<TextObject> tos = new ArrayList<TextObject>();
 
 int level;
+<<<<<<< HEAD
 int STARTING_LEVEL = 8;
+=======
+int STARTING_LEVEL = 7;
+>>>>>>> origin/master
 int MAX_LEVELS = 20;
 
 color[][] colors = new color[MAX_LEVELS][5];
@@ -50,8 +54,11 @@ void setup()
 	initColors();
 	state = LAUNCHER;
 	transitionTime = 0.0;
+<<<<<<< HEAD
 	level = 8;
 	reader = createReader("level" + level + ".txt");
+=======
+>>>>>>> origin/master
 	reader = createReader("level" + level + ".txt");
 	level = STARTING_LEVEL - 1; //Adjust for launcher appearance
 	drawLauncher();
@@ -99,8 +106,9 @@ void initColors()
 
 void clearWorld()
 {
+	man = null;
+	wman = null;
 	world.clear();
-	world.setEdges(0, 0, width, height, colors[level][0]);
 	world.setEdges(colors[level][1]);
 	gos.clear();
 	tos.clear();
@@ -190,7 +198,6 @@ void initFisicaWorld()
 	Fisica.init(this);
 	world = new FWorld();
 	world.setGrabbable(true);
-	world.setEdges(0, 0, width, height, colors[level][0]);
 	world.setGravity(0, 1e3);
 	clearWorld();
 }
@@ -259,7 +266,7 @@ void updateWorld()
 		}
 		if(go instanceof Button)
 		{
-			if(man.box.isTouchingBody(go.box) || wman.box.isTouchingBody(go.box))
+			if(go.box.getTouching().size() > 0)
 				((Button) go).activate();
 		}
 	}
@@ -346,6 +353,10 @@ void drawLevel()
 		}
 	}
 	while(line != null);
+	if(man == null)
+	{
+		System.exit(0);
+	}
 	man.box.setFillColor(colors[level][4]);
 	wman.box.setFillColor(colors[level][3]);
 	man.box.setFriction(0);
@@ -365,11 +376,6 @@ abstract class GameObject
 		box.setFillColor(colors[level][1]);
 		world.add(box);
 	}
-	GameObject(FBox box) {
-		this.box = box;
-		world.add(box);
-	}
-
 }
 
 class TextObject
