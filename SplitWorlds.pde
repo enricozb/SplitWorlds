@@ -20,7 +20,7 @@ ArrayList<GameObject> gos = new ArrayList<GameObject>();
 ArrayList<TextObject> tos = new ArrayList<TextObject>();
 
 int level;
-int STARTING_LEVEL = 7;
+int STARTING_LEVEL = 10;
 int MAX_LEVELS = 20;
 
 color[][] colors = new color[MAX_LEVELS][5];
@@ -199,6 +199,13 @@ void playDeathSound()
 {
 	AudioPlayer sound;
 	sound = minim.loadFile("die.wav");
+	sound.play();
+}
+
+void playClickSound()
+{
+	AudioPlayer sound;
+	sound = minim.loadFile("click.mp3");
 	sound.play();
 }
 
@@ -473,6 +480,8 @@ class Button extends GameObject
 	}
 	void activate()
 	{
+		if(!active)
+			playClickSound();
 		active = true;
 	}
 };
