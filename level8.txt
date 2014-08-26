@@ -1,8 +1,7 @@
-Platform 600 130 20 300 true
-Platform 600 400 20 300 true
-Text 300 150 Sometimes_it_won't_be_that_easy
-Text 900 150 Use_the_environment_around_you
-Door 620 575 20 50 0 100 .5 645 580 10 10 
-Door 580 575 20 50 0 100 .5 555 580 10 10 
-Man 300 550 20 20
-Woman 900 550 20 20
+Platform 600.0 250.0 20.0 640.0 true 
+Platform 226.0 552.0 40.0 20.0 true 
+Platform 88.0 486.0 40.0 20.0 true
+Spikes 900.0 585.0 300.0 20.0 
+Spikes 900.0 300 200.0 20.0
+Man 359.48776 585.09735 20.0 20.0
+Woman 900.0 750 20.0 20.0

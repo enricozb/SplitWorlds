@@ -1,9 +1,10 @@
-Platform 588.7223 330.09128 40.0 530.0 false
-Platform 166.0 540.0 60.0 26.0 true
-Platform 904.0 488.0 60.0 26.0 true
-Platform 306.0 488.0 60.0 26.0 true
-Platform 1030.0 542.0 60.0 26.0 true
-Spikes 950.0 590.0 50.0 20.0
-Spikes 144.0 590.0 50.0 20.0
-Man 18.0 500 20.0 20.0
-Woman 1170.9899 500 20.0 20.0
+//DIVIDER - Hole at bottom
+Platform 600 250 20 640 true
+Platform 620 560 100 20 true
+Platform 600 580 20 20 false
+
+Text 300 150 The_lack_of_symmetry
+Text 900 150 Is_not_an_accident
+
+Man 300 550 20 20
+Woman 900 550 20 20

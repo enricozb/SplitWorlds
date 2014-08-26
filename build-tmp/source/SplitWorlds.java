@@ -5,6 +5,7 @@ import processing.opengl.*;
 
 import java.awt.Rectangle; 
 import fisica.*; 
+import ddf.minim.*; 
 
 import java.util.HashMap; 
 import java.util.ArrayList; 
@@ -19,10 +20,16 @@ public class SplitWorlds extends PApplet {
 
 
 
+//import Minim library
+
 
 final String SPIKE = "Spike";
 final String DOORBUTTON = "DoorButton";
 final String MOVINGPLATFORM ="mPlatform";
+
+Minim minim;
+//to make it play song files
+AudioPlayer song;
 
 FWorld world;
 
@@ -33,7 +40,7 @@ ArrayList<GameObject> gos = new ArrayList<GameObject>();
 ArrayList<TextObject> tos = new ArrayList<TextObject>();
 
 int level;
-int STARTING_LEVEL = 7;
+int STARTING_LEVEL = 8;
 int MAX_LEVELS = 20;
 
 int[][] colors = new int[MAX_LEVELS][5];
@@ -59,10 +66,11 @@ public void setup()
 	textAlign(CENTER,CENTER);
 	rectMode(CENTER);
 	initFisicaWorld();
+	initMinim();
 	initColors();
 	state = LAUNCHER;
 	transitionTime = 0.0f;
-	level = 0;
+	level = 8;
 	reader = createReader("level" + level + ".txt");
 	reader = createReader("level" + level + ".txt");
 	level = STARTING_LEVEL - 1; //Adjust for launcher appearance
@@ -71,6 +79,7 @@ public void setup()
 }
 public void draw() 
 {
+
 	background(colors[level][0]);
 	if(state == LAUNCHER)
 	{
@@ -86,8 +95,18 @@ public void draw()
 	else if(state == TRANSITION)
 	{
 		upDrawObjects();
+		if(level == STARTING_LEVEL - 1)
+			drawLauncherText();
 		continueTransition();
 	}
+}
+
+public void initMinim()
+{
+	minim = new Minim(this);
+	song = minim.loadFile("bgs.wav");
+	song.play();
+	song.loop();
 }
 
 public void initColors()
@@ -134,9 +153,9 @@ public void initTransition(FBody a, FBody b)
 
 public void drawLauncherText()
 {
-	text("PLAY",lerp(0,width,.25f),height/2);
-	text("ABOUT",lerp(0,width,.5f),height/2);
-	text("HELP",lerp(0,width,.75f),height/2);
+	//text("PLAY",lerp(0,width,.25),height/2);
+	text("PLAY",lerp(0,width,.5f),height/2);
+	//text("HELP",lerp(0,width,.75),height/2);
 }
 
 public void drawLauncher()
@@ -144,15 +163,13 @@ public void drawLauncher()
 	Platform ptemp;
 	man = new Man(width/2,lerp(0,height,.75f) - 20, 20, 20);
 	man.box.setFillColor(colors[level][4]);
-	ptemp = new Platform(lerp(0,width,.25f),height/2,100,50,true);
+	//ptemp = new Platform(lerp(0,width,.25),height/2,100,50,true);
+	//ptemp.box.setFillColor(colors[level][1]);
+	ptemp = new Platform(lerp(0,width,.5f),height/2,100,50,true);
 	ptemp.box.setName("PLAY");
 	ptemp.box.setFillColor(colors[level][1]);
-	ptemp = new Platform(lerp(0,width,.5f),height/2,100,50,true);
-	ptemp.box.setName("HELP");
-	ptemp.box.setFillColor(colors[level][1]);
-	ptemp = new Platform(lerp(0,width,.75f),height/2,100,50,true);
-	ptemp.box.setName("ABOUT");
-	ptemp.box.setFillColor(colors[level][1]);
+	//ptemp = new Platform(lerp(0,width,.75),height/2,100,50,true);
+	//ptemp.box.setFillColor(colors[level][1]);
 	new Platform(width/2, lerp(0,height,.75f),width,20,true);
 }
 
@@ -196,6 +213,15 @@ public void initFisicaWorld()
 	world.setEdges(0, 0, width, height, colors[level][0]);
 	world.setGravity(0, 1e3f);
 	clearWorld();
+}
+
+//Play Sounds
+
+public void playDeathSound()
+{
+	AudioPlayer sound;
+	sound = minim.loadFile("die.wav");
+	sound.play();
 }
 
 //Key press events, simultaneous key presses working.
@@ -515,6 +541,7 @@ class Man extends GameObject
 
 	public void die()
 	{
+		playDeathSound();
 		box.setPosition(ix,iy);
 		box.setVelocity(0,0);
 	}
