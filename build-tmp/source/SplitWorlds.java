@@ -40,7 +40,7 @@ ArrayList<GameObject> gos = new ArrayList<GameObject>();
 ArrayList<TextObject> tos = new ArrayList<TextObject>();
 
 int level;
-int STARTING_LEVEL = 9;
+int STARTING_LEVEL = 7;
 int MAX_LEVELS = 20;
 
 int[][] colors = new int[MAX_LEVELS][5];
@@ -277,7 +277,7 @@ public void updateWorld()
 		}
 		if(go instanceof Button)
 		{
-			if(man.box.isTouchingBody(go.box) || wman.box.isTouchingBody(go.box))
+			if(go.box.getTouching().size() > 0)
 				((Button) go).activate();
 		}
 	}
