@@ -1,9 +1,11 @@
-Spikes 160.0 590.0 130.0 20.0
-Spikes 840.0 590.0 500.0 20.0
+Platform 600 450 20 650 true
+Door 1125 585 100 20 0 -150 1 75 580 10 10
+Door 970 585 100 20 0 -250 1 225 580 10 10
+Door 825 585 100 20 0 -350 1 375 580 10 10
+Door 675 585 100 20 0 -450 1 525 580 10 10
 
-Platform 221.0 530.0 50.0 26.0 true
-Platform 70.0 464.0 50.0 26.0 true
+Text 300 50 Failure_is_not_an_option
+Text 900 50 Restart_by_pressing_the_'r'_key
 
-Man 48.88642 400 20.0 2
-Woman 779.8192 380 20.0 20.0
-
+Man 300 550 20 20
+Woman 900 550 20 20

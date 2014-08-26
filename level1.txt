@@ -1,10 +1,6 @@
-Spikes 160 590 130 20
-Spikes 840 590 500 20
-Platform 23 32 32 32 true
-Platform 500 500 32 32 true 
-Platform 45 45 50 32 true
-Platform 100 100 50 32 true
-Platform 0 0 50 32 true
-Woman 500 500 20 20
-Man 25 25 20 20 
-
+Platform 600 130 20 300 true
+Platform 600 400 20 300 true
+Text 300 150 The_Man_and_Woman_are_seperated
+Text 900 150 Bring_them_together_again
+Man 300 550 20 20
+Woman 900 550 20 20
