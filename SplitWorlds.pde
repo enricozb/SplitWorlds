@@ -43,6 +43,7 @@ BufferedReader reader;
 void setup() 
 {
 	size(1200,600);
+
 	textAlign(CENTER,CENTER);
 	rectMode(CENTER);
 	initFisicaWorld();
@@ -91,7 +92,7 @@ void initColors()
 {
 	for(int i = 0; i < MAX_LEVELS; i++)
 	{
-		colors[i] = new color[] {color(42,54,59),color(255,132,124),color(254,206,168),color(232,74,95),color(153,184,152)};
+		colors[i] = new color[] {color(42,54,59),color(255,132,124),color(254,206,168),color(232,74,95),color(129,202,211)};
 	}
 }
 
@@ -111,7 +112,11 @@ void continueTransition()
 	pushStyle();
 	noStroke();
 	fill(colors[level + 1][0]);
-	rect(transitionVector.x, transitionVector.y, a, a);
+	pushStyle();
+	stroke(colors[level][1]);
+	strokeWeight(20);
+	ellipse(transitionVector.x, transitionVector.y, a, a);
+	popStyle();
 	popStyle();
 	transitionTime += .01;
 
@@ -134,6 +139,10 @@ void drawLauncherText()
 {
 	//text("PLAY",lerp(0,width,.25),height/2);
 	text("PLAY",lerp(0,width,.5),height/2);
+	pushStyle();
+	//textSize(100);
+	text("Split Worlds", 600, 150);
+	popStyle();
 	//text("HELP",lerp(0,width,.75),height/2);
 }
 
