@@ -1,20 +1,9 @@
-<<<<<<< HEAD
 Spikes 160.0 590.0 130.0 20.0
 Spikes 840.0 590.0 500.0 20.0
 
 Platform 221.0 530.0 50.0 26.0 true
 Platform 70.0 464.0 50.0 26.0 true
 
-Man 48.88642 400 20.0 20.0
+Man 48.88642 400 20.0 2
 Woman 779.8192 380 20.0 20.0
-=======
-Platform 600 470 20 300 true
-Platform 600 330 300 20 true
-Platform 600 130 20 300 true
-Platform 900 460 300 20 true
-Platform 860 440 20 20 true
-Platform 800 440 20 20 true
-Platform 840 360 20 160 false
-Man 300 300 20 20
-Woman 940 370 20 20
->>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
+

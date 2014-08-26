@@ -53,8 +53,8 @@ void setup()
 	reader = createReader("level" + level + ".txt");
 	level = STARTING_LEVEL - 1; //Adjust for launcher appearance
 	drawLauncher();
-}
 
+}
 void draw() 
 {
 
