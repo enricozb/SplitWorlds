@@ -20,7 +20,7 @@ ArrayList<GameObject> gos = new ArrayList<GameObject>();
 ArrayList<TextObject> tos = new ArrayList<TextObject>();
 
 int level;
-int STARTING_LEVEL = 10;
+int STARTING_LEVEL = 9;
 int MAX_LEVELS = 20;
 
 color[][] colors = new color[MAX_LEVELS][5];
@@ -50,13 +50,8 @@ void setup()
 	initColors();
 	state = LAUNCHER;
 	transitionTime = 0.0;
-<<<<<<< HEAD
-	level = 0;
-	reader = createReader("level" + level + ".txt");
-=======
 	reader = createReader("level" + level + ".txt");
 	level = STARTING_LEVEL - 1; //Adjust for launcher appearance
->>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
 	drawLauncher();
 }
 
@@ -102,12 +97,10 @@ void initColors()
 
 void clearWorld()
 {
+	man = null;
+	wman = null;
 	world.clear();
-<<<<<<< HEAD
-	world.setEdges(0, 0, width, height, colors[level][0]);
-=======
 	world.setEdges(colors[level][1]);
->>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
 	gos.clear();
 	tos.clear();
 }
@@ -196,10 +189,6 @@ void initFisicaWorld()
 	Fisica.init(this);
 	world = new FWorld();
 	world.setGrabbable(true);
-<<<<<<< HEAD
-	world.setEdges(0, 0, width, height, colors[level][0]);
-=======
->>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
 	world.setGravity(0, 1e3);
 	clearWorld();
 }
@@ -342,15 +331,10 @@ void drawLevel()
 					man = new Man(int(ch[1]),int(ch[2]),int(ch[3]),int(ch[4]));
 				else if(ch[0].equals("Woman"))
 					wman = new Man(int(ch[1]),int(ch[2]),int(ch[3]),int(ch[4]));
-<<<<<<< HEAD
-				else if(ch[0].equals("Door"))
-					gos.add(new Door(int(ch[1]),int(ch[2]),int(ch[3]),int(ch[4]),int(ch[4]),int(ch[6]),int(ch[7]),int(ch[8]),int(ch[9]),int(ch[10]),int(ch[11])));
-=======
 				else if(ch[0].equals("Text"))
 					tos.add(new TextObject(int(ch[1]), int(ch[2]), ch[3]));
 				else if(ch[0].equals("Door"))
 					gos.add(new Door(float(ch[1]),float(ch[2]),float(ch[3]),float(ch[4]),float(ch[5]),float(ch[6]),float(ch[7]),float(ch[8]),float(ch[9]),float(ch[10]),float(ch[11])));
->>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
 
 			} catch(NullPointerException e ) {
 				System.exit(0);
@@ -360,6 +344,10 @@ void drawLevel()
 		}
 	}
 	while(line != null);
+	if(man == null)
+	{
+		System.exit(0);
+	}
 	man.box.setFillColor(colors[level][4]);
 	wman.box.setFillColor(colors[level][3]);
 	man.box.setFriction(0);
@@ -378,15 +366,7 @@ abstract class GameObject
 		box.setNoStroke();
 		box.setFillColor(colors[level][1]);
 		world.add(box);
-<<<<<<< HEAD
 	}
-	GameObject(FBox box) {
-		this.box = box;
-		world.add(box);
-	}
-=======
- 	}
->>>>>>> 2ee3aab2d8e3b426a500b357af3a245cc095a258
 }
 
 class TextObject

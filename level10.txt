@@ -6,5 +6,5 @@ Spikes 900 585 300 20
 Text 300 150 Death
 Text 900 150 Is_not_an_option
 
-Man 300 550 20 20
+
 Woman 900 300 20 20
